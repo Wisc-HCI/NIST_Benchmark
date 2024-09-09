@@ -91,7 +91,7 @@ sudo docker run -it --privileged --cap-add=SYS_NICE --env DISPLAY=$DISPLAY -v /t
 rm -f src/CMakeLists.txt  # Remove if it exists from other machine
 catkin_init_workspace src
 source /opt/ros/noetic/setup.sh
-catkin_make clean
+catkin_make clean  # Make sure this is in the base directory (NIST_Benchmark)
 source devel/setup.sh
 ```
 TODO: See if can move some of the above to the  docker file
@@ -101,8 +101,8 @@ Before you can run anything with code, make sure joints are unlocked and FCI Con
 
 You should still be in the container's terminal to run the following commands. Make sure to subsitute 192.168.1.2 with your robot's IP.
 ```bash
-#rosrun libfranka echo_robot_state 192.168.1.2 # Tests comms (does not require real time kernel) # TODO FIX THIS
-sudo communication_test 192.168.1.2  # Tests realtime kernel and robot by moving bot
+sudo echo_robot_state 192.168.1.2  # TODO: Check this
+sudo communication_test 192.168.1.2  # Tests realtime kernel and robot by moving bot  # TODO: REPLACE THIS
 ```
 
 ###  Notes
@@ -151,10 +151,3 @@ https://github.com/frankaemika/franka_ros/tree/develop/franka_description
 
 If you ever change  /src/relaxed_ik_ros1/relaxed_ik_core, you will need to go into that directory and recompile it with `cargo build`
 
-
-
-
-## TODO:
-ERROR:
-root@hcilab-G7-7590:/workspace# rosrun libfranka echo_robot_state 192.168.1.2
-[rospack] Error: package 'libfranka' not found

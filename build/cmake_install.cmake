@@ -131,7 +131,16 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/workspace/build/gtest/cmake_install.cmake")
+  include("/workspace/build/franka_ros/franka_ros/cmake_install.cmake")
+  include("/workspace/build/franka_ros/franka_description/cmake_install.cmake")
+  include("/workspace/build/franka_ros/franka_msgs/cmake_install.cmake")
   include("/workspace/build/relaxed_ik_ros1/cmake_install.cmake")
+  include("/workspace/build/franka_ros/franka_gripper/cmake_install.cmake")
+  include("/workspace/build/franka_ros/franka_visualization/cmake_install.cmake")
+  include("/workspace/build/franka_ros/franka_hw/cmake_install.cmake")
+  include("/workspace/build/franka_ros/franka_control/cmake_install.cmake")
+  include("/workspace/build/franka_ros/franka_example_controllers/cmake_install.cmake")
+  include("/workspace/build/franka_ros/franka_gazebo/cmake_install.cmake")
 
 endif()
 
