@@ -24,21 +24,26 @@ sudo docker build -t panda-container .
 sudo docker run -it --env DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v $(pwd):/workspace --net=host panda-container
 ```
 
-Now your container should be running and you should be in it's command line. So in the container's terminal, setup the simulation:
+Now your container should be running and you should be in it's command line. So in the container's terminal, setup the visualization:
 ```bash
 source /opt/ros/noetic/setup.sh
 catkin_make 
 source devel/setup.sh
 ```
 
-And run the simulation:
+And run the visualization:
 ```bash
-roslaunch relaxed_ik_ros1 demo.launch
+roslaunch relaxed_ik_ros1 demo.launch setting_file_path:=/workspace/src/panda.yaml
 ```
 
 
 ## Resources
+Source of RelaxedIK (Panda URDF has been midly modified):
 https://github.com/uwgraphics/relaxed_ik_ros1
 
-More detailed instructions that help with installing relaxedIK ROS1
+More detailed instructions that help with installing RelaxedIK ROS1:
 https://github.com/uwgraphics/relaxed_ik_ros2 
+
+
+Source of franka_description:
+https://github.com/frankaemika/franka_ros/tree/develop/franka_description
