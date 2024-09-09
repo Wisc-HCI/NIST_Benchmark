@@ -47,3 +47,9 @@ https://github.com/uwgraphics/relaxed_ik_ros2
 
 Source of franka_description:
 https://github.com/frankaemika/franka_ros/tree/develop/franka_description
+
+
+
+## Notes:
+
+If you ever change  /src/relaxed_ik_ros1/relaxed_ik_core, you will need to go into that directory and recompile it with `cargo build`
