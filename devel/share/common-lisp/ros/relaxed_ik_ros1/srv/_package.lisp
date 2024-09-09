@@ -1,0 +1,15 @@
+(cl:defpackage relaxed_ik_ros1-srv
+  (:use )
+  (:export
+   "IKPOSE"
+   "<IKPOSE-REQUEST>"
+   "IKPOSE-REQUEST"
+   "<IKPOSE-RESPONSE>"
+   "IKPOSE-RESPONSE"
+   "IKVELOCITY"
+   "<IKVELOCITY-REQUEST>"
+   "IKVELOCITY-REQUEST"
+   "<IKVELOCITY-RESPONSE>"
+   "IKVELOCITY-RESPONSE"
+  ))
+
