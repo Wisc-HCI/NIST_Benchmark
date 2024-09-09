@@ -1,10 +1,10 @@
 
 "use strict";
 
-let IKPose = require('./IKPose.js')
 let IKVelocity = require('./IKVelocity.js')
+let IKPose = require('./IKPose.js')
 
 module.exports = {
-  IKPose: IKPose,
   IKVelocity: IKVelocity,
+  IKPose: IKPose,
 };

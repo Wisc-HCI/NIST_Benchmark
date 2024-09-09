@@ -44,8 +44,17 @@ RUN rosdep install --from-paths src --ignore-src --rosdistro noetic -y --skip-ke
 
 
 # Set libfranka library
-RUN  dpkg -i /workspace/libfranka/build/libfranka-0.9.2-x86_64.deb  
 
+# RUN mkdir -p /workspace/libfranka/build
+# WORKDIR /workspace/libfranka/build
+# RUN cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF ..
+# RUN cmake --build .
+# RUN cpack -G DEB
+RUN  dpkg -i /workspace/libfranka/build/libfranka-0.9.2-x86_64.deb  
+#RUN  dpkg -i libfranka-0.9.2-x86_64.deb  
+
+
+WORKDIR /workspace/
 
 # Set the default command to execute
 # When creating a container, this will simulate `docker run -it`
