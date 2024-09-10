@@ -29,7 +29,9 @@ sudo docker run -it --env DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v $
 Now your container should be running and you should be in it's command line. So in the container's terminal, setup the visualization:
 ```bash
 source /opt/ros/noetic/setup.sh
-catkin_make 
+rm -f src/CMakeLists.txt 
+catkin_init_workspace src
+catkin_make clean
 source devel/setup.sh
 ```
 
