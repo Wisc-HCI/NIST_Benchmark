@@ -101,9 +101,9 @@ TODO: See if can move some of the above to the  docker file
 ### Running
 Before you can run anything with code, make sure joints are unlocked and FCI Control is enabled in the Franka desktop ( our robot is [192.168.1.2](https://192.168.1.2/desk/)). Directions for doing that are [here](https://youtu.be/91wFDNHVXI4?si=4-ZArdrxOMAiCc5H&t=484). WARNING: we could not get Firefox to access the desk because of security reasons. However we could access through chrome once we clicked "Advanced" > "Proceed to 192.168.1.2 (unsafe)".
 
-You should still be in the container's terminal to run the following commands. Make sure to subsitute 192.168.1.2 with your robot's IP.
+You should still be in the container's terminal to run the following commands. Make sure to substitute 192.168.1.2 with your robot's IP.
 ```bash
-sudo echo_robot_state 192.168.1.2  # TODO: Check this
+sudo echo_robot_state 192.168.1.2  
 sudo communication_test 192.168.1.2  # Tests realtime kernel and robot by moving bot  # TODO: REPLACE THIS
 ```
 
