@@ -1,4 +1,4 @@
 
-/build/
-/deve/
+build/
+devel/
 !/libfranka/build/
