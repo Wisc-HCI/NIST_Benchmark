@@ -31,7 +31,7 @@ Now your container should be running and you should be in it's command line. So 
 source /opt/ros/noetic/setup.sh
 rm -f src/CMakeLists.txt 
 catkin_init_workspace src
-catkin_make clean
+catkin_make
 source devel/setup.sh
 ```
 
@@ -93,7 +93,7 @@ sudo docker run -it --privileged --cap-add=SYS_NICE --env DISPLAY=$DISPLAY -v /t
 rm -f src/CMakeLists.txt  # Remove if it exists from other machine
 catkin_init_workspace src
 source /opt/ros/noetic/setup.sh
-catkin_make clean  # Make sure this is in the base directory (NIST_Benchmark)
+catkin_make   # Make sure this is in the base directory (NIST_Benchmark)
 source devel/setup.sh
 ```
 TODO: See if can move some of the above to the  docker file
@@ -101,9 +101,9 @@ TODO: See if can move some of the above to the  docker file
 ### Running
 Before you can run anything with code, make sure joints are unlocked and FCI Control is enabled in the Franka desktop ( our robot is [192.168.1.2](https://192.168.1.2/desk/)). Directions for doing that are [here](https://youtu.be/91wFDNHVXI4?si=4-ZArdrxOMAiCc5H&t=484). WARNING: we could not get Firefox to access the desk because of security reasons. However we could access through chrome once we clicked "Advanced" > "Proceed to 192.168.1.2 (unsafe)".
 
-You should still be in the container's terminal to run the following commands. Make sure to substitute 192.168.1.2 with your robot's IP.
+You should still be in the container's terminal to run the following commands. Make sure to subsitute 192.168.1.2 with your robot's IP.
 ```bash
-sudo echo_robot_state 192.168.1.2  
+sudo echo_robot_state 192.168.1.2  # TODO: Check this
 sudo communication_test 192.168.1.2  # Tests realtime kernel and robot by moving bot  # TODO: REPLACE THIS
 ```
 
@@ -122,7 +122,18 @@ catkin_make  # Make sure you're in root directory
 source devel/setup.sh
 ```
 
-If you make changes to libfranka (which you probably should not be doing), you'll need to run:
+
+
+## Troubleshooting + Tip
+* If you ever have trouble with `catkin_make`, try running `catkin_make clean` and then `catkin_make` again.
+
+* Panda limits for motion are located [here](https://frankaemika.github.io/docs/control_parameters.html#limits-for-panda).
+If you go beyond them, you will get the error `libfranka: Move command aborted: motion aborted by reflex! ["cartesian_reflex"]`.
+After that any other command will throw the error `libfranka: Set Joint Impedance command rejected: command not possible in the current mode ("Reflex")!` **UNTIL  the joints are locked and unlocked**.
+
+
+* If you ever change  /src/relaxed_ik_ros1/relaxed_ik_core, you will need to go into that directory and recompile it with `cargo build`.
+* If you make changes to libfranka (which you probably should not be doing), you'll need to run:
 ``` bash
 cd libfranka/build  # May need to use other command to get to this directory
 rm -r * # For cleaning the cache to avoid errors of builds on different machines
@@ -133,8 +144,6 @@ sudo dpkg -i libfranka-0.9.2-x86_64.deb
 
 ```
 
-## Troubleshooting + Tips
-Check the "Panda Notes" section at the bottom of [setup.md](setup.md) for tips you should know about Panda.
 
 ## Resources
 Source of RelaxedIK (Panda URDF has been midly modified):
@@ -149,7 +158,5 @@ https://github.com/frankaemika/franka_ros/tree/develop/franka_description
 
 
 
-## Notes:
 
-If you ever change  /src/relaxed_ik_ros1/relaxed_ik_core, you will need to go into that directory and recompile it with `cargo build`
 
