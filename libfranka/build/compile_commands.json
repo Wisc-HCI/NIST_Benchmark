@@ -1,0 +1,202 @@
+[
+{
+  "directory": "/workspace/libfranka/build",
+  "command": "/usr/bin/c++  -DPOCO_NO_AUTOMATIC_LIBS -Dfranka_EXPORTS -I/workspace/libfranka/include -I/workspace/libfranka/common/include -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -Wall -Wextra -pthread -std=gnu++14 -o CMakeFiles/franka.dir/src/control_loop.cpp.o -c /workspace/libfranka/src/control_loop.cpp",
+  "file": "/workspace/libfranka/src/control_loop.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build",
+  "command": "/usr/bin/c++  -DPOCO_NO_AUTOMATIC_LIBS -Dfranka_EXPORTS -I/workspace/libfranka/include -I/workspace/libfranka/common/include -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -Wall -Wextra -pthread -std=gnu++14 -o CMakeFiles/franka.dir/src/control_tools.cpp.o -c /workspace/libfranka/src/control_tools.cpp",
+  "file": "/workspace/libfranka/src/control_tools.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build",
+  "command": "/usr/bin/c++  -DPOCO_NO_AUTOMATIC_LIBS -Dfranka_EXPORTS -I/workspace/libfranka/include -I/workspace/libfranka/common/include -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -Wall -Wextra -pthread -std=gnu++14 -o CMakeFiles/franka.dir/src/control_types.cpp.o -c /workspace/libfranka/src/control_types.cpp",
+  "file": "/workspace/libfranka/src/control_types.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build",
+  "command": "/usr/bin/c++  -DPOCO_NO_AUTOMATIC_LIBS -Dfranka_EXPORTS -I/workspace/libfranka/include -I/workspace/libfranka/common/include -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -Wall -Wextra -pthread -std=gnu++14 -o CMakeFiles/franka.dir/src/duration.cpp.o -c /workspace/libfranka/src/duration.cpp",
+  "file": "/workspace/libfranka/src/duration.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build",
+  "command": "/usr/bin/c++  -DPOCO_NO_AUTOMATIC_LIBS -Dfranka_EXPORTS -I/workspace/libfranka/include -I/workspace/libfranka/common/include -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -Wall -Wextra -pthread -std=gnu++14 -o CMakeFiles/franka.dir/src/errors.cpp.o -c /workspace/libfranka/src/errors.cpp",
+  "file": "/workspace/libfranka/src/errors.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build",
+  "command": "/usr/bin/c++  -DPOCO_NO_AUTOMATIC_LIBS -Dfranka_EXPORTS -I/workspace/libfranka/include -I/workspace/libfranka/common/include -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -Wall -Wextra -pthread -std=gnu++14 -o CMakeFiles/franka.dir/src/exception.cpp.o -c /workspace/libfranka/src/exception.cpp",
+  "file": "/workspace/libfranka/src/exception.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build",
+  "command": "/usr/bin/c++  -DPOCO_NO_AUTOMATIC_LIBS -Dfranka_EXPORTS -I/workspace/libfranka/include -I/workspace/libfranka/common/include -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -Wall -Wextra -pthread -std=gnu++14 -o CMakeFiles/franka.dir/src/gripper.cpp.o -c /workspace/libfranka/src/gripper.cpp",
+  "file": "/workspace/libfranka/src/gripper.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build",
+  "command": "/usr/bin/c++  -DPOCO_NO_AUTOMATIC_LIBS -Dfranka_EXPORTS -I/workspace/libfranka/include -I/workspace/libfranka/common/include -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -Wall -Wextra -pthread -std=gnu++14 -o CMakeFiles/franka.dir/src/gripper_state.cpp.o -c /workspace/libfranka/src/gripper_state.cpp",
+  "file": "/workspace/libfranka/src/gripper_state.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build",
+  "command": "/usr/bin/c++  -DPOCO_NO_AUTOMATIC_LIBS -Dfranka_EXPORTS -I/workspace/libfranka/include -I/workspace/libfranka/common/include -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -Wall -Wextra -pthread -std=gnu++14 -o CMakeFiles/franka.dir/src/library_downloader.cpp.o -c /workspace/libfranka/src/library_downloader.cpp",
+  "file": "/workspace/libfranka/src/library_downloader.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build",
+  "command": "/usr/bin/c++  -DPOCO_NO_AUTOMATIC_LIBS -Dfranka_EXPORTS -I/workspace/libfranka/include -I/workspace/libfranka/common/include -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -Wall -Wextra -pthread -std=gnu++14 -o CMakeFiles/franka.dir/src/library_loader.cpp.o -c /workspace/libfranka/src/library_loader.cpp",
+  "file": "/workspace/libfranka/src/library_loader.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build",
+  "command": "/usr/bin/c++  -DPOCO_NO_AUTOMATIC_LIBS -Dfranka_EXPORTS -I/workspace/libfranka/include -I/workspace/libfranka/common/include -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -Wall -Wextra -pthread -std=gnu++14 -o CMakeFiles/franka.dir/src/load_calculations.cpp.o -c /workspace/libfranka/src/load_calculations.cpp",
+  "file": "/workspace/libfranka/src/load_calculations.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build",
+  "command": "/usr/bin/c++  -DPOCO_NO_AUTOMATIC_LIBS -Dfranka_EXPORTS -I/workspace/libfranka/include -I/workspace/libfranka/common/include -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -Wall -Wextra -pthread -std=gnu++14 -o CMakeFiles/franka.dir/src/log.cpp.o -c /workspace/libfranka/src/log.cpp",
+  "file": "/workspace/libfranka/src/log.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build",
+  "command": "/usr/bin/c++  -DPOCO_NO_AUTOMATIC_LIBS -Dfranka_EXPORTS -I/workspace/libfranka/include -I/workspace/libfranka/common/include -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -Wall -Wextra -pthread -std=gnu++14 -o CMakeFiles/franka.dir/src/logger.cpp.o -c /workspace/libfranka/src/logger.cpp",
+  "file": "/workspace/libfranka/src/logger.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build",
+  "command": "/usr/bin/c++  -DPOCO_NO_AUTOMATIC_LIBS -Dfranka_EXPORTS -I/workspace/libfranka/include -I/workspace/libfranka/common/include -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -Wall -Wextra -pthread -std=gnu++14 -o CMakeFiles/franka.dir/src/lowpass_filter.cpp.o -c /workspace/libfranka/src/lowpass_filter.cpp",
+  "file": "/workspace/libfranka/src/lowpass_filter.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build",
+  "command": "/usr/bin/c++  -DPOCO_NO_AUTOMATIC_LIBS -Dfranka_EXPORTS -I/workspace/libfranka/include -I/workspace/libfranka/common/include -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -Wall -Wextra -pthread -std=gnu++14 -o CMakeFiles/franka.dir/src/model.cpp.o -c /workspace/libfranka/src/model.cpp",
+  "file": "/workspace/libfranka/src/model.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build",
+  "command": "/usr/bin/c++  -DPOCO_NO_AUTOMATIC_LIBS -Dfranka_EXPORTS -I/workspace/libfranka/include -I/workspace/libfranka/common/include -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -Wall -Wextra -pthread -std=gnu++14 -o CMakeFiles/franka.dir/src/model_library.cpp.o -c /workspace/libfranka/src/model_library.cpp",
+  "file": "/workspace/libfranka/src/model_library.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build",
+  "command": "/usr/bin/c++  -DPOCO_NO_AUTOMATIC_LIBS -Dfranka_EXPORTS -I/workspace/libfranka/include -I/workspace/libfranka/common/include -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -Wall -Wextra -pthread -std=gnu++14 -o CMakeFiles/franka.dir/src/network.cpp.o -c /workspace/libfranka/src/network.cpp",
+  "file": "/workspace/libfranka/src/network.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build",
+  "command": "/usr/bin/c++  -DPOCO_NO_AUTOMATIC_LIBS -Dfranka_EXPORTS -I/workspace/libfranka/include -I/workspace/libfranka/common/include -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -Wall -Wextra -pthread -std=gnu++14 -o CMakeFiles/franka.dir/src/rate_limiting.cpp.o -c /workspace/libfranka/src/rate_limiting.cpp",
+  "file": "/workspace/libfranka/src/rate_limiting.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build",
+  "command": "/usr/bin/c++  -DPOCO_NO_AUTOMATIC_LIBS -Dfranka_EXPORTS -I/workspace/libfranka/include -I/workspace/libfranka/common/include -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -Wall -Wextra -pthread -std=gnu++14 -o CMakeFiles/franka.dir/src/robot.cpp.o -c /workspace/libfranka/src/robot.cpp",
+  "file": "/workspace/libfranka/src/robot.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build",
+  "command": "/usr/bin/c++  -DPOCO_NO_AUTOMATIC_LIBS -Dfranka_EXPORTS -I/workspace/libfranka/include -I/workspace/libfranka/common/include -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -Wall -Wextra -pthread -std=gnu++14 -o CMakeFiles/franka.dir/src/robot_impl.cpp.o -c /workspace/libfranka/src/robot_impl.cpp",
+  "file": "/workspace/libfranka/src/robot_impl.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build",
+  "command": "/usr/bin/c++  -DPOCO_NO_AUTOMATIC_LIBS -Dfranka_EXPORTS -I/workspace/libfranka/include -I/workspace/libfranka/common/include -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -Wall -Wextra -pthread -std=gnu++14 -o CMakeFiles/franka.dir/src/robot_state.cpp.o -c /workspace/libfranka/src/robot_state.cpp",
+  "file": "/workspace/libfranka/src/robot_state.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build",
+  "command": "/usr/bin/c++  -DPOCO_NO_AUTOMATIC_LIBS -Dfranka_EXPORTS -I/workspace/libfranka/include -I/workspace/libfranka/common/include -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -Wall -Wextra -pthread -std=gnu++14 -o CMakeFiles/franka.dir/src/vacuum_gripper.cpp.o -c /workspace/libfranka/src/vacuum_gripper.cpp",
+  "file": "/workspace/libfranka/src/vacuum_gripper.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build",
+  "command": "/usr/bin/c++  -DPOCO_NO_AUTOMATIC_LIBS -Dfranka_EXPORTS -I/workspace/libfranka/include -I/workspace/libfranka/common/include -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -Wall -Wextra -pthread -std=gnu++14 -o CMakeFiles/franka.dir/src/vacuum_gripper_state.cpp.o -c /workspace/libfranka/src/vacuum_gripper_state.cpp",
+  "file": "/workspace/libfranka/src/vacuum_gripper_state.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build/examples",
+  "command": "/usr/bin/c++   -I/workspace/libfranka/include -isystem /usr/include/eigen3  -O3 -DNDEBUG   -Wall -Wextra -std=gnu++14 -o CMakeFiles/vacuum_object.dir/vacuum_object.cpp.o -c /workspace/libfranka/examples/vacuum_object.cpp",
+  "file": "/workspace/libfranka/examples/vacuum_object.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build/examples",
+  "command": "/usr/bin/c++   -I/workspace/libfranka/include -isystem /usr/include/eigen3  -O3 -DNDEBUG   -Wall -Wextra -std=gnu++14 -o CMakeFiles/print_joint_poses.dir/print_joint_poses.cpp.o -c /workspace/libfranka/examples/print_joint_poses.cpp",
+  "file": "/workspace/libfranka/examples/print_joint_poses.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build/examples",
+  "command": "/usr/bin/c++  -DPOCO_NO_AUTOMATIC_LIBS -I/workspace/libfranka/include -isystem /usr/include/eigen3  -O3 -DNDEBUG   -Wall -Wextra -std=gnu++14 -o CMakeFiles/motion_with_control.dir/motion_with_control.cpp.o -c /workspace/libfranka/examples/motion_with_control.cpp",
+  "file": "/workspace/libfranka/examples/motion_with_control.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build/examples",
+  "command": "/usr/bin/c++   -I/workspace/libfranka/include -isystem /usr/include/eigen3  -O3 -DNDEBUG   -Wall -Wextra -std=gnu++14 -o CMakeFiles/generate_elbow_motion.dir/generate_elbow_motion.cpp.o -c /workspace/libfranka/examples/generate_elbow_motion.cpp",
+  "file": "/workspace/libfranka/examples/generate_elbow_motion.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build/examples",
+  "command": "/usr/bin/c++   -I/workspace/libfranka/include -isystem /usr/include/eigen3  -O3 -DNDEBUG   -Wall -Wextra -std=gnu++14 -o CMakeFiles/grasp_object.dir/grasp_object.cpp.o -c /workspace/libfranka/examples/grasp_object.cpp",
+  "file": "/workspace/libfranka/examples/grasp_object.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build/examples",
+  "command": "/usr/bin/c++   -I/workspace/libfranka/include -isystem /usr/include/eigen3  -O3 -DNDEBUG   -Wall -Wextra -std=gnu++14 -o CMakeFiles/joint_point_to_point_motion.dir/joint_point_to_point_motion.cpp.o -c /workspace/libfranka/examples/joint_point_to_point_motion.cpp",
+  "file": "/workspace/libfranka/examples/joint_point_to_point_motion.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build/examples",
+  "command": "/usr/bin/c++   -I/workspace/libfranka/include -isystem /usr/include/eigen3  -O3 -DNDEBUG   -Wall -Wextra -std=gnu++14 -o CMakeFiles/cartesian_impedance_control.dir/cartesian_impedance_control.cpp.o -c /workspace/libfranka/examples/cartesian_impedance_control.cpp",
+  "file": "/workspace/libfranka/examples/cartesian_impedance_control.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build/examples",
+  "command": "/usr/bin/c++   -I/workspace/libfranka/include -isystem /usr/include/eigen3  -O3 -DNDEBUG   -Wall -Wextra -std=gnu++14 -o CMakeFiles/communication_test.dir/communication_test.cpp.o -c /workspace/libfranka/examples/communication_test.cpp",
+  "file": "/workspace/libfranka/examples/communication_test.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build/examples",
+  "command": "/usr/bin/c++   -I/workspace/libfranka/include -isystem /usr/include/eigen3  -O3 -DNDEBUG   -Wall -Wextra -std=gnu++14 -o CMakeFiles/generate_joint_velocity_motion.dir/generate_joint_velocity_motion.cpp.o -c /workspace/libfranka/examples/generate_joint_velocity_motion.cpp",
+  "file": "/workspace/libfranka/examples/generate_joint_velocity_motion.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build/examples",
+  "command": "/usr/bin/c++   -I/workspace/libfranka/include -isystem /usr/include/eigen3  -O3 -DNDEBUG   -Wall -Wextra -std=gnu++14 -o CMakeFiles/echo_robot_state.dir/echo_robot_state.cpp.o -c /workspace/libfranka/examples/echo_robot_state.cpp",
+  "file": "/workspace/libfranka/examples/echo_robot_state.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build/examples",
+  "command": "/usr/bin/c++   -I/workspace/libfranka/include -isystem /usr/include/eigen3  -O3 -DNDEBUG   -Wall -Wextra -std=gnu++14 -o CMakeFiles/force_control.dir/force_control.cpp.o -c /workspace/libfranka/examples/force_control.cpp",
+  "file": "/workspace/libfranka/examples/force_control.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build/examples",
+  "command": "/usr/bin/c++   -I/workspace/libfranka/include -isystem /usr/include/eigen3  -O3 -DNDEBUG   -Wall -Wextra -std=gnu++14 -o CMakeFiles/generate_cartesian_velocity_motion.dir/generate_cartesian_velocity_motion.cpp.o -c /workspace/libfranka/examples/generate_cartesian_velocity_motion.cpp",
+  "file": "/workspace/libfranka/examples/generate_cartesian_velocity_motion.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build/examples",
+  "command": "/usr/bin/c++   -I/workspace/libfranka/include -isystem /usr/include/eigen3  -O3 -DNDEBUG   -Wall -Wextra -std=gnu++14 -o CMakeFiles/generate_cartesian_pose_motion.dir/generate_cartesian_pose_motion.cpp.o -c /workspace/libfranka/examples/generate_cartesian_pose_motion.cpp",
+  "file": "/workspace/libfranka/examples/generate_cartesian_pose_motion.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build/examples",
+  "command": "/usr/bin/c++   -I/workspace/libfranka/include -isystem /usr/include/eigen3  -O3 -DNDEBUG   -Wall -Wextra -std=gnu++14 -o CMakeFiles/generate_joint_position_motion.dir/generate_joint_position_motion.cpp.o -c /workspace/libfranka/examples/generate_joint_position_motion.cpp",
+  "file": "/workspace/libfranka/examples/generate_joint_position_motion.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build/examples",
+  "command": "/usr/bin/c++   -I/workspace/libfranka/include -isystem /usr/include/eigen3  -O3 -DNDEBUG   -Wall -Wextra -std=gnu++14 -o CMakeFiles/examples_common.dir/examples_common.cpp.o -c /workspace/libfranka/examples/examples_common.cpp",
+  "file": "/workspace/libfranka/examples/examples_common.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build/examples",
+  "command": "/usr/bin/c++   -I/workspace/libfranka/include -isystem /usr/include/eigen3  -O3 -DNDEBUG   -Wall -Wextra -std=gnu++14 -o CMakeFiles/generate_consecutive_motions.dir/generate_consecutive_motions.cpp.o -c /workspace/libfranka/examples/generate_consecutive_motions.cpp",
+  "file": "/workspace/libfranka/examples/generate_consecutive_motions.cpp"
+},
+{
+  "directory": "/workspace/libfranka/build/examples",
+  "command": "/usr/bin/c++   -I/workspace/libfranka/include -isystem /usr/include/eigen3  -O3 -DNDEBUG   -Wall -Wextra -pthread -std=gnu++14 -o CMakeFiles/joint_impedance_control.dir/joint_impedance_control.cpp.o -c /workspace/libfranka/examples/joint_impedance_control.cpp",
+  "file": "/workspace/libfranka/examples/joint_impedance_control.cpp"
+}
+]

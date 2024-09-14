@@ -1,0 +1,11 @@
+Architecture: amd64
+Conflicts: ros-kinetic-libfranka, ros-melodic-libfranka, ros-noetic-libfranka, ros-foxy-libfranka
+Depends: libpoco-dev
+Description: libfranka built using CMake
+Maintainer: Franka Emika GmbH
+Package: libfranka
+Priority: optional
+Section: devel
+Version: 0.9.2-1
+Installed-Size: 2001
+
