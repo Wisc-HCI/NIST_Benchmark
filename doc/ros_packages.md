@@ -6,28 +6,23 @@ Below are example instructions for initiating our panda_benchmark package with d
 
 ```bash
 cd src
-catkin_create_pkg panda_benchmark std_msgs rospy roscpp franka_ros relaxed_ik_ros1
+catkin_create_pkg panda_benchmark std_msgs rospy roscpp relaxed_ik_ros1 franka_control franka_description franka_example_controllers franka_gripper franka_hw franka_msgs franka_visualization
 
+# Create scripts directory
+mkdir -p panda_benchmark/scripts  
+# Create any python scripts in the scripts folder
+
+chmod +x /workspace/src/panda_benchmark/scripts/* # Make python files recognizable
 
 cd .. # You should now be in the root repo directory
+
 catkin_make
+source devel/setup.sh
 ```
 
-In src/panda_benchmark/CMakeLists.txt, make sure the following is uncommented like this:
-```bash
-catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES panda_benchmark
-  CATKIN_DEPENDS franka_ros relaxed_ik_ros1 roscpp rospy std_msgs
-#  DEPENDS system_lib
-)
-
-# ... More stuff here ...
-target_link_libraries(${PROJECT_NAME}_node
-  ${catkin_LIBRARIES}
-)
-
 ```
+```
+rosrun panda_benchmark line_tracing.py _tolerances:=[0,0,0,0,0,999]
 
 
 BLah blah

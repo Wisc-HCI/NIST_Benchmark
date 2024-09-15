@@ -38,6 +38,9 @@ source devel/setup.sh
 And run the visualization:
 ```bash
 roslaunch relaxed_ik_ros1 demo.launch setting_file_path:=/workspace/src/panda.yaml
+
+# Open another terminal for the following command (see bottom of this doc for isntructions
+rosrun panda_benchmark line_tracing.py _tolerances:=[0,0,0,0,0,999]  # Start line tracing
 ```
 
 ## Controlling Panda with FCI
