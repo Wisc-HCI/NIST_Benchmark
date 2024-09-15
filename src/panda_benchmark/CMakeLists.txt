@@ -109,7 +109,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES panda_benchmark
-#  CATKIN_DEPENDS franka_ros relaxed_ik_ros1 roscpp rospy std_msgs
+CATKIN_DEPENDS franka_ros relaxed_ik_ros1 roscpp rospy std_msgs
 #  DEPENDS system_lib
 )
 
@@ -150,9 +150,9 @@ include_directories(
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(${PROJECT_NAME}_node
-#   ${catkin_LIBRARIES}
-# )
+target_link_libraries(${PROJECT_NAME}_node
+  ${catkin_LIBRARIES}
+)
 
 #############
 ## Install ##
