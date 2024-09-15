@@ -107,10 +107,7 @@ sudo echo_robot_state 192.168.1.2  # Spits out bot's current state
 sudo communication_test 192.168.1.2  # Tests realtime kernel and robot by moving bot  
 
 # Shows gazebo simulation and RVIZ visuals
-roslaunch franka_gazebo panda.launch x:=-0.5 \
-    world:=$(rospack find franka_gazebo)/world/stone.sdf \
-    controller:=cartesian_impedance_example_controller \
-    rviz:=true
+roslaunch franka_gazebo panda.launch rviz:=true
 ```
 
 ###  Notes
@@ -163,6 +160,10 @@ source /opt/ros/noetic/setup.sh
 source devel/setup.sh
 ```
 
+* Seeing which packages are available:
+```bash
+rospack list
+```
 
 ## Resources
 Source of RelaxedIK (Panda URDF has been midly modified):
