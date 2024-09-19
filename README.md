@@ -40,7 +40,7 @@ And run the visualization:
 roslaunch relaxed_ik_ros1 demo.launch setting_file_path:=/workspace/src/panda.yaml
 
 # Open another terminal for the following command (see bottom of this doc for isntructions
-rosrun panda_benchmark line_tracing.py _tolerances:=[0,0,0,0,0,999]  # Start line tracing
+rosrun panda_benchmark line_tracing.py _tolerances:=[0,0,0,0,0,999] _setting_file_path:=/workspace/src/panda.yaml # Start line tracing
 ```
 
 ## Controlling Panda with FCI
@@ -166,6 +166,22 @@ source devel/setup.sh
 * Seeing which packages are available:
 ```bash
 rospack list
+```
+
+```bash
+# Make sure your at least one node is launched or you will get an error
+
+# Do the following in another terminal
+
+# See what nodes are running
+rosnode list
+
+#
+rosnode info <NODE_NAME>
+
+# See connecting nodes
+rqt_graph
+
 ```
 
 ## Resources

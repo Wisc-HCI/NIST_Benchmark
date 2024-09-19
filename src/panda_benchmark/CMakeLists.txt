@@ -10,7 +10,7 @@ project(panda_benchmark)
 find_package(catkin REQUIRED COMPONENTS
   franka_control
   franka_description
-  franka_example_controllers
+  franka_test
   franka_gripper
   franka_hw
   franka_msgs
@@ -113,7 +113,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES panda_benchmark
-#  CATKIN_DEPENDS franka_control franka_description franka_example_controllers franka_gripper franka_hw franka_msgs franka_visualization relaxed_ik_ros1 roscpp rospy std_msgs
+#  CATKIN_DEPENDS franka_control franka_description franka_test franka_gripper franka_hw franka_msgs franka_visualization relaxed_ik_ros1 roscpp rospy std_msgs
 #  DEPENDS system_lib
 )
 

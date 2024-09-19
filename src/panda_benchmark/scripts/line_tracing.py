@@ -20,6 +20,7 @@ path_to_src = rospkg.RosPack().get_path('relaxed_ik_ros1') + '/relaxed_ik_core'
 
 class TraceALine:
     def __init__(self):
+        print("___HERE_____")
         try:
             tolerances = rospy.get_param('~tolerances')
         except:
@@ -28,8 +29,10 @@ class TraceALine:
 
         try:
             self.use_topic_not_service = rospy.get_param('~use_topic_not_service')
+            print("-------", self.use_topic_not_service )
         except:
             self.use_topic_not_service = False
+            print("------HERE INSTEAD")
 
         try: 
             self.loop = rospy.get_param('~loop')
@@ -45,7 +48,7 @@ class TraceALine:
 
         deault_setting_file_path = path_to_src + '/configs/settings.yaml'
 
-        setting_file_path = rospy.get_param('setting_file_path')
+        setting_file_path = rospy.get_param('~setting_file_path') #rospy.get_param('setting_file_path')
 
         if setting_file_path == '':
             setting_file_path = deault_setting_file_path
