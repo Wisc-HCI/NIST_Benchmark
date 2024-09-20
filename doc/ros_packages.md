@@ -12,7 +12,6 @@ catkin_create_pkg panda_benchmark std_msgs rospy roscpp relaxed_ik_ros1 franka_c
 mkdir -p panda_benchmark/scripts  
 # Create any python scripts in the scripts folder
 
-chmod +x /workspace/src/panda_benchmark/scripts/* # Make python files recognizable
 
 cd .. # You should now be in the root repo directory
 

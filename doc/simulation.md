@@ -33,7 +33,7 @@ roslaunch franka_gazebo panda.launch controller:=joint_position_controller rviz:
 
 ## Writing more controlers
 
-If you want to write your own controller, TODOD ....
+If you want to write your own controller, TODOD yaml, xml, etc....
 
 You will also need to add your controller configuration to `franka_ros/franka_gazebo/config/sim_controllers.yaml`. For example, this is the configs for joint_position_controller:
 
@@ -51,3 +51,16 @@ joint_position_controller:
 ```
 
 After you make any changes, make sure to rerun `catkin_make`.
+
+
+
+
+
+____
+And run the visualization:
+```bash
+roslaunch relaxed_ik_ros1 demo.launch setting_file_path:=/workspace/src/panda.yaml
+
+# Open another terminal for the following command (see bottom of this doc for isntructions
+rosrun franka_test line_tracing.py _tolerances:=[0,0,0,0,0,999] _setting_file_path:=/workspace/src/panda.yaml # Start line tracing
+```
