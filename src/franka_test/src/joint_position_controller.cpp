@@ -69,7 +69,7 @@ void JointPositionController::starting(const ros::Time& /* time */) {
   geometry_msgs::Pose desired_pose;
   desired_pose.position.x = 0.5;
   desired_pose.position.y = 0.0;
-  desired_pose.position.z = 0.3;
+  desired_pose.position.z = 0.5;
   desired_pose.orientation.x = 1;
   desired_pose.orientation.y = 0.0;
   desired_pose.orientation.z = 0.0;
@@ -101,13 +101,24 @@ void JointPositionController::starting(const ros::Time& /* time */) {
   }
   elapsed_time_ = ros::Duration(0.0);
   //joint_goals = 2.1;
-         
-  // joint_goals = {{0, -M_PI_4, 0, -1.3, 0, 3.5, M_PI_4}}; // Rads, almost veritcal
+
+  // joint_goals = {{0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_PI_4}}; // Initial pos
+  joint_goals = {{0.5, -0.7, 0.01, -2.3, 0.13, 1.4, 1.3}};
+  // [ INFO] [1726870558.504259858]: Joint 0: 0.5336
+  // [ INFO] [1726870558.504346459]: Joint 1: -0.728685
+  // [ INFO] [1726870558.504385946]: Joint 2: 0.00469184
+  // [ INFO] [1726870558.504408504]: Joint 3: -2.31191
+  // [ INFO] [1726870558.504432694]: Joint 4: 0.139497
+  // [ INFO] [1726870558.504452743]: Joint 5: 1.42993
+  // [ INFO] [1726870558.504469717]: Joint 6: 1.34998
+  
+  //joint_goals = {{0, -M_PI_4, 0, -1.3, 0, 3.5, M_PI_4}}; // Rads, almost veritcal
   //joint_goals = {{-0.19418254089403628, -0.9555199928276591, 0.1781300756198672, -3.0718, 0.16989313282837123, 2.034388729388579, 0.5908506680005838}};
 
   // Calculate how long each joint should run based on velocity and initial position
   for (size_t i = 0; i < 7; ++i) {
     max_time_seconds[i] = fabs(joint_goals[i] - initial_pose_[i]) / VELOCITY;
+    
   }
 }
 
@@ -126,6 +137,7 @@ void JointPositionController::update(const ros::Time& /*time*/,
     
     if (elapsed_time_.toSec() <= max_time_seconds[i]) {
       position_joint_handles_[i].setCommand(next_position);
+      ROS_INFO_STREAM("Joint " << i <<": " << next_position);
       // ROS_INFO_STREAM("next_pos " << next_position << " | current_position " << current_position << " | step " << step);
     }
 

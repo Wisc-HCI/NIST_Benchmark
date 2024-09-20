@@ -68,5 +68,9 @@ After you make any changes, make sure to rerun `catkin_make`.
 
 ______________________
 
-roslaunch franka_example_controllers joint_impedance_example_controller.launch \
-  robot_ip:=192.168.1.2 load_gripper:=true robot:=panda
+sudo docker run -it --privileged --cap-add=SYS_NICE --env DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v $(pwd):/workspace --net=host panda-container
+
+roslaunch franka_test joint_position_controller.launch \
+  robot_ip:=192.168.1.2 load_gripper:=false robot:=panda
+
+https://github.com/franzesegiovanni/franka_human_friendly_controllers

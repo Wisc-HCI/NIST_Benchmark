@@ -132,7 +132,14 @@ sudo dpkg -i libfranka-0.9.2-x86_64.deb
 ```
 
 ## Troubleshooting + Tips
-Check the "Panda Notes" section at the bottom of [setup.md](setup.md) for tips you should know about Panda.
+* Panda limits for motion are located [here](https://frankaemika.github.io/docs/control_parameters.html#limits-for-panda).
+If you go beyond them, you will get the error `libfranka: Move command aborted: motion aborted by reflex! ["cartesian_reflex"]`.
+After that any other command will throw the error `libfranka: Set Joint Impedance command rejected: command not possible in the current mode ("Reflex")!` **UNTIL  the joints are locked and unlocked**.
+
+* If you ever change  /src/relaxed_ik_ros1/relaxed_ik_core, you will need to go into that directory and recompile it with `cargo build`
+
+
+
 
 ## Resources
 Source of RelaxedIK (Panda URDF has been midly modified):
@@ -149,5 +156,4 @@ https://github.com/frankaemika/franka_ros/tree/develop/franka_description
 
 ## Notes:
 
-If you ever change  /src/relaxed_ik_ros1/relaxed_ik_core, you will need to go into that directory and recompile it with `cargo build`
 
