@@ -13,7 +13,8 @@ RUN apt-get update && \
     cmake\
     libpoco-dev\ 
     libeigen3-dev\
-    python3-rosdep
+    python3-rosdep\
+    nano
 
 # Install python packages
 RUN pip install readchar

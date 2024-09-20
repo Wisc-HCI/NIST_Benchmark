@@ -9,11 +9,14 @@
 #include <hardware_interface/joint_command_interface.h>
 #include <pluginlib/class_list_macros.h>
 #include <ros/ros.h>
+#include <iostream>
 
 namespace franka_test {
 
 bool JointPositionController::init(hardware_interface::RobotHW* robot_hardware,
                                           ros::NodeHandle& node_handle) {
+
+  // Setup
   position_joint_interface_ = robot_hardware->get<hardware_interface::PositionJointInterface>();
   if (position_joint_interface_ == nullptr) {
     ROS_ERROR(
@@ -38,18 +41,19 @@ bool JointPositionController::init(hardware_interface::RobotHW* robot_hardware,
           "JointPositionController: Exception getting joint handles: " << e.what());
       return false;
     }
+
   }
 
-  std::array<double, 7> q_start{{0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_PI_4}};
-  for (size_t i = 0; i < q_start.size(); i++) {
-    if (std::abs(position_joint_handles_[i].getPosition() - q_start[i]) > 0.1) {
-      ROS_ERROR_STREAM(
-          "JointPositionController: Robot is not in the expected starting position for "
-          "running this example. Run `roslaunch franka_test move_to_start.launch "
-          "robot_ip:=<robot-ip> load_gripper:=<has-attached-gripper>` first.");
-      return false;
-    }
-  }
+  // std::array<double, 7> q_start{{0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_PI_4}};
+  // for (size_t i = 0; i < q_start.size(); i++) {
+  //   if (std::abs(position_joint_handles_[i].getPosition() - q_start[i]) > 0.1) {
+  //     ROS_ERROR_STREAM(
+  //         "JointPositionController: Robot is not in the expected starting position for "
+  //         "running this example. Run `roslaunch franka_test move_to_start.launch "
+  //         "robot_ip:=<robot-ip> load_gripper:=<has-attached-gripper>` first.");
+  //     return false;
+  //   }
+  // }
 
   return true;
 }
@@ -59,20 +63,34 @@ void JointPositionController::starting(const ros::Time& /* time */) {
     initial_pose_[i] = position_joint_handles_[i].getPosition();
   }
   elapsed_time_ = ros::Duration(0.0);
+  joint_goal = 2.1;
+  max_time_seconds = (joint_goal - initial_pose_[2]) / VELOCITY;
 }
 
 void JointPositionController::update(const ros::Time& /*time*/,
                                             const ros::Duration& period) {
   elapsed_time_ += period;
 
-  double delta_angle = M_PI / 16 * (1 - std::cos(M_PI / 5.0 * elapsed_time_.toSec())) * 0.2;
-  for (size_t i = 0; i < 7; ++i) {
-    if (i == 4) {
-      position_joint_handles_[i].setCommand(initial_pose_[i] - delta_angle);
-    } else {
-      position_joint_handles_[i].setCommand(initial_pose_[i] + delta_angle);
-    }
+
+
+  float next_position = elapsed_time_.toSec() * VELOCITY + period.toSec() + initial_pose_[2];
+  
+
+  if (elapsed_time_.toSec() <= max_time_seconds) {
+    position_joint_handles_[2].setCommand(next_position);
+    // ROS_INFO_STREAM("next_pos " << next_position << " | current_position " << current_position << " | step " << step);
   }
+
+  
+
+  // for (size_t i = 0; i < 7; ++i) {
+  //   if (i == 2) {
+  //     position_joint_handles_[i].setCommand(initial_pose_[i] - delta_angle);
+      
+  //   } else {
+  //     position_joint_handles_[i].setCommand(initial_pose_[i] + delta_angle);
+  //   }
+  // }
 }
 
 }  // namespace franka_test
