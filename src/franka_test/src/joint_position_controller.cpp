@@ -63,23 +63,38 @@ void JointPositionController::starting(const ros::Time& /* time */) {
     initial_pose_[i] = position_joint_handles_[i].getPosition();
   }
   elapsed_time_ = ros::Duration(0.0);
-  joint_goal = 2.1;
-  max_time_seconds = (joint_goal - initial_pose_[2]) / VELOCITY;
+  //joint_goals = 2.1;
+         
+  joint_goals = {{0, -M_PI_4, 0, -1.3, 0, 3.5, M_PI_4}}; // Rads, almost veritcal
+
+  // Calculate how long each joint should run based on velocity and initial position
+  for (size_t i = 0; i < 7; ++i) {
+    max_time_seconds[i] = fabs(joint_goals[i] - initial_pose_[i]) / VELOCITY;
+  }
 }
 
 void JointPositionController::update(const ros::Time& /*time*/,
                                             const ros::Duration& period) {
   elapsed_time_ += period;
 
+  float next_position;
+  int direction_multiplier;
+  for (size_t i = 0; i < 7; ++i) {
+    
+    direction_multiplier = 1;
+    if (joint_goals[i] < initial_pose_[i]) direction_multiplier = -1;
+  
+    next_position = (elapsed_time_.toSec() * VELOCITY + period.toSec()) * direction_multiplier + initial_pose_[i];
+    
+    if (elapsed_time_.toSec() <= max_time_seconds[i]) {
+      position_joint_handles_[i].setCommand(next_position);
+      // ROS_INFO_STREAM("next_pos " << next_position << " | current_position " << current_position << " | step " << step);
+    }
 
-
-  float next_position = elapsed_time_.toSec() * VELOCITY + period.toSec() + initial_pose_[2];
+  }
+  
   
 
-  if (elapsed_time_.toSec() <= max_time_seconds) {
-    position_joint_handles_[2].setCommand(next_position);
-    // ROS_INFO_STREAM("next_pos " << next_position << " | current_position " << current_position << " | step " << step);
-  }
 
   
 

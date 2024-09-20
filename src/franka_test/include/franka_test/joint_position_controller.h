@@ -25,9 +25,10 @@ class JointPositionController : public controller_interface::MultiInterfaceContr
   hardware_interface::PositionJointInterface* position_joint_interface_;
   std::vector<hardware_interface::JointHandle> position_joint_handles_;
   ros::Duration elapsed_time_;
-  double max_time_seconds;
-  double joint_goal;
+
   double VELOCITY = 0.1; // rad/s
+  std::array<double, 7> joint_goals{};
+  std::array<double, 7> max_time_seconds{}; // Max time that each joint needs to move
   std::array<double, 7> initial_pose_{};
 };
 
