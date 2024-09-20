@@ -30,6 +30,7 @@ This code runs a custom controller we wrote that moves the robot from it's inita
 
 roslaunch relaxed_ik_ros1 ik.launch setting_file_path:=/workspace/src/panda.yaml  # TODO: Put this in franka_test???
 
+# Run this in another terminal (hint: open another docker terminal using instructions in READM.md)
 roslaunch franka_gazebo panda.launch controller:=joint_position_controller rviz:=true
 
 ```
@@ -60,15 +61,7 @@ After you make any changes, make sure to rerun `catkin_make`.
 
 
 
-____
-And run the visualization:
-```bash
-roslaunch relaxed_ik_ros1 demo.launch setting_file_path:=/workspace/src/panda.yaml
+______________________
 
-# Open another terminal for the following command (see bottom of this doc for isntructions
-rosrun franka_test joint_position_controller.py  # Start line tracing
-```
-
-roslaunch relaxed_ik_ros1 demo.launch setting_file_path:=/workspace/src/panda.yaml
-
-service [/relaxed_ik/solve_pose] unavailable
+roslaunch franka_example_controllers joint_impedance_example_controller.launch \
+  robot_ip:=192.168.1.2 load_gripper:=true robot:=panda
