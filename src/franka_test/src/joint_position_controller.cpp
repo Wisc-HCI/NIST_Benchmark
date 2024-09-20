@@ -11,6 +11,12 @@
 #include <ros/ros.h>
 #include <iostream>
 
+#include <ros/ros.h>
+#include <geometry_msgs/Pose.h>
+#include <relaxed_ik_ros1/IKPose.h>
+#include <relaxed_ik_ros1/IKPoseRequest.h>
+#include <relaxed_ik_ros1/IKPoseResponse.h>
+
 namespace franka_test {
 
 bool JointPositionController::init(hardware_interface::RobotHW* robot_hardware,
@@ -59,13 +65,45 @@ bool JointPositionController::init(hardware_interface::RobotHW* robot_hardware,
 }
 
 void JointPositionController::starting(const ros::Time& /* time */) {
+
+  geometry_msgs::Pose desired_pose;
+  desired_pose.position.x = 0.5;
+  desired_pose.position.y = 0.0;
+  desired_pose.position.z = 0.3;
+  desired_pose.orientation.x = 1;
+  desired_pose.orientation.y = 0.0;
+  desired_pose.orientation.z = 0.0;
+  desired_pose.orientation.w = 0.0;
+
+  // Create a service client to request IK solutions
+  ros::NodeHandle nh;
+  ros::ServiceClient client = nh.serviceClient<relaxed_ik_ros1::IKPose>("relaxed_ik/solve_pose");
+  ros::service::waitForService("relaxed_ik/solve_pose");
+
+  // Prepare the IKPose request and response objects
+  relaxed_ik_ros1::IKPose srv;
+  srv.request.ee_poses.push_back(desired_pose);
+
+  // Call the service and process the response
+  if (client.call(srv)) {
+      // Print out the IK solution (Joint Configuration)
+      
+      ROS_INFO_STREAM("Calculated Joint Configuration:" << srv.response);
+  
+      for (size_t i = 0; i < 7; ++i) {
+        joint_goals[i] = srv.response.joint_state[i];
+      }
+  }
+  else ROS_ERROR("Failed to call IK service");
+
   for (size_t i = 0; i < 7; ++i) {
     initial_pose_[i] = position_joint_handles_[i].getPosition();
   }
   elapsed_time_ = ros::Duration(0.0);
   //joint_goals = 2.1;
          
-  joint_goals = {{0, -M_PI_4, 0, -1.3, 0, 3.5, M_PI_4}}; // Rads, almost veritcal
+  // joint_goals = {{0, -M_PI_4, 0, -1.3, 0, 3.5, M_PI_4}}; // Rads, almost veritcal
+  //joint_goals = {{-0.19418254089403628, -0.9555199928276591, 0.1781300756198672, -3.0718, 0.16989313282837123, 2.034388729388579, 0.5908506680005838}};
 
   // Calculate how long each joint should run based on velocity and initial position
   for (size_t i = 0; i < 7; ++i) {

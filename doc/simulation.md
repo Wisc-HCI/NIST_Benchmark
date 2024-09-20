@@ -27,7 +27,11 @@ source devel/setup.sh
 ## Running
 This code runs a custom controller we wrote that moves the robot from it's inital position to a vertical positon:
 ```bash
+
+roslaunch relaxed_ik_ros1 ik.launch setting_file_path:=/workspace/src/panda.yaml  # TODO: Put this in franka_test???
+
 roslaunch franka_gazebo panda.launch controller:=joint_position_controller rviz:=true
+
 ```
 
 
@@ -62,5 +66,9 @@ And run the visualization:
 roslaunch relaxed_ik_ros1 demo.launch setting_file_path:=/workspace/src/panda.yaml
 
 # Open another terminal for the following command (see bottom of this doc for isntructions
-rosrun franka_test line_tracing.py _tolerances:=[0,0,0,0,0,999] _setting_file_path:=/workspace/src/panda.yaml # Start line tracing
+rosrun franka_test joint_position_controller.py  # Start line tracing
 ```
+
+roslaunch relaxed_ik_ros1 demo.launch setting_file_path:=/workspace/src/panda.yaml
+
+service [/relaxed_ik/solve_pose] unavailable
