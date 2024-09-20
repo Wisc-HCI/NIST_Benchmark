@@ -17,6 +17,9 @@ sudo docker run -it --env DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v $
 
 Now your container should be running and you should be in it's command line. So in the container's terminal, setup the visualization:
 ```bash
+cd src/relaxed_ik_ros1/relaxed_ik_core
+cargo build
+cd /workspace
 source /opt/ros/noetic/setup.sh
 rm -f src/CMakeLists.txt 
 catkin_init_workspace src
