@@ -39,6 +39,9 @@ generate_dynamic_reconfigure_options(
   cfg/teleop_gripper_param.cfg
 )
 
+generate_messages()
+
+
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES franka_test
@@ -63,15 +66,16 @@ catkin_package(
 )
 
 add_library(franka_test
-  src/joint_position_example_controller.cpp
+  src/joint_position_controller.cpp
   src/model_example_controller.cpp
 )
+
 
 add_dependencies(franka_test
   ${${PROJECT_NAME}_EXPORTED_TARGETS}
   ${catkin_EXPORTED_TARGETS}
-  # ${PROJECT_NAME}_generate_messages_cpp
-  # ${PROJECT_NAME}_gencpp
+  ${PROJECT_NAME}_generate_messages_cpp
+  ${PROJECT_NAME}_gencpp
   ${PROJECT_NAME}_gencfg
 )
 

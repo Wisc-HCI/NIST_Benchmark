@@ -1,5 +1,5 @@
 <library path="lib/libfranka_test">
-  <class name="franka_test/JointPositionExampleController" type="franka_test::JointPositionExampleController" base_class_type="controller_interface::ControllerBase">
+  <class name="franka_test/JointPositionController" type="franka_test::JointPositionController" base_class_type="controller_interface::ControllerBase">
     <description>
       A controller that executes a short motion based on joint positions to demonstrate correct usage
     </description>

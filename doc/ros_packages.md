@@ -208,22 +208,13 @@ https://docs.ros.org/en/noetic/api/franka_hw/html/annotated.html
 -------------------------------------
 
 ```bash
-roslaunch franka_gazebo panda.launch \
+# roslaunch franka_gazebo panda.launch\
+#     controller:=joint_position_example_controller \
+#     rviz:=true
+roslaunch franka_gazebo panda.launch\
+    controller:=joint_position_controller \
     rviz:=true
 
-# /franka_state_controller/joint_states [TOPIC] -> sensor_msgs/JointState [ message]
-# std_msgs/Header header
-#   uint32 seq
-#   time stamp
-#   string frame_id
-# string[] name
-# float64[] position
-# float64[] velocity
-# float64[] effort
-
-
-
-rostopic pub  /joint_states sensor_msgs/JointState '{header: {stamp:{ secs: 230}}, name: ["panda_joint1"], position: [100], velocity: [.5]}' --once
 
 
 ```

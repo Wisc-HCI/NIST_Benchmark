@@ -9,8 +9,8 @@ joint_velocity_example_controller:
         - panda_joint6
         - panda_joint7
 
-joint_position_example_controller:
-    type: franka_test/JointPositionExampleController
+joint_position_controller:
+    type: franka_test/JointPositionController
     joint_names:
         - panda_joint1
         - panda_joint2
