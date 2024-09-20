@@ -1,5 +1,5 @@
 # NIST_Benchmark
- [NIST Benchmark](https://www.nist.gov/el/intelligent-systems-division-73500/robotic-grasping-and-manipulation-assembly/assembly) testing with the Franka Emika Panda Robot. 
+ [NIST Benchmark](https://www.nist.gov/el/intelligent-systems-division-73500/robotic-grasping-and-manipulation-assembly/assembly) testing with the Franka Emika Panda.
 
 In order to just visualize the robot, follow the `Visualization` section instructions. To physically control the robot, you will need to follow the `Controlling Panda with FCI` instructions.
 
@@ -29,18 +29,13 @@ sudo docker run -it --env DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v $
 Now your container should be running and you should be in it's command line. So in the container's terminal, setup the visualization:
 ```bash
 source /opt/ros/noetic/setup.sh
-rm -f src/CMakeLists.txt 
-catkin_init_workspace src
-catkin_make
+catkin_make 
 source devel/setup.sh
 ```
 
 And run the visualization:
 ```bash
 roslaunch relaxed_ik_ros1 demo.launch setting_file_path:=/workspace/src/panda.yaml
-
-# Open another terminal for the following command (see bottom of this doc for isntructions
-rosrun panda_benchmark line_tracing.py _tolerances:=[0,0,0,0,0,999] _setting_file_path:=/workspace/src/panda.yaml # Start line tracing
 ```
 
 ## Controlling Panda with FCI
@@ -96,7 +91,7 @@ sudo docker run -it --privileged --cap-add=SYS_NICE --env DISPLAY=$DISPLAY -v /t
 rm -f src/CMakeLists.txt  # Remove if it exists from other machine
 catkin_init_workspace src
 source /opt/ros/noetic/setup.sh
-catkin_make   # Make sure this is in the base directory (NIST_Benchmark)
+catkin_make clean  # Make sure this is in the base directory (NIST_Benchmark)
 source devel/setup.sh
 ```
 TODO: See if can move some of the above to the  docker file
@@ -104,13 +99,10 @@ TODO: See if can move some of the above to the  docker file
 ### Running
 Before you can run anything with code, make sure joints are unlocked and FCI Control is enabled in the Franka desktop ( our robot is [192.168.1.2](https://192.168.1.2/desk/)). Directions for doing that are [here](https://youtu.be/91wFDNHVXI4?si=4-ZArdrxOMAiCc5H&t=484). WARNING: we could not get Firefox to access the desk because of security reasons. However we could access through chrome once we clicked "Advanced" > "Proceed to 192.168.1.2 (unsafe)".
 
-You should still be in the container's terminal to run the following commands. Make sure to subsitute 192.168.1.2 with your robot's IP. THese commands all different ways to test the bot
+You should still be in the container's terminal to run the following commands. Make sure to substitute 192.168.1.2 with your robot's IP.
 ```bash
-sudo echo_robot_state 192.168.1.2  # Spits out bot's current state
-sudo communication_test 192.168.1.2  # Tests realtime kernel and robot by moving bot  
-
-# Shows gazebo simulation and RVIZ visuals
-roslaunch franka_gazebo panda.launch rviz:=true
+sudo echo_robot_state 192.168.1.2  
+sudo communication_test 192.168.1.2  # Tests realtime kernel and robot by moving bot  # TODO: REPLACE THIS
 ```
 
 ###  Notes
@@ -128,18 +120,7 @@ catkin_make  # Make sure you're in root directory
 source devel/setup.sh
 ```
 
-
-
-## Troubleshooting + Tip
-* If you ever have trouble with `catkin_make`, try running `catkin_make clean` and then `catkin_make` again.
-
-* Panda limits for motion are located [here](https://frankaemika.github.io/docs/control_parameters.html#limits-for-panda).
-If you go beyond them, you will get the error `libfranka: Move command aborted: motion aborted by reflex! ["cartesian_reflex"]`.
-After that any other command will throw the error `libfranka: Set Joint Impedance command rejected: command not possible in the current mode ("Reflex")!` **UNTIL  the joints are locked and unlocked**.
-
-
-* If you ever change  /src/relaxed_ik_ros1/relaxed_ik_core, you will need to go into that directory and recompile it with `cargo build`.
-* If you make changes to libfranka (which you probably should not be doing), you'll need to run:
+If you make changes to libfranka (which you probably should not be doing), you'll need to run:
 ``` bash
 cd libfranka/build  # May need to use other command to get to this directory
 rm -r * # For cleaning the cache to avoid errors of builds on different machines
@@ -150,39 +131,8 @@ sudo dpkg -i libfranka-0.9.2-x86_64.deb
 
 ```
 
-* To open another docker terminal for a running container, run the following on your home-machine:
-```bash
-# Show your running CONTAINER_ID
-docker ps 
-
-# Open another terminal using that CONTAINER_ID
-docker exec -it  <YOUR_CONTAINER_ID> bash
-
-# Source ROS properly
-source /opt/ros/noetic/setup.sh
-source devel/setup.sh
-```
-
-* Seeing which packages are available:
-```bash
-rospack list
-```
-
-```bash
-# Make sure your at least one node is launched or you will get an error
-
-# Do the following in another terminal
-
-# See what nodes are running
-rosnode list
-
-#
-rosnode info <NODE_NAME>
-
-# See connecting nodes
-rqt_graph
-
-```
+## Troubleshooting + Tips
+Check the "Panda Notes" section at the bottom of [setup.md](setup.md) for tips you should know about Panda.
 
 ## Resources
 Source of RelaxedIK (Panda URDF has been midly modified):
@@ -197,5 +147,7 @@ https://github.com/frankaemika/franka_ros/tree/develop/franka_description
 
 
 
+## Notes:
 
+If you ever change  /src/relaxed_ik_ros1/relaxed_ik_core, you will need to go into that directory and recompile it with `cargo build`
 

@@ -14,6 +14,7 @@ RUN apt-get update && \
     libpoco-dev\ 
     libeigen3-dev\
     python3-rosdep\
+    mesa-utils\
     nano
 
 # Install python packages

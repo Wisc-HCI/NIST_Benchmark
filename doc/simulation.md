@@ -33,7 +33,9 @@ This code runs a custom controller we wrote that moves the robot from it's inita
 
 roslaunch relaxed_ik_ros1 ik.launch setting_file_path:=/workspace/src/panda.yaml  # TODO: Put this in franka_test???
 
-# Run this in another terminal (hint: open another docker terminal using instructions in READM.md)
+
+# Run this in another terminal (hint: open another docker terminal using instructions in README.md)
+# If you run into error while doing this, run `export LIBGL_ALWAYS_SOFTWARE=1`
 roslaunch franka_gazebo panda.launch controller:=joint_position_controller rviz:=true
 
 ```
