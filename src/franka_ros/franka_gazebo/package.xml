@@ -35,6 +35,7 @@
   <depend>franka_msgs</depend>
   <depend>franka_gripper</depend>
   <depend>franka_example_controllers</depend>
+  <depend>franka_human_friendly_controllers</depend>
   <depend>urdf</depend>
   <depend>angles</depend>
 

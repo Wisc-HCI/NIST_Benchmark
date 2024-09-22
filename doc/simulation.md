@@ -38,6 +38,44 @@ roslaunch relaxed_ik_ros1 ik.launch setting_file_path:=/workspace/src/panda.yaml
 # If you run into error while doing this, run `export LIBGL_ALWAYS_SOFTWARE=1`
 roslaunch franka_gazebo panda.launch controller:=joint_position_controller rviz:=true
 
+
+# Other controller:
+# roslaunch franka_gazebo panda.launch x:=-0.5 world:=$(rospack find franka_gazebo)/world/stone.sdf controller:=cartesian_variable_impedance_controller rviz:=true
+
+roslaunch franka_gazebo panda.launch controller:=cartesian_variable_impedance_controller rviz:=true
+
+rostopic pub -1 /equilibrium_pose  geometry_msgs/PoseStamped -- 'pose: [[0.5, 0, 0.5], [1,1,0,0]]'
+
+
+#rosrun frank_human_friendly_controller main_lfd.py 
+# pip install pynput
+# pip install numpy-quaternion
+# python3 src/franka_human_friendly_controllers/python/LfD/main_lfd.py
+
+roslaunch franka_gazebo panda.launch controller:=joint_variable_impedance_controller rviz:=true
+
+rostopic pub -1 /equilibrium_configuration  geometry_msgs/PoseStamped -- 'pose: [[0.5, 0, 0.5], [1,1,0,0]]' # This doesn't work very well for some reason, maybe IK is off?
+
+rostopic pub -1 /equilibrium_configuration  sensor_msgs/JointState -- 'position: [0, 1, 0, 0, 0, 0, 0]'
+
+rostopic pub -1 /equilibrium_configuration  sensor_msgs/JointState -- 'position: [0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_P]'
+
+# Move to default position
+rostopic pub -1 /equilibrium_configuration  sensor_msgs/JointState -- '{position: [0, -0.785, 0, -2.356, 0, 1.57, 3.14], velocity: [0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001]}'
+ 
+
+#ros2 topic pub /robot/drive_power custom_msgs_srvs/msg/DrivePower "{left_power:10, right_power:10}"
+
+# Get joint stiffness
+rosrun dynamic_reconfigure dynparam get /dynamic_reconfigure_compliance_param_node
+# MAX stiffness:
+# {'joint_1': 600.0, 'joint_2': 600.0, 'joint_3': 600.0, 'joint_4': 600.0, 'joint_5': 250.0, 'joint_6': 150.0, 'joint_7': 50.0, 'damping_ratio': 1.0, 'groups': {'id': 0, 'parent': 0, 'name': 'Default', 'type': '', 'state': True, 'groups': {}, 'parameters': {}, 'joint_1': 600.0, 'joint_2': 600.0, 'joint_3': 600.0, 'joint_4': 600.0, 'joint_5': 250.0, 'joint_6': 150.0, 'joint_7': 50.0, 'damping_ratio': 1.0}}
+
+# Set joint stiffness
+rosrun dynamic_reconfigure dynparam set /dynamic_reconfigure_compliance_param_node "{joint_1: 100, joint_2: 100, joint_3: 100, joint_4: 100, joint_5: 100, joint_6: 100, joint_7: 20}"
+
+
+
 ```
 
 
