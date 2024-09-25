@@ -28,12 +28,17 @@ sudo docker run -it --env DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v $
 
 Now your container should be running and you should be in it's command line. So in the container's terminal, setup the visualization:
 ```bash
+cd src/relaxed_ik_ros1/relaxed_ik_core
+cargo build
+cd /workspace
 source /opt/ros/noetic/setup.sh
-catkin_make 
+rm -f src/CMakeLists.txt 
+catkin_init_workspace src
+catkin_make
 source devel/setup.sh
 ```
 
-And run the visualization:
+And run the visualization. Note: If you get an error about `libGL error: MESA-LOADER: failed to retrieve device information`, please run `export LIBGL_ALWAYS_SOFTWARE=1` and your issue should be fixed.
 ```bash
 roslaunch relaxed_ik_ros1 demo.launch setting_file_path:=/workspace/src/panda.yaml
 ```
@@ -88,10 +93,13 @@ sudo docker run -it --privileged --cap-add=SYS_NICE --env DISPLAY=$DISPLAY -v /t
 
 # Now the container should be running and you should be in the container's terminal
 # Prepare the ROS workspace
-rm -f src/CMakeLists.txt  # Remove if it exists from other machine
-catkin_init_workspace src
+cd src/relaxed_ik_ros1/relaxed_ik_core
+cargo build
+cd /workspace
 source /opt/ros/noetic/setup.sh
-catkin_make clean  # Make sure this is in the base directory (NIST_Benchmark)
+rm -f src/CMakeLists.txt 
+catkin_init_workspace src
+catkin_make
 source devel/setup.sh
 ```
 TODO: See if can move some of the above to the  docker file

@@ -28,7 +28,8 @@ source devel/setup.sh
 ```
 
 ## Running
-This code runs a custom controller we wrote that moves the robot from it's inital position to a vertical positon:
+This code runs a custom controller we wrote that moves the robot from it's inital position to a vertical positon.
+Note: If you get an error about `libGL error: MESA-LOADER: failed to retrieve device information`, please run `export LIBGL_ALWAYS_SOFTWARE=1` and your issue should be fixed.
 ```bash
 
 roslaunch relaxed_ik_ros1 ik.launch setting_file_path:=/workspace/src/panda.yaml  # TODO: Put this in franka_test???
