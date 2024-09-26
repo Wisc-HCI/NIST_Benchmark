@@ -21,6 +21,7 @@ find_package(catkin REQUIRED COMPONENTS
   realtime_tools
   roscpp
   rospy
+  sensor_msgs 
   urdf
   visualization_msgs
 )
@@ -70,6 +71,8 @@ add_library(franka_test
   src/model_example_controller.cpp
 )
 
+add_executable(publish_cartesian_position src/publish_cartesian_position.cpp)
+target_link_libraries(publish_cartesian_position ${catkin_LIBRARIES})
 
 add_dependencies(franka_test
   ${${PROJECT_NAME}_EXPORTED_TARGETS}

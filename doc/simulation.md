@@ -32,7 +32,7 @@ This code runs a custom controller we wrote that moves the robot from it's inita
 Note: If you get an error about `libGL error: MESA-LOADER: failed to retrieve device information`, please run `export LIBGL_ALWAYS_SOFTWARE=1` and your issue should be fixed.
 ```bash
 
-roslaunch relaxed_ik_ros1 ik.launch setting_file_path:=/workspace/src/panda.yaml  # TODO: Put this in franka_test???
+roslaunch relaxed_ik_ros1 ik.launch setting_file_path:=/workspace/src/panda.yaml  # TODO: Put this in franka_test since I changed it??
 
 
 # Run this in another terminal (hint: open another docker terminal using instructions in README.md)
@@ -41,29 +41,24 @@ roslaunch franka_gazebo panda.launch controller:=joint_position_controller rviz:
 
 
 # Other controller:
-# roslaunch franka_gazebo panda.launch x:=-0.5 world:=$(rospack find franka_gazebo)/world/stone.sdf controller:=cartesian_variable_impedance_controller rviz:=true
 
+#################################################
+# This DOES NOT WORK WELL... MAYBE IK is OFF???
+roslaunch franka_gazebo panda.launch x:=-0.5 world:=$(rospack find franka_gazebo)/world/stone.sdf controller:=cartesian_variable_impedance_controller rviz:=true
 roslaunch franka_gazebo panda.launch controller:=cartesian_variable_impedance_controller rviz:=true
-
 rostopic pub -1 /equilibrium_pose  geometry_msgs/PoseStamped -- 'pose: [[0.5, 0, 0.5], [1,1,0,0]]'
+#################################################
 
-
-#rosrun frank_human_friendly_controller main_lfd.py 
-# pip install pynput
-# pip install numpy-quaternion
-# python3 src/franka_human_friendly_controllers/python/LfD/main_lfd.py
 
 roslaunch franka_gazebo panda.launch controller:=joint_variable_impedance_controller rviz:=true
 
-rostopic pub -1 /equilibrium_configuration  geometry_msgs/PoseStamped -- 'pose: [[0.5, 0, 0.5], [1,1,0,0]]' # This doesn't work very well for some reason, maybe IK is off?
 
 rostopic pub -1 /equilibrium_configuration  sensor_msgs/JointState -- 'position: [0, 1, 0, 0, 0, 0, 0]'
 
-rostopic pub -1 /equilibrium_configuration  sensor_msgs/JointState -- 'position: [0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_P]'
 
 # Move to default position
 rostopic pub -1 /equilibrium_configuration  sensor_msgs/JointState -- '{position: [0, -0.785, 0, -2.356, 0, 1.57, 3.14], velocity: [0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001]}'
- 
+rostopic pub -1 /equilibrium_configuration  sensor_msgs/JointState -- '{position: [0, -0.785, 0, -2.356, 0, 1.57, 3.14]}'
 
 #ros2 topic pub /robot/drive_power custom_msgs_srvs/msg/DrivePower "{left_power:10, right_power:10}"
 
@@ -76,6 +71,31 @@ rosrun dynamic_reconfigure dynparam get /dynamic_reconfigure_compliance_param_no
 rosrun dynamic_reconfigure dynparam set /dynamic_reconfigure_compliance_param_node "{joint_1: 100, joint_2: 100, joint_3: 100, joint_4: 100, joint_5: 100, joint_6: 100, joint_7: 20}"
 
 
+  position[0]: -0.00998261
+  position[1]: -0.185409
+  position[2]: 0.00975286
+  position[3]: -2.09979
+  position[4]: 0.00149473
+  position[5]: 1.91418
+  position[6]: 0.784968
+
+  rostopic pub -1 /equilibrium_configuration  sensor_msgs/JointState -- '{position: [-0.00998261, -0.185409, 0.00975286,  -2.09979, 0.00149473, 1.91418, 0.784968]}'
+
+  
+
+#### RUNNING SCRIPT when changes
+# TODO make launch for some of these
+
+
+# Run this in own terminal
+roslaunch franka_gazebo panda.launch controller:=joint_variable_impedance_controller rviz:=true
+
+# Run this in own terminal
+roslaunch relaxed_ik_ros1 ik.launch setting_file_path:=/workspace/src/panda.yaml  # TODO: Put this in franka_test since I changed it??
+
+catkin_make
+source devel/setup.bash
+rosrun franka_test publish_cartesian_position
 
 ```
 
