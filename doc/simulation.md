@@ -97,6 +97,9 @@ catkin_make
 source devel/setup.bash
 rosrun franka_test publish_cartesian_position
 
+
+
+roslaunch franka_human_friendly_controllers joint_variable_impedance_controller.launch robot_ip:=192.168.1.2 load_gripper:=False arm_id:=panda
 ```
 
 
@@ -133,3 +136,6 @@ roslaunch franka_test joint_position_controller.launch \
   robot_ip:=192.168.1.2 load_gripper:=false robot:=panda
 
 https://github.com/franzesegiovanni/franka_human_friendly_controllers
+
+
+
