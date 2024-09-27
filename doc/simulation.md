@@ -100,6 +100,8 @@ rosrun franka_test publish_cartesian_position
 
 
 roslaunch franka_human_friendly_controllers joint_variable_impedance_controller.launch robot_ip:=192.168.1.2 load_gripper:=False arm_id:=panda
+
+rosrun dynamic_reconfigure dynparam set /dynamic_reconfigure_compliance_param_node "{joint_1: 10, joint_2: 10, joint_3: 10, joint_4: 10, joint_5: 10, joint_6: 10, joint_7: 10}"
 ```
 
 
