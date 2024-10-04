@@ -31,7 +31,6 @@ pip install numpy==1.21 # This is to fix error AttributeError: module 'numpy' ha
 
 apt-get update
 apt install python3-catkin-tools git ros-noetic-gazebo-ros-control ros-noetic-rospy-message-converter ros-noetic-effort-controllers ros-noetic-joint-state-controller ros-noetic-moveit ros-noetic-moveit-commander ros-noetic-moveit-visual-tools
-sudo apt-get install python3-catkin-tools
 
 
 source /opt/ros/noetic/setup.sh
@@ -63,8 +62,7 @@ roslaunch franka_interface interface.launch # (use argument load_gripper:=false 
 python3
 import rospy
 from panda_robot import PandaArm
-rospy.init_node("panda_sim")
-#rospy.init_node("panda_demo") # initialise ros node
+rospy.init_node("panda_demo") # initialise ros node
 r = PandaArm() 
 r.move_to_neutral()
 r.move_to_joint_position([-8.48556818e-02, -8.88127666e-02, -6.59622769e-01, -1.57569726e+00, -4.82374882e-04,  2.15975946e+00,  4.36766917e-01]) # move robot to the specified pose
@@ -76,3 +74,22 @@ r.move_to_joint_position([-8.48556818e-02, -8.88127666e-02, -6.59622769e-01, -1.
 
 ## Resources
 https://github.com/justagist/franka_ros_interface?tab=readme-ov-file
+
+
+## Ignore:
+```bash
+[franka <Master> - Robot@192.168.1.2] root@hcilab-G7-7590:/workspace# roslaunch franka_interface interface.launch
+... logging to /root/.ros/log/45308a6a-827c-11ef-ab9e-8c04ba9c94a0/roslaunch-hcilab-G7-7590-34350.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+
+xacro: in-order processing became default in ROS Melodic. You can drop the option.
+No such file or directory: /workspace/src/franka_ros/franka_description/robots/panda/panda.urdf.xacro [Errno 2] No such file or directory: '/workspace/src/franka_ros/franka_description/robots/panda/panda.urdf.xacro'
+RLException: while processing /workspace/src/panda_moveit_config/launch/move_group.launch:
+while processing /workspace/src/panda_moveit_config/launch/planning_context.launch:
+Invalid <param> tag: Cannot load command parameter [robot_description]: command [['xacro', '/workspace/src/franka_ros/franka_description/robots/panda/panda.urdf.xacro', 'hand:=true', 'arm_id:=panda']] returned with code [2]. 
+
+Param xml is <param name="$(arg robot_description)" command="xacro '$(find franka_description)/robots/panda/panda.urdf.xacro' hand:=$(arg load_gripper) arm_id:=$(arg arm_id)" if="$(arg load_robot_description)"/>
+The traceback for the exception was written to the log file
+```
