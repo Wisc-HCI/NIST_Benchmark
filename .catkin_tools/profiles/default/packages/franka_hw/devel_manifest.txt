@@ -1,0 +1,7 @@
+franka_ros/franka_hw
+/workspace/devel/.private/franka_hw/cmake.lock /workspace/devel/./cmake.lock
+/workspace/devel/.private/franka_hw/lib/libfranka_hw.so /workspace/devel/lib/libfranka_hw.so
+/workspace/devel/.private/franka_hw/lib/libfranka_control_services.so /workspace/devel/lib/libfranka_control_services.so
+/workspace/devel/.private/franka_hw/lib/pkgconfig/franka_hw.pc /workspace/devel/lib/pkgconfig/franka_hw.pc
+/workspace/devel/.private/franka_hw/share/franka_hw/cmake/franka_hwConfig-version.cmake /workspace/devel/share/franka_hw/cmake/franka_hwConfig-version.cmake
+/workspace/devel/.private/franka_hw/share/franka_hw/cmake/franka_hwConfig.cmake /workspace/devel/share/franka_hw/cmake/franka_hwConfig.cmake

@@ -1,0 +1,5 @@
+franka_panda_description
+/workspace/devel/.private/franka_panda_description/cmake.lock /workspace/devel/./cmake.lock
+/workspace/devel/.private/franka_panda_description/lib/pkgconfig/franka_panda_description.pc /workspace/devel/lib/pkgconfig/franka_panda_description.pc
+/workspace/devel/.private/franka_panda_description/share/franka_panda_description/cmake/franka_panda_descriptionConfig.cmake /workspace/devel/share/franka_panda_description/cmake/franka_panda_descriptionConfig.cmake
+/workspace/devel/.private/franka_panda_description/share/franka_panda_description/cmake/franka_panda_descriptionConfig-version.cmake /workspace/devel/share/franka_panda_description/cmake/franka_panda_descriptionConfig-version.cmake

@@ -19,6 +19,7 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   pluginlib
   realtime_tools
+  relaxed_ik_ros1
   roscpp
   rospy
   sensor_msgs 
@@ -31,6 +32,11 @@ find_package(Franka 0.9.0 QUIET)
 if(NOT Franka_FOUND)
   find_package(Franka 0.8.0 REQUIRED)
 endif()
+
+include_directories(
+  ${catkin_INCLUDE_DIRS}
+)
+
 
 generate_dynamic_reconfigure_options(
   cfg/compliance_param.cfg

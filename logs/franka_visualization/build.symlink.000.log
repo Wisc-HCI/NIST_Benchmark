@@ -1,0 +1,5 @@
+Symlinking /workspace/devel/lib/franka_visualization/robot_joint_state_publisher
+Symlinking /workspace/devel/lib/franka_visualization/gripper_joint_state_publisher
+Symlinking /workspace/devel/lib/pkgconfig/franka_visualization.pc
+Symlinking /workspace/devel/share/franka_visualization/cmake/franka_visualizationConfig-version.cmake
+Symlinking /workspace/devel/share/franka_visualization/cmake/franka_visualizationConfig.cmake

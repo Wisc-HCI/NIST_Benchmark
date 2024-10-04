@@ -1,0 +1,6 @@
+Linked: (/workspace/devel/.private/franka_control/lib/libfranka_state_controller.so, /workspace/devel/lib/libfranka_state_controller.so)
+Linked: (/workspace/devel/.private/franka_control/lib/franka_control/franka_combined_control_node, /workspace/devel/lib/franka_control/franka_combined_control_node)
+Linked: (/workspace/devel/.private/franka_control/lib/franka_control/franka_control_node, /workspace/devel/lib/franka_control/franka_control_node)
+Linked: (/workspace/devel/.private/franka_control/lib/pkgconfig/franka_control.pc, /workspace/devel/lib/pkgconfig/franka_control.pc)
+Linked: (/workspace/devel/.private/franka_control/share/franka_control/cmake/franka_controlConfig.cmake, /workspace/devel/share/franka_control/cmake/franka_controlConfig.cmake)
+Linked: (/workspace/devel/.private/franka_control/share/franka_control/cmake/franka_controlConfig-version.cmake, /workspace/devel/share/franka_control/cmake/franka_controlConfig-version.cmake)

@@ -1,0 +1,5 @@
+Symlinking /workspace/devel/lib/libfranka_hw.so
+Symlinking /workspace/devel/lib/libfranka_control_services.so
+Symlinking /workspace/devel/lib/pkgconfig/franka_hw.pc
+Symlinking /workspace/devel/share/franka_hw/cmake/franka_hwConfig-version.cmake
+Symlinking /workspace/devel/share/franka_hw/cmake/franka_hwConfig.cmake

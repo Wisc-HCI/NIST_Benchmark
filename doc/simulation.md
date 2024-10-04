@@ -17,127 +17,54 @@ sudo docker run -it --env DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v $
 
 Now your container should be running and you should be in it's command line. So in the container's terminal, setup the visualization:
 ```bash
+
+# TODO: MOVE THE FOLLOWING TO DOCKER FILE
+# pip install -r src/panda_simulator/requirements.txt 
+    # Successfully uninstalled numpy-1.24.4
+    # Successfully uninstalled numpy-quaternion-2021.4.5.14.42.35
+pip install future
+pip install panda_robot  # This is installed locally from source bc there where errors that I had to fix
+pip install numpy==1.21 # This is to fix error AttributeError: module 'numpy' has no attribute 'typeDict'
+
+apt-get update
+apt install python3-catkin-tools git ros-noetic-gazebo-ros-control ros-noetic-rospy-message-converter ros-noetic-effort-controllers ros-noetic-joint-state-controller ros-noetic-moveit ros-noetic-moveit-commander ros-noetic-moveit-visual-tools
+sudo apt-get install python3-catkin-tools
+
+
+source /opt/ros/noetic/setup.sh
 cd src/relaxed_ik_ros1/relaxed_ik_core
 cargo build
+
+cd /workspace/src
+wstool merge panda_simulator/dependencies.rosinstall
+
+# rm -f src/CMakeLists.txt 
+# catkin_init_workspace src
 cd /workspace
-source /opt/ros/noetic/setup.sh
-rm -f src/CMakeLists.txt 
-catkin_init_workspace src
-catkin_make
+catkin build
 source devel/setup.sh
 ```
 
 ## Running
-This code runs a custom controller we wrote that moves the robot from it's inital position to a vertical positon.
-Note: If you get an error about `libGL error: MESA-LOADER: failed to retrieve device information`, please run `export LIBGL_ALWAYS_SOFTWARE=1` and your issue should be fixed.
+
 ```bash
 
-roslaunch relaxed_ik_ros1 ik.launch setting_file_path:=/workspace/src/panda.yaml  # TODO: Put this in franka_test since I changed it??
+roslaunch panda_gazebo panda_world.launch # (use argument load_gripper:=false for starting without gripper; see other available arguments in launch file)
 
 
-# Run this in another terminal (hint: open another docker terminal using instructions in README.md)
-# If you run into error while doing this, run `export LIBGL_ALWAYS_SOFTWARE=1`
-roslaunch franka_gazebo panda.launch controller:=joint_position_controller rviz:=true
+# Run the following in another  terminal to move the bot to a position
+python3
+import rospy
+from panda_robot import PandaArm
+rospy.init_node("panda_sim")
+#rospy.init_node("panda_demo") # initialise ros node
+r = PandaArm() 
+r.move_to_neutral()
+r.move_to_joint_position([-8.48556818e-02, -8.88127666e-02, -6.59622769e-01, -1.57569726e+00, -4.82374882e-04,  2.15975946e+00,  4.36766917e-01]) # move robot to the specified pose
 
-
-# Other controller:
-
-#################################################
-# This DOES NOT WORK WELL... MAYBE IK is OFF???
-roslaunch franka_gazebo panda.launch x:=-0.5 world:=$(rospack find franka_gazebo)/world/stone.sdf controller:=cartesian_variable_impedance_controller rviz:=true
-roslaunch franka_gazebo panda.launch controller:=cartesian_variable_impedance_controller rviz:=true
-rostopic pub -1 /equilibrium_pose  geometry_msgs/PoseStamped -- 'pose: [[0.5, 0, 0.5], [1,1,0,0]]'
-#################################################
-
-
-roslaunch franka_gazebo panda.launch controller:=joint_variable_impedance_controller rviz:=true
-
-
-rostopic pub -1 /equilibrium_configuration  sensor_msgs/JointState -- 'position: [0, 1, 0, 0, 0, 0, 0]'
-
-
-# Move to default position
-rostopic pub -1 /equilibrium_configuration  sensor_msgs/JointState -- '{position: [0, -0.785, 0, -2.356, 0, 1.57, 3.14], velocity: [0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001]}'
-rostopic pub -1 /equilibrium_configuration  sensor_msgs/JointState -- '{position: [0, -0.785, 0, -2.356, 0, 1.57, 3.14]}'
-
-#ros2 topic pub /robot/drive_power custom_msgs_srvs/msg/DrivePower "{left_power:10, right_power:10}"
-
-# Get joint stiffness
-rosrun dynamic_reconfigure dynparam get /dynamic_reconfigure_compliance_param_node
-# MAX stiffness:
-# {'joint_1': 600.0, 'joint_2': 600.0, 'joint_3': 600.0, 'joint_4': 600.0, 'joint_5': 250.0, 'joint_6': 150.0, 'joint_7': 50.0, 'damping_ratio': 1.0, 'groups': {'id': 0, 'parent': 0, 'name': 'Default', 'type': '', 'state': True, 'groups': {}, 'parameters': {}, 'joint_1': 600.0, 'joint_2': 600.0, 'joint_3': 600.0, 'joint_4': 600.0, 'joint_5': 250.0, 'joint_6': 150.0, 'joint_7': 50.0, 'damping_ratio': 1.0}}
-
-# Set joint stiffness
-rosrun dynamic_reconfigure dynparam set /dynamic_reconfigure_compliance_param_node "{joint_1: 100, joint_2: 100, joint_3: 100, joint_4: 100, joint_5: 100, joint_6: 100, joint_7: 20}"
-
-
-  position[0]: -0.00998261
-  position[1]: -0.185409
-  position[2]: 0.00975286
-  position[3]: -2.09979
-  position[4]: 0.00149473
-  position[5]: 1.91418
-  position[6]: 0.784968
-
-  rostopic pub -1 /equilibrium_configuration  sensor_msgs/JointState -- '{position: [-0.00998261, -0.185409, 0.00975286,  -2.09979, 0.00149473, 1.91418, 0.784968]}'
-
-  
-
-#### RUNNING SCRIPT when changes
-# TODO make launch for some of these
-
-
-# Run this in own terminal
-roslaunch franka_gazebo panda.launch controller:=joint_variable_impedance_controller rviz:=true
-
-# Run this in own terminal
-roslaunch relaxed_ik_ros1 ik.launch setting_file_path:=/workspace/src/panda.yaml  # TODO: Put this in franka_test since I changed it??
-
-catkin_make
-source devel/setup.bash
-rosrun franka_test publish_cartesian_position
-
-
-
-roslaunch franka_human_friendly_controllers joint_variable_impedance_controller.launch robot_ip:=192.168.1.2 load_gripper:=False arm_id:=panda
-
-rosrun dynamic_reconfigure dynparam set /dynamic_reconfigure_compliance_param_node "{joint_1: 10, joint_2: 10, joint_3: 10, joint_4: 10, joint_5: 10, joint_6: 10, joint_7: 10}"
 ```
 
 
-## Writing more controlers
-
-If you want to write your own controller, TODOD yaml, xml, etc....
-
-You will also need to add your controller configuration to `franka_ros/franka_gazebo/config/sim_controllers.yaml`. For example, this is the configs for joint_position_controller:
-
-```bash
-joint_position_controller:
-    type: franka_test/JointPositionController
-    joint_names:
-        - $(arg arm_id)_joint1
-        - $(arg arm_id)_joint2
-        - $(arg arm_id)_joint3
-        - $(arg arm_id)_joint4
-        - $(arg arm_id)_joint5
-        - $(arg arm_id)_joint6
-        - $(arg arm_id)_joint7
-```
-
-After you make any changes, make sure to rerun `catkin_make`.
-
-
-
-
-
-______________________
-
-sudo docker run -it --privileged --cap-add=SYS_NICE --env DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v $(pwd):/workspace --net=host panda-container
-
-roslaunch franka_test joint_position_controller.launch \
-  robot_ip:=192.168.1.2 load_gripper:=false robot:=panda
-
-https://github.com/franzesegiovanni/franka_human_friendly_controllers
-
-
+## Resources
+https://github.com/justagist/franka_ros_interface?tab=readme-ov-file
 

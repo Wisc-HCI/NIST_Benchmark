@@ -1,0 +1,4 @@
+Symlinking /workspace/devel/lib/libpanda_sim_controllers.so
+Symlinking /workspace/devel/lib/pkgconfig/panda_sim_controllers.pc
+Symlinking /workspace/devel/share/panda_sim_controllers/cmake/panda_sim_controllersConfig.cmake
+Symlinking /workspace/devel/share/panda_sim_controllers/cmake/panda_sim_controllersConfig-version.cmake

@@ -1,0 +1,12 @@
+Symlinking /workspace/devel/lib/libcustom_franka_state_controller.so
+Symlinking /workspace/devel/lib/franka_interface/custom_franka_control_node
+Symlinking /workspace/devel/lib/franka_interface/enable_robot.py
+Symlinking /workspace/devel/lib/franka_interface/cmake.lock
+Symlinking /workspace/devel/lib/franka_interface/simple_gripper.py
+Symlinking /workspace/devel/lib/franka_interface/demo_joint_positions_keyboard.py
+Symlinking /workspace/devel/lib/franka_interface/move_to_neutral.py
+Symlinking /workspace/devel/lib/python3/dist-packages/franka_interface/__init__.py
+Symlinking /workspace/devel/lib/python3/dist-packages/franka_dataflow/__init__.py
+Symlinking /workspace/devel/lib/pkgconfig/franka_interface.pc
+Symlinking /workspace/devel/share/franka_interface/cmake/franka_interfaceConfig.cmake
+Symlinking /workspace/devel/share/franka_interface/cmake/franka_interfaceConfig-version.cmake

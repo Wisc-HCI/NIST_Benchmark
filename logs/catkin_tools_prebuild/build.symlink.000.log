@@ -1,0 +1,12 @@
+Symlinking /workspace/devel/./cmake.lock
+Symlinking /workspace/devel/./local_setup.sh
+Symlinking /workspace/devel/./local_setup.bash
+Symlinking /workspace/devel/./local_setup.zsh
+Symlinking /workspace/devel/./_setup_util.py
+Symlinking /workspace/devel/./setup.bash
+Symlinking /workspace/devel/./setup.zsh
+Symlinking /workspace/devel/./env.sh
+Symlinking /workspace/devel/./setup.sh
+Symlinking /workspace/devel/lib/pkgconfig/catkin_tools_prebuild.pc
+Symlinking /workspace/devel/share/catkin_tools_prebuild/cmake/catkin_tools_prebuildConfig-version.cmake
+Symlinking /workspace/devel/share/catkin_tools_prebuild/cmake/catkin_tools_prebuildConfig.cmake

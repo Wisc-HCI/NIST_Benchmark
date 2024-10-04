@@ -1,0 +1,14 @@
+franka_ros_interface/franka_interface
+/workspace/devel/.private/franka_interface/cmake.lock /workspace/devel/./cmake.lock
+/workspace/devel/.private/franka_interface/lib/libcustom_franka_state_controller.so /workspace/devel/lib/libcustom_franka_state_controller.so
+/workspace/devel/.private/franka_interface/lib/franka_interface/custom_franka_control_node /workspace/devel/lib/franka_interface/custom_franka_control_node
+/workspace/devel/.private/franka_interface/lib/franka_interface/enable_robot.py /workspace/devel/lib/franka_interface/enable_robot.py
+/workspace/devel/.private/franka_interface/lib/franka_interface/cmake.lock /workspace/devel/lib/franka_interface/cmake.lock
+/workspace/devel/.private/franka_interface/lib/franka_interface/simple_gripper.py /workspace/devel/lib/franka_interface/simple_gripper.py
+/workspace/devel/.private/franka_interface/lib/franka_interface/demo_joint_positions_keyboard.py /workspace/devel/lib/franka_interface/demo_joint_positions_keyboard.py
+/workspace/devel/.private/franka_interface/lib/franka_interface/move_to_neutral.py /workspace/devel/lib/franka_interface/move_to_neutral.py
+/workspace/devel/.private/franka_interface/lib/python3/dist-packages/franka_interface/__init__.py /workspace/devel/lib/python3/dist-packages/franka_interface/__init__.py
+/workspace/devel/.private/franka_interface/lib/python3/dist-packages/franka_dataflow/__init__.py /workspace/devel/lib/python3/dist-packages/franka_dataflow/__init__.py
+/workspace/devel/.private/franka_interface/lib/pkgconfig/franka_interface.pc /workspace/devel/lib/pkgconfig/franka_interface.pc
+/workspace/devel/.private/franka_interface/share/franka_interface/cmake/franka_interfaceConfig.cmake /workspace/devel/share/franka_interface/cmake/franka_interfaceConfig.cmake
+/workspace/devel/.private/franka_interface/share/franka_interface/cmake/franka_interfaceConfig-version.cmake /workspace/devel/share/franka_interface/cmake/franka_interfaceConfig-version.cmake

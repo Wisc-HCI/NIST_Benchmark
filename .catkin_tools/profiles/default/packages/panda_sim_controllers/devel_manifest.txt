@@ -1,0 +1,6 @@
+panda_simulator/panda_sim_controllers
+/workspace/devel/.private/panda_sim_controllers/cmake.lock /workspace/devel/./cmake.lock
+/workspace/devel/.private/panda_sim_controllers/lib/libpanda_sim_controllers.so /workspace/devel/lib/libpanda_sim_controllers.so
+/workspace/devel/.private/panda_sim_controllers/lib/pkgconfig/panda_sim_controllers.pc /workspace/devel/lib/pkgconfig/panda_sim_controllers.pc
+/workspace/devel/.private/panda_sim_controllers/share/panda_sim_controllers/cmake/panda_sim_controllersConfig.cmake /workspace/devel/share/panda_sim_controllers/cmake/panda_sim_controllersConfig.cmake
+/workspace/devel/.private/panda_sim_controllers/share/panda_sim_controllers/cmake/panda_sim_controllersConfig-version.cmake /workspace/devel/share/panda_sim_controllers/cmake/panda_sim_controllersConfig-version.cmake

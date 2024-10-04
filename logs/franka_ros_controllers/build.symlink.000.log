@@ -1,0 +1,11 @@
+Symlinking /workspace/devel/lib/libfranka_ros_controllers.so
+Symlinking /workspace/devel/lib/python3/dist-packages/franka_ros_controllers/__init__.py
+Symlinking /workspace/devel/lib/python3/dist-packages/franka_ros_controllers/cfg/__init__.py
+Symlinking /workspace/devel/lib/python3/dist-packages/franka_ros_controllers/cfg/joint_controller_paramsConfig.py
+Symlinking /workspace/devel/lib/pkgconfig/franka_ros_controllers.pc
+Symlinking /workspace/devel/share/franka_ros_controllers/docs/joint_controller_paramsConfig.dox
+Symlinking /workspace/devel/share/franka_ros_controllers/docs/joint_controller_paramsConfig.wikidoc
+Symlinking /workspace/devel/share/franka_ros_controllers/docs/joint_controller_paramsConfig-usage.dox
+Symlinking /workspace/devel/share/franka_ros_controllers/cmake/franka_ros_controllersConfig-version.cmake
+Symlinking /workspace/devel/share/franka_ros_controllers/cmake/franka_ros_controllersConfig.cmake
+Symlinking /workspace/devel/include/franka_ros_controllers/joint_controller_paramsConfig.h

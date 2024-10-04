@@ -1,0 +1,6 @@
+Symlinking /workspace/devel/lib/libfranka_state_controller.so
+Symlinking /workspace/devel/lib/franka_control/franka_combined_control_node
+Symlinking /workspace/devel/lib/franka_control/franka_control_node
+Symlinking /workspace/devel/lib/pkgconfig/franka_control.pc
+Symlinking /workspace/devel/share/franka_control/cmake/franka_controlConfig.cmake
+Symlinking /workspace/devel/share/franka_control/cmake/franka_controlConfig-version.cmake

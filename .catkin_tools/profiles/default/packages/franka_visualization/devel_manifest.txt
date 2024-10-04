@@ -1,0 +1,7 @@
+franka_ros/franka_visualization
+/workspace/devel/.private/franka_visualization/cmake.lock /workspace/devel/./cmake.lock
+/workspace/devel/.private/franka_visualization/lib/franka_visualization/robot_joint_state_publisher /workspace/devel/lib/franka_visualization/robot_joint_state_publisher
+/workspace/devel/.private/franka_visualization/lib/franka_visualization/gripper_joint_state_publisher /workspace/devel/lib/franka_visualization/gripper_joint_state_publisher
+/workspace/devel/.private/franka_visualization/lib/pkgconfig/franka_visualization.pc /workspace/devel/lib/pkgconfig/franka_visualization.pc
+/workspace/devel/.private/franka_visualization/share/franka_visualization/cmake/franka_visualizationConfig-version.cmake /workspace/devel/share/franka_visualization/cmake/franka_visualizationConfig-version.cmake
+/workspace/devel/.private/franka_visualization/share/franka_visualization/cmake/franka_visualizationConfig.cmake /workspace/devel/share/franka_visualization/cmake/franka_visualizationConfig.cmake

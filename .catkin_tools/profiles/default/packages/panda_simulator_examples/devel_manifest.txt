@@ -1,0 +1,9 @@
+panda_simulator/panda_simulator_examples
+/workspace/devel/.private/panda_simulator_examples/cmake.lock /workspace/devel/./cmake.lock
+/workspace/devel/.private/panda_simulator_examples/lib/panda_simulator_examples/move_robot.py /workspace/devel/lib/panda_simulator_examples/move_robot.py
+/workspace/devel/.private/panda_simulator_examples/lib/panda_simulator_examples/task_space_control_using_sim_only.py /workspace/devel/lib/panda_simulator_examples/task_space_control_using_sim_only.py
+/workspace/devel/.private/panda_simulator_examples/lib/panda_simulator_examples/cmake.lock /workspace/devel/lib/panda_simulator_examples/cmake.lock
+/workspace/devel/.private/panda_simulator_examples/lib/panda_simulator_examples/task_space_control_with_fri.py /workspace/devel/lib/panda_simulator_examples/task_space_control_with_fri.py
+/workspace/devel/.private/panda_simulator_examples/lib/pkgconfig/panda_simulator_examples.pc /workspace/devel/lib/pkgconfig/panda_simulator_examples.pc
+/workspace/devel/.private/panda_simulator_examples/share/panda_simulator_examples/cmake/panda_simulator_examplesConfig.cmake /workspace/devel/share/panda_simulator_examples/cmake/panda_simulator_examplesConfig.cmake
+/workspace/devel/.private/panda_simulator_examples/share/panda_simulator_examples/cmake/panda_simulator_examplesConfig-version.cmake /workspace/devel/share/panda_simulator_examples/cmake/panda_simulator_examplesConfig-version.cmake

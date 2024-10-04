@@ -1,0 +1,7 @@
+[01m[K/workspace/src/franka_test/src/publish_cartesian_position.cpp:5:10:[m[K [01;31m[Kfatal error: [m[Krelaxed_ik_ros1/IKPose.h: No such file or directory
+    5 | #include [01;31m[K<relaxed_ik_ros1/IKPose.h>[m[K
+      |          [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+compilation terminated.
+make[2]: *** [CMakeFiles/publish_cartesian_position.dir/build.make:63: CMakeFiles/publish_cartesian_position.dir/src/publish_cartesian_position.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:1705: CMakeFiles/publish_cartesian_position.dir/all] Error 2
+make: *** [Makefile:141: all] Error 2

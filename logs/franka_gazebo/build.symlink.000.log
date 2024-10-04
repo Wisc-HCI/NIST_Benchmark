@@ -1,0 +1,5 @@
+Symlinking /workspace/devel/lib/libfranka_hw_sim.so
+Symlinking /workspace/devel/lib/libfranka_gripper_sim.so
+Symlinking /workspace/devel/lib/pkgconfig/franka_gazebo.pc
+Symlinking /workspace/devel/share/franka_gazebo/cmake/franka_gazeboConfig.cmake
+Symlinking /workspace/devel/share/franka_gazebo/cmake/franka_gazeboConfig-version.cmake

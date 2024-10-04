@@ -1,0 +1,13 @@
+Symlinking /workspace/devel/lib/panda_sim_custom_action_server/start_gripper_action_server.py
+Symlinking /workspace/devel/lib/panda_sim_custom_action_server/cmake.lock
+Symlinking /workspace/devel/lib/panda_sim_custom_action_server/start_joint_trajectory_server.py
+Symlinking /workspace/devel/lib/python3/dist-packages/panda_sim_custom_action_server/__init__.py
+Symlinking /workspace/devel/lib/python3/dist-packages/panda_sim_custom_action_server/cfg/__init__.py
+Symlinking /workspace/devel/lib/python3/dist-packages/panda_sim_custom_action_server/cfg/PandaPositionFFJointTrajectoryActionServerConfig.py
+Symlinking /workspace/devel/lib/pkgconfig/panda_sim_custom_action_server.pc
+Symlinking /workspace/devel/share/panda_sim_custom_action_server/docs/PandaPositionFFJointTrajectoryActionServerConfig-usage.dox
+Symlinking /workspace/devel/share/panda_sim_custom_action_server/docs/PandaPositionFFJointTrajectoryActionServerConfig.dox
+Symlinking /workspace/devel/share/panda_sim_custom_action_server/docs/PandaPositionFFJointTrajectoryActionServerConfig.wikidoc
+Symlinking /workspace/devel/share/panda_sim_custom_action_server/cmake/panda_sim_custom_action_serverConfig.cmake
+Symlinking /workspace/devel/share/panda_sim_custom_action_server/cmake/panda_sim_custom_action_serverConfig-version.cmake
+Symlinking /workspace/devel/include/panda_sim_custom_action_server/PandaPositionFFJointTrajectoryActionServerConfig.h

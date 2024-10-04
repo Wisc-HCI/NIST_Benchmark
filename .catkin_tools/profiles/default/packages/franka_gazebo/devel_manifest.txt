@@ -1,0 +1,7 @@
+franka_ros/franka_gazebo
+/workspace/devel/.private/franka_gazebo/cmake.lock /workspace/devel/./cmake.lock
+/workspace/devel/.private/franka_gazebo/lib/libfranka_hw_sim.so /workspace/devel/lib/libfranka_hw_sim.so
+/workspace/devel/.private/franka_gazebo/lib/libfranka_gripper_sim.so /workspace/devel/lib/libfranka_gripper_sim.so
+/workspace/devel/.private/franka_gazebo/lib/pkgconfig/franka_gazebo.pc /workspace/devel/lib/pkgconfig/franka_gazebo.pc
+/workspace/devel/.private/franka_gazebo/share/franka_gazebo/cmake/franka_gazeboConfig.cmake /workspace/devel/share/franka_gazebo/cmake/franka_gazeboConfig.cmake
+/workspace/devel/.private/franka_gazebo/share/franka_gazebo/cmake/franka_gazeboConfig-version.cmake /workspace/devel/share/franka_gazebo/cmake/franka_gazeboConfig-version.cmake

@@ -1,0 +1,7 @@
+Symlinking /workspace/devel/lib/libpanda_robot_hw_sim.so
+Symlinking /workspace/devel/lib/libpanda_gazebo_ros_control.so
+Symlinking /workspace/devel/lib/panda_gazebo/cmake.lock
+Symlinking /workspace/devel/lib/panda_gazebo/force_neutral_pose.py
+Symlinking /workspace/devel/lib/pkgconfig/panda_gazebo.pc
+Symlinking /workspace/devel/share/panda_gazebo/cmake/panda_gazeboConfig.cmake
+Symlinking /workspace/devel/share/panda_gazebo/cmake/panda_gazeboConfig-version.cmake

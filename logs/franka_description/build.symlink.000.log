@@ -1,0 +1,3 @@
+Symlinking /workspace/devel/lib/pkgconfig/franka_description.pc
+Symlinking /workspace/devel/share/franka_description/cmake/franka_descriptionConfig.cmake
+Symlinking /workspace/devel/share/franka_description/cmake/franka_descriptionConfig-version.cmake

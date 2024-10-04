@@ -1,0 +1,5 @@
+franka_ros/franka_description
+/workspace/devel/.private/franka_description/cmake.lock /workspace/devel/./cmake.lock
+/workspace/devel/.private/franka_description/lib/pkgconfig/franka_description.pc /workspace/devel/lib/pkgconfig/franka_description.pc
+/workspace/devel/.private/franka_description/share/franka_description/cmake/franka_descriptionConfig.cmake /workspace/devel/share/franka_description/cmake/franka_descriptionConfig.cmake
+/workspace/devel/.private/franka_description/share/franka_description/cmake/franka_descriptionConfig-version.cmake /workspace/devel/share/franka_description/cmake/franka_descriptionConfig-version.cmake
