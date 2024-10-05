@@ -1,6 +1,6 @@
-# Simulating the Bot
-In order to simulate the bot using Gazebo and RVIZ, follow the instructions below
+# Moving the Physical the Bot
 
+This uses franka_ros_interface as a controller. For compatibility with franka_ros, we are using the kinetic-devel branch of panda_moveit_config.
 
 ## Setup
 
@@ -12,7 +12,10 @@ xhost +local:
 Now  build the container image and start the container. Make sure you are in this directories root directory (NIST_Benchmark). These commands use the current directory as the containers file system so any changes you make to the files on your host machine will be mirrored in the container. TJese commands also allow the containers display to be forwarded to your host machine so that you can see it.
 ```bash
 sudo docker build -t panda-container .
-sudo docker run -it --env DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v $(pwd):/workspace --net=host panda-container
+
+# Start the container with real-time kernel privileges, mount onto the current directory, and allow display forwarding
+sudo docker run -it --privileged --cap-add=SYS_NICE --env DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v $(pwd):/workspace --net=host panda-container
+
 ```
 
 Now your container should be running and you should be in it's command line. 
@@ -48,7 +51,7 @@ source devel/setup.sh
 ```
 
 
-Change the "your_ip"  values in franka.sh (specified in that file). You can use [this website](https://whatismyipaddress.com/) to find your IP. Then run the following to set up your environment
+Change the "your_ip"  values in franka.sh (specified in that file). You can find your internal ip using `ifconfig` It should be 192.168.1.___.
 
 ## Running
 
@@ -56,8 +59,11 @@ Change the "your_ip"  values in franka.sh (specified in that file). You can use 
 # Start the driver
 ./franka.sh master
 roslaunch franka_interface interface.launch # (use argument load_gripper:=false for starting without gripper)
+# Or run with options:
+roslaunch franka_interface interface.launch load_demo_planning_scene:=false load_gripper:=false start_controllers:=false start_moveit:=false
 
 # In another terminal do the following:
+source devel/setup.sh
 ./franka.sh master
 python3
 import rospy
@@ -93,3 +99,7 @@ Invalid <param> tag: Cannot load command parameter [robot_description]: command 
 Param xml is <param name="$(arg robot_description)" command="xacro '$(find franka_description)/robots/panda/panda.urdf.xacro' hand:=$(arg load_gripper) arm_id:=$(arg arm_id)" if="$(arg load_robot_description)"/>
 The traceback for the exception was written to the log file
 ```
+
+
+# Resources
+https://github.com/frankaemika/franka_ros/issues/23
