@@ -34,6 +34,7 @@ if(NOT Franka_FOUND)
 endif()
 
 include_directories(
+  include
   ${catkin_INCLUDE_DIRS}
 )
 

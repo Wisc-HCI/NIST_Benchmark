@@ -6,7 +6,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # Update apt package list and install general packages
 RUN apt-get update && \
-    apt-get install -y \
+    apt-get install -y --fix-missing \
     curl\
     python3-pip\
     build-essential\ 
@@ -42,7 +42,7 @@ COPY . /workspace
 WORKDIR /workspace/
 #RUN rosdep init 
 RUN rosdep update
-RUN rosdep install --from-paths src --ignore-src --rosdistro noetic -y --skip-keys libfranka
+RUN rosdep install --from-paths src --ignore-src --rosdistro noetic  -y --skip-keys libfranka
 
 
 # Set libfranka library

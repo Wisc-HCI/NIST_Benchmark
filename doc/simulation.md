@@ -28,7 +28,7 @@ pip install numpy==1.21 # This is to fix error AttributeError: module 'numpy' ha
 
 apt-get update
 apt install python3-catkin-tools git ros-noetic-gazebo-ros-control ros-noetic-rospy-message-converter ros-noetic-effort-controllers ros-noetic-joint-state-controller ros-noetic-moveit ros-noetic-moveit-commander ros-noetic-moveit-visual-tools
-sudo apt-get install python3-catkin-tools
+
 
 
 source /opt/ros/noetic/setup.sh
