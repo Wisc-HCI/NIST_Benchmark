@@ -33,8 +33,8 @@ source devel/setup.sh
 ## Running
 This code runs a custom controller we wrote that moves the robot from it's inital position to a vertical positon:
 ```bash
-roslaunch franka_test joint_position_controller.launch \
-  robot_ip:=192.168.1.2 load_gripper:=false robot:=panda rviz=true
+# If you run into error while doing this, run `export LIBGL_ALWAYS_SOFTWARE=1`
+roslaunch franka_test joint_position_controller.launch robot_ip:=192.168.1.2 load_gripper:=false robot:=panda rviz:=true
 
 # In another terminal run the following to publish a message to make the bot go vertical:
 rostopic pub /joint_angles sensor_msgs/JointState "{
