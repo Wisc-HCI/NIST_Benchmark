@@ -29,7 +29,7 @@ Now install setup the dependencies:
     # Successfully uninstalled numpy-1.24.4
     # Successfully uninstalled numpy-quaternion-2021.4.5.14.42.35
 pip install future
-pip install panda_robot  # This is installed locally from source bc there where errors that I had to fix
+#pip install panda_robot  # This is installed locally from source bc there where errors that I had to fix
 pip install numpy==1.21 # This is to fix error AttributeError: module 'numpy' has no attribute 'typeDict'
 
 apt-get update
@@ -77,6 +77,13 @@ r.move_to_joint_position([-8.48556818e-02, -8.88127666e-02, -6.59622769e-01, -1.
 ```
 
 
+```bash
+>>> r.move_to_neutral()
+[WARN] [1728313860.988517]: PandaArm: MoveGroupInterface was not found! Using JointTrajectoryActionClient instead.
+[ERROR] [1728313861.303542]: Got a transition callback on a goal handle that we're not tracking
+[ERROR] [1728313861.309118]: Collision detected. PandaArm: Panda limb failed to reach commanded joint positions.
+[INFO] [1728313861.821256]: PandaArm: Trajectory controlling complete
+```
 
 ## Resources
 https://github.com/justagist/franka_ros_interface?tab=readme-ov-file
@@ -100,6 +107,27 @@ Param xml is <param name="$(arg robot_description)" command="xacro '$(find frank
 The traceback for the exception was written to the log file
 ```
 
-
+```bash
+>>> rospy.init_node("panda_demo")
+>>> r = PandaArm() 
+[INFO] [1728308941.137827]: Waiting for collision behaviour services...
+[INFO] [1728308941.143072]: Collision behaviour services found.
+[INFO] [1728308941.224655]: Moveit server does not seem to be running.
+[INFO] [1728308941.228797]: PandaArm: MoveGroup was not found! This is okay if moveit service is not required!
+[INFO] [1728308941.240047]: FrankaGripper: could not detect gripper.
+[INFO] [1728308941.765287]: Robot Stopped: Attempting Reset...
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/usr/local/lib/python3.8/dist-packages/panda_robot/panda_robot.py", line 104, in __init__
+    self._franka_robot_enable_interface.enable()
+  File "/workspace/src/franka_ros_interface/franka_interface/src/franka_interface/robot_enable.py", line 130, in enable
+    self._toggle_enabled(True)
+  File "/workspace/src/franka_ros_interface/franka_interface/src/franka_interface/robot_enable.py", line 106, in _toggle_enabled
+    franka_dataflow.wait_for(
+  File "/workspace/src/franka_ros_interface/franka_interface/src/franka_dataflow/wait_for.py", line 56, in wait_for
+    raise OSError(errno.ETIMEDOUT, timeout_msg)
+TimeoutError: [Errno 110] Failed to enable robot
+>>> 
+```
 # Resources
 https://github.com/frankaemika/franka_ros/issues/23
