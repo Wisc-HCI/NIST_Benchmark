@@ -33,28 +33,17 @@ source devel/setup.sh
 ## Running
 This code runs a custom controller we wrote that moves the robot from it's inital position to a vertical positon:
 ```bash
-roslaunch franka_example_controllers \
-    dual_arm_cartesian_impedance_example_controller.launch \
-    robot_id:=<name_of_the_2_arm_setup> \
-    robot_ips:=<your_robot_ips_as_a_map> \
-    rviz:=<true/false> rqt:=<true/false>
-    
+roslaunch franka_test joint_position_controller.launch \
+  robot_ip:=192.168.1.2 load_gripper:=false robot:=panda rviz=true
+
 # In another terminal run the following to publish a message to make the bot go vertical:
 rostopic pub /joint_angles sensor_msgs/JointState "{
   position: [0, -0.785, 0, -1.3, 0, 3.5, -0.785],
 }" -r 10
-# rostopic pub /your_topic_name sensor_msgs/JointState "{
-#   header: {
-#     seq: 0,
-#     stamp: now,
-#     frame_id: ''
-#   },
-#   name: ['joint1', 'joint2', 'joint3', 'joint4', 'joint5', 'joint6', 'joint7'],
-#   position: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7],
-#   velocity: [],
-#   effort: []
-# }" -r 10
 
+# rostopic pub /joint_angles sensor_msgs/JointState "{
+#   position: [0, -0.785, 0, -1.3, 0, 3.5, -0.785],
+# }" -1
 ```
 
 
