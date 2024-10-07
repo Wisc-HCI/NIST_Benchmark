@@ -33,14 +33,12 @@ source devel/setup.sh
 ## Running
 This code runs a custom controller we wrote that moves the robot from it's inital position to a vertical positon:
 ```bash
-
-# roslaunch relaxed_ik_ros1 ik.launch setting_file_path:=/workspace/src/panda.yaml  # TODO: Put this in franka_test???
-
-
-# Run this in another terminal (hint: open another docker terminal using instructions in README.md)
-# If you run into error while doing this, run `export LIBGL_ALWAYS_SOFTWARE=1`
-roslaunch franka_gazebo panda.launch controller:=joint_position_controller rviz:=true
-
+roslaunch franka_example_controllers \
+    dual_arm_cartesian_impedance_example_controller.launch \
+    robot_id:=<name_of_the_2_arm_setup> \
+    robot_ips:=<your_robot_ips_as_a_map> \
+    rviz:=<true/false> rqt:=<true/false>
+    
 # In another terminal run the following to publish a message to make the bot go vertical:
 rostopic pub /joint_angles sensor_msgs/JointState "{
   position: [0, -0.785, 0, -1.3, 0, 3.5, -0.785],

@@ -71,7 +71,7 @@ class JointPositionController : public controller_interface::MultiInterfaceContr
   std::unique_ptr<franka_hw::FrankaStateHandle> state_handle_;
   int last_time_called;
   // std::array<double, 7> joint_velocities{};
-  std::vector<double> joint_positions_{0,0,0,0,0,0,0};
+  std::vector<double> joint_positions_{0, -M_PI_4, 0, -1.3, 0, 3.5, M_PI_4};
   float p_ = 1.9;
   float d_ = 0.0;
   // float curr_error_;

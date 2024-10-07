@@ -215,8 +215,10 @@ bool JointPositionController::init(hardware_interface::RobotHW* robot_hardware,
 
   this->first_sample_taken = false;
   // TODO: create a subscriber and callback so I can control the joint vel from a ros topic
+  // sub_command_ = node_handle.subscribe<sensor_msgs::JointState>(
+  //                 "/relaxed_ik/joint_angle_solutions", 1, &JointPositionController::jointCommandCb, this); 
   sub_command_ = node_handle.subscribe<sensor_msgs::JointState>(
-                  "/relaxed_ik/joint_angle_solutions", 1, &JointPositionController::jointCommandCb, this); 
+                  "/joint_angles", 1, &JointPositionController::jointCommandCb, this); 
   last_time_called = ros::Time::now().toSec();
 
   velocity_joint_interface_ = robot_hardware->get<hardware_interface::VelocityJointInterface>();
@@ -274,7 +276,7 @@ void JointPositionController::jointCommandCb(const sensor_msgs::JointState::Cons
     for (int i = 0; i < 7; i++) joint_positions_[i] = joint_pos_commands->position[i];
     this->callback_done_once = true;
     this->last_time_called = ros::Time::now().toSec();
-    std::cout << this->last_time_called << std::endl;
+    // std::cout << this->last_time_called << std::endl;
 }
 
 void JointPositionController::starting(const ros::Time& /* time */) {
@@ -294,10 +296,11 @@ void JointPositionController::update(const ros::Time& /* time */,
   elapsed_time_ += period;
   if ((ros::Time::now().toSec() - this->last_time_called) > 3) {
         for (int i = 0; i < 7; i++) velocity_joint_handles_[i].setCommand(0.0);
-        std::cout << "Set Vel to ZERO ******" << std::endl;
+        // std::cout << "Set Vel to ZERO ******" << std::endl;
 
   } else if(this->callback_done_once) {  // If command recieved, send the command to the controller
         for (int i = 0; i < 7; i++) {
+          // std::cout << "HERE ******" << std::endl;
             this->curr_error_[i] = (joint_positions_[i] - robot_state.q[i]);
             double proportional = this->p_ * this->curr_error_[i];
 
