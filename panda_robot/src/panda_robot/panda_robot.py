@@ -104,10 +104,7 @@ class PandaArm(franka_interface.ArmInterface):
             self._params)
         rospy.loginfo("---------------HERE3--------------")
         if not self._franka_robot_enable_interface.is_enabled():
-            #### Mya Modification Start####
-            rospy.loginfo("Franka Robot Interface is NOT enabled. Proceeding anyways")
-            # self._franka_robot_enable_interface.enable()
-            #### Mya Modification End ####
+            self._franka_robot_enable_interface.enable()
         rospy.loginfo("---------------HERE4--------------")
 
         # this will be useful to compute ee_velocity using finite differences
@@ -115,15 +112,15 @@ class PandaArm(franka_interface.ArmInterface):
         self._time_now_old = time_in_seconds()
 
         if reset_frames:
-            anka_robot_enable_interface.enable()
-
-    def _configuself.reset_EE_frame()
+            self.reset_EE_frame()
 
     def enable_robot(self):
         """
             Re-enable robot if stopped due to collision or safety.
         """
-        self._frre(self, on_state_callback):
+        self._franka_robot_enable_interface.enable()
+
+    def _configure(self, on_state_callback):
 
         if on_state_callback:
             self._on_state_callback = on_state_callback
