@@ -1,5 +1,5 @@
 
 /build/
 /devel/
-!/libfranka/build/
 /logs/
+!/libfranka/build/
