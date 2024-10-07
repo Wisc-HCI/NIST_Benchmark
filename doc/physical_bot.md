@@ -30,6 +30,9 @@ Now install setup the dependencies:
     # Successfully uninstalled numpy-quaternion-2021.4.5.14.42.35
 pip install future
 #pip install panda_robot  # This is installed locally from source bc there where errors that I had to fix
+cd panda_robot
+python3 setup.py install
+cd /workspace
 pip install numpy==1.21 # This is to fix error AttributeError: module 'numpy' has no attribute 'typeDict'
 
 apt-get update
