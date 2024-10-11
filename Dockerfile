@@ -15,12 +15,24 @@ RUN apt-get update && \
     libeigen3-dev\
     python3-rosdep\
     mesa-utils\
-    nano
+    nano\
+    python3-catkin-tools\ 
+    ros-noetic-gazebo-ros-control\
+    ros-noetic-rospy-message-converter\
+    ros-noetic-effort-controllers\
+    ros-noetic-joint-state-controller\
+    ros-noetic-moveit\
+    ros-noetic-moveit-commander\
+    ros-noetic-moveit-visual-tools
+
 
 # Install python packages
-RUN pip install readchar
-RUN pip install PyYaml
-RUN pip install urdf-parser-py
+RUN pip install future\
+    PyYaml\
+    urdf-parser-py\
+    panda_robot\
+    numpy==1.21
+
 
 # Install Rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
