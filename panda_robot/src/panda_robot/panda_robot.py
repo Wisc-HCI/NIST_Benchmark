@@ -70,7 +70,6 @@ class PandaArm(franka_interface.ArmInterface):
             :param reset_frames: if True, EE frame is reset using :py:class:`franka_interface.ArmInteface`
                 (using :py:class:`franka_interface.ArmInterface` and :py:class:`franka_tools.FrankaFramesInterface`).
         """
-        rospy.loginfo("---------------HERE_YAYA--------------")
 
         self._logger = logging.getLogger(__name__)
 
@@ -90,7 +89,6 @@ class PandaArm(franka_interface.ArmInterface):
         self._nu = len(self._jnt_limits)
 
         self._configure(on_state_callback)
-        rospy.loginfo("---------------HERE2--------------")
 
 
         self._tuck = [self._neutral_pose_joints[j] for j in self._joint_names]
@@ -102,10 +100,8 @@ class PandaArm(franka_interface.ArmInterface):
 
         self._franka_robot_enable_interface = franka_interface.RobotEnable(
             self._params)
-        rospy.loginfo("---------------HERE3--------------")
         if not self._franka_robot_enable_interface.is_enabled():
             self._franka_robot_enable_interface.enable()
-        rospy.loginfo("---------------HERE4--------------")
 
         # this will be useful to compute ee_velocity using finite differences
         self._ee_pos_old, self._ee_ori_old = self.ee_pose()
