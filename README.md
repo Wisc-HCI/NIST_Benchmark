@@ -144,7 +144,11 @@ sudo dpkg -i libfranka-0.9.2-x86_64.deb
 If you go beyond them, you will get the error `libfranka: Move command aborted: motion aborted by reflex! ["cartesian_reflex"]`.
 After that any other command will throw the error `libfranka: Set Joint Impedance command rejected: command not possible in the current mode ("Reflex")!` **UNTIL  the joints are locked and unlocked**.
 
+* If you ever see the error `libfranka: Set Joint Impedance command rejected: command not possible in the current mode ("Reflex")!` along with the error on Franka Desktop of `Configured Force Thresholds Reached.` and they keep on popping up even when moving very little/slowly and pop up when moving to the "pack" position in Settings > System > Move Robot to Transport Pose, you will need to **factory reset** the bot by using the button under Settings > System > Factory Reset.
+
 * If you ever change  /src/relaxed_ik_ros1/relaxed_ik_core, you will need to go into that directory and recompile it with `cargo build`
+
+
 
 
 
