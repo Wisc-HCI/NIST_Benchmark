@@ -65,21 +65,14 @@ Change the "your_ip"  values in franka.sh (specified in that file). You can find
 ```bash
 # Start the driver
 ./franka.sh master
-roslaunch franka_interface interface.launch # (use argument load_gripper:=false for starting without gripper)
-# Or run with options:
-roslaunch franka_interface interface.launch load_demo_planning_scene:=false load_gripper:=false start_controllers:=false start_moveit:=false
+roslaunch franka_interface interface.launch 
+
 
 # In another terminal do the following:
 source devel/setup.sh
 ./franka.sh master
-python3
-import rospy
-from panda_robot import PandaArm
-rospy.init_node("panda_demo") # initialise ros node
-r = PandaArm() 
-r.move_to_neutral()
-r.move_to_joint_position([-8.48556818e-02, -8.88127666e-02, -6.59622769e-01, -1.57569726e+00, -4.82374882e-04,  2.15975946e+00,  4.36766917e-01]) # move robot to the specified pose
-
+chmod +x /workspace/src/franka_test/scripts/move_to_position.py
+rosrun franka_test move_to_position.py
 
 ```
 
