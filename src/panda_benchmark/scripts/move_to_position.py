@@ -5,18 +5,21 @@ import rospy
 from panda_robot import PandaArm
 from geometry_msgs.msg import Pose
 from relaxed_ik_ros1.srv import IKPoseRequest, IKPose
+from transformations import quaternion_from_euler
 
 
 def move_to_caresian_position(
     arm:PandaArm,
     x:float, y:float, z:float, 
-    orientation_x:float, orientation_y:float, orientation_z:float, orientation_w:float):
+    roll:float, pitch:float, yaw:float):
 
     """
-    Moves arm to so that the end-effector position is at (x, y, z) in meters with quaternion orientation
-    (orientation_x, orientation_y,  orientation_z, orientation_w).
+    Moves arm to so that the end-effector position is at (x, y, z) in meters with 
+    and at orientation roll (rotation around x-axis), pitch (rotation around y-axis), and yaw 
+    (rotation around z-axis) in radians.
     """
 
+    quat_x, quat_y, quat_z, quat_q = quaternion_from_euler(roll, pitch, yaw)
 
     desired_pose = Pose()
     # Set your desired x, y, z positions
@@ -24,10 +27,10 @@ def move_to_caresian_position(
     desired_pose.position.y = y
     desired_pose.position.z = z
     # Set your desired orientation
-    desired_pose.orientation.x = orientation_x
-    desired_pose.orientation.y = orientation_y
-    desired_pose.orientation.z = orientation_z
-    desired_pose.orientation.w = orientation_w
+    desired_pose.orientation.x = quat_x
+    desired_pose.orientation.y = quat_y
+    desired_pose.orientation.z = quat_z
+    desired_pose.orientation.w = quat_q
 
     req = IKPoseRequest()
 
@@ -49,4 +52,4 @@ if __name__ == '__main__':
     rospy.init_node("panda_demo") # initialise ros node
     arm = PandaArm() 
     arm.move_to_neutral()
-    move_to_caresian_position(arm, 0.5, 0, 0.3, 1.0, 0.0, 0.0, 0.0)
+    move_to_caresian_position(arm, 0.5, 0, 0.3, 0, 0.0, 0.0)
