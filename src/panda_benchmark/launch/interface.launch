@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+  <!-- IK Launch -->
+  <include file="$(find relaxed_ik_ros1)/launch/ik.launch">
+      <arg name="setting_file_path" value="/workspace/src/panda.yaml "/>
+  </include>
+
+  <!--  Controller Interface launch  -->
+  <include file="$(find franka_interface)/launch/interface.launch">
+  </include>
+
+</launch>
