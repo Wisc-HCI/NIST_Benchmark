@@ -4,7 +4,7 @@ import rospy
 
 from panda_robot import PandaArm
 from geometry_msgs.msg import Pose
-from relaxed_ik_ros1.srv import IKPoseRequest,  IKPose
+from relaxed_ik_ros1.srv import IKPoseRequest, IKPose
 
 
 def move_to_caresian_position(

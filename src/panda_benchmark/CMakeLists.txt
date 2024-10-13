@@ -39,15 +39,6 @@ include_directories(
 )
 
 
-generate_dynamic_reconfigure_options(
-  cfg/compliance_param.cfg
-  cfg/desired_mass_param.cfg
-  cfg/dual_arm_compliance_param.cfg
-  cfg/teleop_param.cfg
-  cfg/teleop_gripper_param.cfg
-)
-
-generate_messages()
 
 
 catkin_package(
@@ -84,9 +75,6 @@ target_link_libraries(publish_cartesian_position ${catkin_LIBRARIES})
 add_dependencies(panda_benchmark
   ${${PROJECT_NAME}_EXPORTED_TARGETS}
   ${catkin_EXPORTED_TARGETS}
-  ${PROJECT_NAME}_generate_messages_cpp
-  ${PROJECT_NAME}_gencpp
-  ${PROJECT_NAME}_gencfg
 )
 
 target_link_libraries(panda_benchmark PUBLIC
