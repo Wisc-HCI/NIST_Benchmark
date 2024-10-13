@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>franka_test</name>
+  <name>panda_benchmark</name>
   <version>0.9.1</version>
-  <description>franka_test provides example code for controlling Franka Emika research robots with ros_control</description>
+  <description>panda_benchmark provides example code for controlling Franka Emika research robots with ros_control</description>
   <maintainer email="support@franka.de">Franka Emika GmbH</maintainer>
   <license>Apache 2.0</license>
 
-  <url type="website">http://wiki.ros.org/franka_test</url>
+  <url type="website">http://wiki.ros.org/panda_benchmark</url>
   <url type="repository">https://github.com/frankaemika/franka_ros</url>
   <url type="bugtracker">https://github.com/frankaemika/franka_ros/issues</url>
   <author>Franka Emika GmbH</author>
@@ -65,6 +65,6 @@
   <exec_depend>std_msgs</exec_depend>
 
   <export>
-    <controller_interface plugin="${prefix}/franka_test_plugin.xml" />
+    <controller_interface plugin="${prefix}/panda_benchmark_plugin.xml" />
   </export>
 </package>

@@ -1,5 +1,5 @@
 joint_position_controller:
-    type: franka_test/JointPositionController
+    type: panda_benchmark/JointPositionController
     joint_names:
         - panda_joint1
         - panda_joint2
@@ -10,5 +10,5 @@ joint_position_controller:
         - panda_joint7
 
 model_example_controller:
-    type: franka_test/ModelExampleController
+    type: panda_benchmark/ModelExampleController
     arm_id: panda

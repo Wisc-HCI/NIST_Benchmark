@@ -65,7 +65,7 @@ cd /workspace
 catkin build
 source devel/setup.sh
 
-chmod +x /workspace/src/franka_test/scripts/
+chmod +x /workspace/src/panda_benchmark/scripts/
 ```
 
 
@@ -78,7 +78,7 @@ Now you are ready to run the robot or simulation by reference [run_robot.md](/do
 
 ###  Notes
 
-* If you make changes, in src, you'll need to run:
+* If you make changes in any of the src C/C++ files, you'll need to run:
 
     ```bash
     catkin build
@@ -88,7 +88,7 @@ Now you are ready to run the robot or simulation by reference [run_robot.md](/do
 * Opening a new docker terminal:
     ```bash
     docker ps  # This will show you running containers w/ their ID
-    docker exec it <CONTAINER_ID> bash  # This will open the container's terminal
+    docker exec -it <CONTAINER_ID> bash  # This will open the container's terminal
     source devel/setup.sh  # Run this in the container's terminal
     ```
 

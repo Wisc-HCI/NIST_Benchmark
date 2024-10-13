@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.4)
-project(franka_test)
+project(panda_benchmark)
 
 set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_STANDARD 14)
@@ -52,7 +52,7 @@ generate_messages()
 
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES franka_test
+  LIBRARIES panda_benchmark
   CATKIN_DEPENDS
     controller_interface
     dynamic_reconfigure
@@ -73,7 +73,7 @@ catkin_package(
   DEPENDS Franka
 )
 
-add_library(franka_test
+add_library(panda_benchmark
   src/joint_position_controller.cpp
   src/model_example_controller.cpp
 )
@@ -81,7 +81,7 @@ add_library(franka_test
 add_executable(publish_cartesian_position src/publish_cartesian_position.cpp)
 target_link_libraries(publish_cartesian_position ${catkin_LIBRARIES})
 
-add_dependencies(franka_test
+add_dependencies(panda_benchmark
   ${${PROJECT_NAME}_EXPORTED_TARGETS}
   ${catkin_EXPORTED_TARGETS}
   ${PROJECT_NAME}_generate_messages_cpp
@@ -89,23 +89,23 @@ add_dependencies(franka_test
   ${PROJECT_NAME}_gencfg
 )
 
-target_link_libraries(franka_test PUBLIC
+target_link_libraries(panda_benchmark PUBLIC
   ${Franka_LIBRARIES}
   ${catkin_LIBRARIES}
 )
 
-target_include_directories(franka_test SYSTEM PUBLIC
+target_include_directories(panda_benchmark SYSTEM PUBLIC
   ${Franka_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIRS}
   ${catkin_INCLUDE_DIRS}
 )
-target_include_directories(franka_test PUBLIC
+target_include_directories(panda_benchmark PUBLIC
   include
 )
 
 
 ## Installation
-install(TARGETS franka_test
+install(TARGETS panda_benchmark
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -119,7 +119,7 @@ install(DIRECTORY launch
 install(DIRECTORY config
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
-install(FILES franka_test_plugin.xml
+install(FILES panda_benchmark_plugin.xml
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
@@ -133,10 +133,10 @@ if(CLANG_TOOLS)
     ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/*.h
   )
-  add_format_target(franka_test FILES ${SOURCES} ${HEADERS})
-  add_tidy_target(franka_test
+  add_format_target(panda_benchmark FILES ${SOURCES} ${HEADERS})
+  add_tidy_target(panda_benchmark
     FILES ${SOURCES}
-    DEPENDS franka_test
+    DEPENDS panda_benchmark
   )
 endif()
 

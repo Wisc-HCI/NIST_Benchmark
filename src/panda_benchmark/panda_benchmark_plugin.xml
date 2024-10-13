@@ -1,0 +1,13 @@
+<library path="lib/libpanda_benchmark">
+  <class name="panda_benchmark/JointPositionController" type="panda_benchmark::JointPositionController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      A controller that executes a short motion based on joint positions to demonstrate correct usage
+    </description>
+  </class>
+  
+  <class name="panda_benchmark/ModelExampleController" type="panda_benchmark::ModelExampleController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      A controller that evaluates and prints the dynamic model of Franka
+    </description>
+  </class>
+</library>

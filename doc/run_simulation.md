@@ -1,6 +1,6 @@
 # Simulating the Bot
 
-This simulates moving the bot to a specific point specified in [move_to_position.py](src/franka_test/scripts/move_to_position.py) in gazebo.
+This simulates moving the bot to a specific point specified in [move_to_position.py](src/panda_benchmark/scripts/move_to_position.py) in gazebo.
 
 
 ## Setup
@@ -13,10 +13,13 @@ Note: If you get `lbGL error: MESA-LOADER: failed to retrieve device information
 ```bash
 roslaunch panda_gazebo panda_world.launch 
 
+# Run the following in another terminal
+source devel/setup.sh
+roslaunch relaxed_ik_ros1 ik.launch setting_file_path:=/workspace/src/panda.yaml 
 
 # Run the following in another  terminal to move the bot to a position
 source devel/setup.sh
-rosrun franka_test move_to_position.py 
+rosrun panda_benchmark move_to_position.py 
 
 ```
 

@@ -1,6 +1,6 @@
 // // Copyright (c) 2017 Franka Emika GmbH
 // // Use of this source code is governed by the Apache-2.0 license, see LICENSE
-// #include <franka_test/joint_position_controller.h>
+// #include <panda_benchmark/joint_position_controller.h>
 
 // #include <cmath>
 
@@ -17,7 +17,7 @@
 // #include <relaxed_ik_ros1/IKPoseRequest.h>
 // #include <relaxed_ik_ros1/IKPoseResponse.h>
 
-// namespace franka_test {
+// namespace panda_benchmark {
 
 // bool JointPositionController::init(hardware_interface::RobotHW* robot_hardware,
 //                                           ros::NodeHandle& node_handle) {
@@ -55,7 +55,7 @@
 //   //   if (std::abs(position_joint_handles_[i].getPosition() - q_start[i]) > 0.1) {
 //   //     ROS_ERROR_STREAM(
 //   //         "JointPositionController: Robot is not in the expected starting position for "
-//   //         "running this example. Run `roslaunch franka_test move_to_start.launch "
+//   //         "running this example. Run `roslaunch panda_benchmark move_to_start.launch "
 //   //         "robot_ip:=<robot-ip> load_gripper:=<has-attached-gripper>` first.");
 //   //     return false;
 //   //   }
@@ -158,15 +158,15 @@
 //   // }
 // }
 
-// }  // namespace franka_test
+// }  // namespace panda_benchmark
 
-// PLUGINLIB_EXPORT_CLASS(franka_test::JointPositionController,
+// PLUGINLIB_EXPORT_CLASS(panda_benchmark::JointPositionController,
 //                        controller_interface::ControllerBase)
 
 
 // Copyright (c) 2017 Franka Emika GmbH
 // Use of this source code is governed by the Apache-2.0 license, see LICENSE
-#include <franka_test/joint_position_controller.h>
+#include <panda_benchmark/joint_position_controller.h>
 
 #include <cmath>
 
@@ -185,7 +185,7 @@
 #include <franka/exception.h>
 // #include <franka/vacuum_gripper.h>
 
-namespace franka_test {
+namespace panda_benchmark {
 
 using franka_gripper::homing;
 using franka_gripper::HomingAction;
@@ -329,5 +329,5 @@ void JointPositionController::stopping(const ros::Time& /*time*/) {
 
 }  // namespace franka_example_controllers
 
-PLUGINLIB_EXPORT_CLASS(franka_test::JointPositionController,
+PLUGINLIB_EXPORT_CLASS(panda_benchmark::JointPositionController,
                        controller_interface::ControllerBase)

@@ -63,7 +63,7 @@ struct Model : public ::testing::Test {
     using namespace std::string_literals;
 
     std::ifstream model_library_stream(
-        FRANKA_TEST_BINARY_DIR + "/libfcimodels.so"s,
+        panda_benchmark_BINARY_DIR + "/libfcimodels.so"s,
         std::ios_base::in | std::ios_base::binary | std::ios_base::ate);
     std::vector<char> buffer;
     buffer.resize(model_library_stream.tellg());

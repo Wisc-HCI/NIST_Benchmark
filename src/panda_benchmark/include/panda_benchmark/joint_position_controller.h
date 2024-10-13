@@ -12,7 +12,7 @@
 // #include <ros/node_handle.h>
 // #include <ros/time.h>
 
-// namespace franka_test {
+// namespace panda_benchmark {
 
 // class JointPositionController : public controller_interface::MultiInterfaceController<
 //                                            hardware_interface::PositionJointInterface> {
@@ -32,7 +32,7 @@
 //   std::array<double, 7> initial_pose_{};
 // };
 
-// }  // namespace franka_test
+// }  // namespace panda_benchmark
 
 
 // Copyright (c) 2017 Franka Emika GmbH
@@ -50,7 +50,7 @@
 #include <ros/time.h>
 #include <sensor_msgs/JointState.h>
 
-namespace franka_test {
+namespace panda_benchmark {
 
 class JointPositionController : public controller_interface::MultiInterfaceController<
                                            hardware_interface::VelocityJointInterface,
@@ -81,4 +81,4 @@ class JointPositionController : public controller_interface::MultiInterfaceContr
   // franka::RobotState robot_state 
 };
 
-}  // namespace franka_test
+}  // namespace panda_benchmark

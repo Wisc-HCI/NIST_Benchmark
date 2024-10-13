@@ -1,7 +1,7 @@
 // Copyright (c) 2017 Franka Emika GmbH
 // Use of this source code is governed by the Apache-2.0 license, see LICENSE
 
-#include <franka_test/model_example_controller.h>
+#include <panda_benchmark/model_example_controller.h>
 
 #include <algorithm>
 #include <array>
@@ -28,7 +28,7 @@ std::ostream& operator<<(std::ostream& ostream, const std::array<T, N>& array) {
 }
 }  // anonymous namespace
 
-namespace franka_test {
+namespace panda_benchmark {
 
 bool ModelExampleController::init(hardware_interface::RobotHW* robot_hw,
                                   ros::NodeHandle& node_handle) {
@@ -89,7 +89,7 @@ void ModelExampleController::update(const ros::Time& /*time*/, const ros::Durati
   }
 }
 
-}  // namespace franka_test
+}  // namespace panda_benchmark
 
-PLUGINLIB_EXPORT_CLASS(franka_test::ModelExampleController,
+PLUGINLIB_EXPORT_CLASS(panda_benchmark::ModelExampleController,
                        controller_interface::ControllerBase)

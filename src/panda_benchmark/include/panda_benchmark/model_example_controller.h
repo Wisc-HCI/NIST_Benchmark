@@ -14,7 +14,7 @@
 #include <franka_hw/franka_state_interface.h>
 #include <franka_hw/trigger_rate.h>
 
-namespace franka_test {
+namespace panda_benchmark {
 
 class ModelExampleController
     : public controller_interface::MultiInterfaceController<franka_hw::FrankaModelInterface,
@@ -31,4 +31,4 @@ class ModelExampleController
   franka_hw::TriggerRate rate_trigger_{1.0};
 };
 
-}  // namespace franka_test
+}  // namespace panda_benchmark

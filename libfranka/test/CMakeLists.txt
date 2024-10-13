@@ -58,7 +58,7 @@ add_executable(run_all_tests
   vacuum_gripper_command_tests.cpp
 )
 
-set(TEST_COMPILE_DEFINITIONS FRANKA_TEST_BINARY_DIR="${CMAKE_CURRENT_BINARY_DIR}")
+set(TEST_COMPILE_DEFINITIONS panda_benchmark_BINARY_DIR="${CMAKE_CURRENT_BINARY_DIR}")
 target_compile_definitions(run_all_tests PRIVATE ${TEST_COMPILE_DEFINITIONS})
 if(WIN32)
     target_compile_options(run_all_tests PRIVATE /bigobj)
