@@ -65,12 +65,11 @@ catkin_package(
 )
 
 add_library(panda_benchmark
-  src/joint_position_controller.cpp
-  src/model_example_controller.cpp
+  src/temp.cpp
 )
 
-add_executable(publish_cartesian_position src/publish_cartesian_position.cpp)
-target_link_libraries(publish_cartesian_position ${catkin_LIBRARIES})
+add_executable(temp src/temp.cpp)
+target_link_libraries(temp ${catkin_LIBRARIES})
 
 add_dependencies(panda_benchmark
   ${${PROJECT_NAME}_EXPORTED_TARGETS}

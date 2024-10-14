@@ -57,3 +57,4 @@ if __name__ == '__main__':
                               0, 0.0, 0.0) # Roll, Pitch, Yaw in rads
     arm.exec_gripper_cmd(0.05) # Width between gripper in m
     arm.exec_gripper_cmd(0.03) # Width between gripper in m
+    arm.move_to_neutral()
