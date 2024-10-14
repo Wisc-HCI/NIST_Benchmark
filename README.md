@@ -1,5 +1,7 @@
 # NIST_Benchmark
- [NIST Benchmark](https://www.nist.gov/el/intelligent-systems-division-73500/robotic-grasping-and-manipulation-assembly/assembly) testing with the Franka Emika Panda.
+ [NIST Benchmark](https://www.nist.gov/el/intelligent-systems-division-73500/robotic-grasping-and-manipulation-assembly/assembly) testing with the Franka Emika Panda Robot. 
+
+In order to just visualize the robot, follow the `Visualization` section instructions. To physically control the robot, you will need to follow the `Controlling Panda with FCI` instructions.
 
 Our scripts our in the src/panda_benchmark package. Please only put any additional scripts here.
 
