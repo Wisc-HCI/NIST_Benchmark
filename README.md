@@ -1,6 +1,7 @@
 # NIST_Benchmark
  [NIST Benchmark](https://www.nist.gov/el/intelligent-systems-division-73500/robotic-grasping-and-manipulation-assembly/assembly) testing with the Franka Emika Panda.
 
+Our scripts our in the src/panda_benchmark package. Please only put any additional scripts here.
 
 ## Running
 Please first follow the setup instructions in [doc/setup.md](/doc/setup.md) to setup everything and then reference [doc/run_robot.md](/doc/run_robot.md) or [doc/run_simulation.md](/doc/run_simulation.md).
