@@ -1,2 +1,0 @@
-franka_ros/franka_ros
-/workspace/devel/.private/franka_ros/cmake.lock /workspace/devel/./cmake.lock

@@ -3,4 +3,4 @@
 /devel/
 /logs/
 !/libfranka/build/
-.catkin_tools/
+/.catkin_tools/
