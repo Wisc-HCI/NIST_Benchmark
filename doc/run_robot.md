@@ -15,7 +15,7 @@ Change the "FRANKA_ROBOT_IP" and "your_ip"  values in [franka.sh](/franka.sh) (s
 ```bash
 # Start the driver
 ./franka.sh master
-roslaunch panda_benchmark interface.launch  # TODO TEST
+roslaunch panda_benchmark interface.launch 
 
 
 # In another terminal do the following:

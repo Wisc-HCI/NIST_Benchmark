@@ -52,4 +52,8 @@ if __name__ == '__main__':
     rospy.init_node("panda_demo") # initialise ros node
     arm = PandaArm() 
     arm.move_to_neutral()
-    move_to_caresian_position(arm, 0.5, 0, 0.3, 0, 0.0, 0.0)
+    move_to_caresian_position(arm, 
+                              0.5, 0, 0.3, # X, Y, Z in m
+                              0, 0.0, 0.0) # Roll, Pitch, Yaw in rads
+    arm.exec_gripper_cmd(0.05) # Width between gripper in m
+    arm.exec_gripper_cmd(0.03) # Width between gripper in m
