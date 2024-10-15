@@ -6,19 +6,33 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # Update apt package list and install general packages
 RUN apt-get update && \
-    apt-get install -y \
+    apt-get install -y --fix-missing \
     curl\
     python3-pip\
     build-essential\ 
     cmake\
     libpoco-dev\ 
     libeigen3-dev\
-    python3-rosdep
+    python3-rosdep\
+    mesa-utils\
+    nano\
+    python3-catkin-tools\ 
+    ros-noetic-gazebo-ros-control\
+    ros-noetic-rospy-message-converter\
+    ros-noetic-effort-controllers\
+    ros-noetic-joint-state-controller\
+    ros-noetic-moveit\
+    ros-noetic-moveit-commander\
+    ros-noetic-moveit-visual-tools
+
 
 # Install python packages
-RUN pip install readchar
-RUN pip install PyYaml
-RUN pip install urdf-parser-py
+RUN pip install future\
+    PyYaml\
+    urdf-parser-py\
+    panda_robot\
+    numpy==1.21
+
 
 # Install Rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
@@ -40,7 +54,7 @@ COPY . /workspace
 WORKDIR /workspace/
 #RUN rosdep init 
 RUN rosdep update
-RUN rosdep install --from-paths src --ignore-src --rosdistro noetic -y --skip-keys libfranka
+RUN rosdep install --from-paths src --ignore-src --rosdistro noetic  -y --skip-keys libfranka
 
 
 # Set libfranka library
@@ -59,4 +73,6 @@ WORKDIR /workspace/
 # Set the default command to execute
 # When creating a container, this will simulate `docker run -it`
 CMD ["bash"]
+
+
 

@@ -38,8 +38,9 @@
     <!-- Always start in paused mode, and only unpause when spawning the model -->
     <arg name="paused" value="true"/>
     <arg name="gui" value="$(eval not arg('headless'))"/>
-    <arg name="use_sim_time" value="true"/>
+    <arg name="use_sim_time" value="false"/>
   </include>
+<node name="rqt_reconfigure" pkg="rqt_reconfigure" type="rqt_reconfigure" required="false" />
 
   <param name="robot_description"
          command="xacro $(find franka_description)/robots/panda_arm.urdf.xacro
