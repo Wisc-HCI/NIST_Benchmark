@@ -1,0 +1,5 @@
+panda_simulator/panda_hardware_interface
+/workspace/devel/.private/panda_hardware_interface/cmake.lock /workspace/devel/./cmake.lock
+/workspace/devel/.private/panda_hardware_interface/lib/pkgconfig/panda_hardware_interface.pc /workspace/devel/lib/pkgconfig/panda_hardware_interface.pc
+/workspace/devel/.private/panda_hardware_interface/share/panda_hardware_interface/cmake/panda_hardware_interfaceConfig.cmake /workspace/devel/share/panda_hardware_interface/cmake/panda_hardware_interfaceConfig.cmake
+/workspace/devel/.private/panda_hardware_interface/share/panda_hardware_interface/cmake/panda_hardware_interfaceConfig-version.cmake /workspace/devel/share/panda_hardware_interface/cmake/panda_hardware_interfaceConfig-version.cmake
