@@ -65,7 +65,9 @@ cd /workspace
 catkin build
 source devel/setup.sh
 
-chmod +x /workspace/src/panda_benchmark/scripts/
+chmod +x /workspace/src/panda_benchmark/scripts/pick_and_place.py
+chmod +x /workspace/src/panda_benchmark/scripts/move_to_position.py
+
 ```
 
 
@@ -84,7 +86,6 @@ Now you are ready to run the robot or simulation by reference [run_robot.md](/do
     catkin build
     source devel/setup.sh
     ```
-
 * Opening a new docker terminal:
     ```bash
     docker ps  # This will show you running containers w/ their ID

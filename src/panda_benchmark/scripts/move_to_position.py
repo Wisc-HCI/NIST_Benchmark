@@ -8,7 +8,7 @@ from relaxed_ik_ros1.srv import IKPoseRequest, IKPose
 from transformations import quaternion_from_euler
 
 
-def move_to_caresian_position(
+def move_to_cartesian_position(
     arm:PandaArm,
     x:float, y:float, z:float, 
     roll:float, pitch:float, yaw:float):
@@ -52,7 +52,7 @@ if __name__ == '__main__':
     rospy.init_node("panda_demo") # initialise ros node
     arm = PandaArm() 
     arm.move_to_neutral()
-    move_to_caresian_position(arm, 
+    move_to_cartesian_position(arm, 
                               0.5, 0, 0.3, # X, Y, Z in m
                               0, 0.0, 0.0) # Roll, Pitch, Yaw in rads
     arm.exec_gripper_cmd(0.05) # Width between gripper in m

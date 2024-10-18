@@ -1,6 +1,6 @@
 # Simulating the Bot
 
-This simulates moving the bot to a specific point specified in [move_to_position.py](src/panda_benchmark/scripts/move_to_position.py) in gazebo.
+This simulates moving the bot to pick and place an object as specified in [pick_and_place.py](src/panda_benchmark/scripts/pick_and_place.py) in gazebo.
 
 
 ## Setup
@@ -15,7 +15,7 @@ roslaunch panda_benchmark simulation.launch
 
 # Run the following in another  terminal to move the bot to a position
 source devel/setup.sh
-rosrun panda_benchmark move_to_position.py 
+rosrun panda_benchmark pick_and_place.py 
 
 ```
 

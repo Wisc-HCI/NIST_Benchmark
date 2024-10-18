@@ -1,6 +1,6 @@
 # Moving the Physical the Bot
 
-This moves the bot to a specific point specified in [move_to_position.py](src/panda_benchmark/scripts/move_to_position.py).
+This moves the bot to pick and place an object as specified in [pick_and_place.py](src/panda_benchmark/scripts/pick_and_place.py)
 
 This uses franka_ros_interface as a controller. For compatibility with franka_ros, we are using the kinetic-devel branch of panda_moveit_config. 
 
@@ -21,7 +21,7 @@ roslaunch panda_benchmark interface.launch
 # In another terminal do the following:
 source devel/setup.sh
 ./franka.sh master
-rosrun panda_benchmark move_to_position.py # WARNING: THIS WILL MOVE THE BOT!
+rosrun panda_benchmark pick_and_place.py # WARNING: THIS WILL MOVE THE BOT!
 ```
 
 
