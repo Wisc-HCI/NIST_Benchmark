@@ -4,3 +4,5 @@
 /logs/
 !/libfranka/build/
 /.catkin_tools/
+# What's in this folder is too big for github
+/src/Azure-Kinect-Sensor-SDK/output/

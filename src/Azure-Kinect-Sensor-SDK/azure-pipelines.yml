@@ -1,0 +1,805 @@
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
+name: K4A-SDK-$(SourceBranchName)-$(Date:yyyyMMdd)-$(Rev:rrr)
+
+schedules:
+# Every 60 minutes from 08:00 UTC (00:00 PST/01:00 PDT) to 10:00 UTC (02:00 PST/03:00 PDT)
+- cron: "*/60 08-10 * * *"
+  displayName: 'Nightly Builds - Develop'
+  branches:
+    include:
+    - develop
+  always: true
+# Every 30 minutes from 11:00 UTC (03:00 PST/04:00 PDT) to 13:00 UTC (05:00 PST/06:00 PDT)
+# - cron: "*/30 11-13 * * *"
+#   displayName: 'Nightly Builds - Master'
+#   branches:
+#     include:
+#     - master
+#   always: true
+
+    
+variables:
+- name: 'skipComponentGovernaceDetection'
+  value: true
+- name: 'linux_firmware_version'
+  value: '1.6.110079014'
+- name: 'windows_firmware_version'
+  value: '1.6.110079014'
+- name: 'NuGetPackageVersion'
+  value: '1.4.1-alpha.0'
+- name: 'OpenCVPath'
+  value: 'C:\OpenCV\Build\x64\vc15\'
+
+trigger:
+  batch: false
+  branches:
+    include:
+    - master
+    - develop
+    - release/*
+    - hotfix/*
+    - feature/*
+
+jobs:
+- job: WindowsK4ABuildTest
+  displayName: Win
+  strategy:
+    maxParallel: 100
+    matrix:
+      VS2019_x64-msvc_debug_ninja:
+        CMakeArch: 'amd64'
+        BuildGenerator: 'Ninja'
+        CMakeConfiguration: 'debug'
+        MSBuildPlatform: 'x64'
+        MSBuildConfiguration: 'Debug'
+        vmImage: 'windows-2019'
+        UsesOpenCV: 'TRUE'
+      VS2019_x64-msvc_rel_ninja:
+        CMakeArch: 'amd64'
+        BuildGenerator: 'Ninja'
+        CMakeConfiguration: 'relwithdebinfo'
+        MSBuildPlatform: 'x64'
+        MSBuildConfiguration: 'Release'
+        vmImage: 'windows-2019'
+        UsesOpenCV: 'TRUE'
+      VS2019_x86-msvc_debug_ninja:
+        CMakeArch: 'x86'
+        BuildGenerator: 'Ninja'
+        CMakeConfiguration: 'debug'
+        MSBuildPlatform: 'x86'
+        MSBuildConfiguration: 'Debug'
+        vmImage: 'windows-2019'
+        UsesOpenCV: 'FALSE'
+      VS2019_x86-msvc_rel_ninja:
+        CMakeArch: 'x86'
+        BuildGenerator: 'Ninja'
+        CMakeConfiguration: 'relwithdebinfo'
+        MSBuildPlatform: 'x86'
+        MSBuildConfiguration: 'Release'
+        vmImage: 'windows-2019'
+        UsesOpenCV: 'FALSE'
+  pool:
+    vmImage: $(vmImage)
+
+  steps:
+  - checkout: self
+    clean: true
+    lfs: false
+    persistCredentials: true
+    submodules: true
+
+  # Use Python Version
+  # Retrieves the specified version of Python from the tool cache. Optionally add it to PATH.
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.x'
+      addToPath: true
+      architecture: 'x64'
+
+  - powershell: '$(Build.SourcesDirectory)/scripts/verify-windows.ps1'
+    displayName: 'Run verify-windows.ps1'
+
+  - script: |
+       git add --renormalize . && git diff-index --quiet HEAD --
+       IF %ERRORLEVEL% NEQ 0 (
+         echo "Please renormalize files before pushing using git add --renormalize ."
+         git status
+         exit /b 1
+       )
+       exit /b 0
+    displayName: 'Check Line Endings'
+
+  - task: BatchScript@1
+    displayName: 'Setup VS Env'
+    inputs:
+      filename: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\Tools\VsDevCmd.bat'
+      arguments: '-arch=$(CMakeArch)'
+      modifyEnvironment: true
+    condition: and(succeeded(), eq(variables['vmImage'], 'vs2017-win2016'))
+
+  - task: BatchScript@1
+    displayName: 'Setup VS Env'
+    inputs:
+      filename: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat'
+      arguments: '-arch=$(CMakeArch)'
+      modifyEnvironment: true
+    condition: and(succeeded(), eq(variables['vmImage'], 'windows-2019'))
+
+  - pwsh: '$(Build.SourcesDirectory)/scripts/install-opencv.ps1'
+    displayName: 'Install OpenCV'
+    condition: and(succeeded(), eq(variables['UsesOpenCV'], 'TRUE'))
+
+  - powershell: |
+      $ErrorActionPreference = "Stop"
+
+      function Download-ToTemp
+      {
+          param
+          (
+              [Parameter(Mandatory)]
+              [string] $url,
+              [string] $filename
+          )
+
+          if (-not ($filename))
+          {
+              $filename = Split-Path -Path $url -Leaf
+          }
+
+          if (-not ($filename))
+          {
+              Write-Error "Unable to parse filename from $url"
+              return $null
+          }
+
+          $tempDir = [System.IO.Path]::GetTempPath()
+          $path = Join-Path -Path $tempDir -ChildPath $filename
+
+          Write-Host -NoNewline "Downloading $url to $path..."
+          Invoke-WebRequest -Uri $url -OutFile $path -UserAgent "NativeClient"
+          Write-Host "Done"
+
+          return $path
+      }
+
+      # Download NASM
+      $url = "https://www.nasm.us/pub/nasm/releasebuilds/2.14.02/win64/nasm-2.14.02-win64.zip"
+      $nasmzip = Download-ToTemp -url $url
+
+      Expand-Archive $nasmzip .\nasmexe
+      Write-Host "NASM Downloaded"
+
+    workingDirectory: '$(Build.BinariesDirectory)'
+    displayName: 'Download NASM'
+
+  - script: |
+      set PATH=%PATH%;$(Build.BinariesDirectory)\nasmexe\nasm-2.14.02
+      cmake -G "$(BuildGenerator)" "-DCMAKE_VERBOSE_MAKEFILE=ON" "-DOpenCV_REQUIRED=$(UsesOpenCV)" "$(Build.SourcesDirectory)" "-DCMAKE_BUILD_TYPE=$(CMakeConfiguration)" "-DK4A_SOURCE_LINK=ON"
+    workingDirectory: '$(Build.BinariesDirectory)'
+    displayName: 'CMake Configure'
+    env:
+      CC: cl
+      CXX: cl
+
+  - task: CMake@1
+    displayName: 'CMake Build'
+    inputs:
+      workingDirectory: '$(Build.BinariesDirectory)'
+      cmakeArgs: '--build . --config "$(CMakeConfiguration)"'
+
+  - task: CMake@1
+    displayName: 'CMake Build Package'
+    inputs:
+      workingDirectory: '$(Build.BinariesDirectory)'
+      cmakeArgs: '--build . --config "$(CMakeConfiguration)" --target package'
+
+  - script: 'ctest -V -C "$(CMakeConfiguration)" -L unit'
+    workingDirectory: '$(Build.BinariesDirectory)'
+    displayName: 'Run Native Unit Tests'
+
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results'
+    inputs:
+      testResultsFiles: '**\TEST-*.xml'
+      searchFolder: '$(Build.BinariesDirectory)'
+      mergeTestResults: true
+      testRunTitle: 'Unit Tests'
+    condition: succeededOrFailed()
+
+  # Create a placeholder version of the depth engine to satisfy MSBuild copy rules.
+  # This version is not needed for actual execution.
+  # In the future we should fetch the real version from a valid source.
+  - powershell: |
+      if ("$(BuildGenerator)" -eq "Ninja")
+      {
+        IF(-Not (Test-Path "$(Build.BinariesDirectory)\bin\depthengine_2_0.dll")) { Add-Content "$(Build.BinariesDirectory)\bin\depthengine_2_0.dll" "Placeholder file, please download real depth engine." }
+      }
+      elseif ("$(BuildGenerator)" -like "Visual Studio *")
+      {
+        IF(-Not (Test-Path "$(Build.BinariesDirectory)\bin\$(CMakeConfiguration)\depthengine_2_0.dll")) { Add-Content "$(Build.BinariesDirectory)\bin\$(CMakeConfiguration)\depthengine_2_0.dll" "Placeholder file, please download real depth engine." }
+      }
+      else
+      {
+        Write-Error "Unknown Generator <<$(BuildGenerator)>>"
+      }
+    displayName: 'Create placeholder depth engine'
+
+  - task: NuGetToolInstaller@0
+    inputs:
+      versionSpec: '>=4.3.1' 
+
+  - task: 333b11bd-d341-40d9-afcf-b32d5ce6f23b@2 # NuGetCommand@2
+    inputs:
+      command: 'restore'
+      solution: '$(Build.SourcesDirectory)\src\csharp\K4a.sln'
+
+  - task: VSBuild@1
+    displayName: 'Build C# Wrappers'
+    inputs:
+      solution: '$(Build.SourcesDirectory)\src\csharp\K4a.sln'
+      msbuildArgs: '/p:BaseOutputPath="$(Build.BinariesDirectory)\bin\$(MSBuildConfiguration)\\"'
+      platform: '$(MSBuildPlatform)'
+      configuration: '$(MSBuildConfiguration)'
+
+  - task: VSTest@2
+    displayName: 'Run C# Unit Tests'
+    inputs:
+      testSelector: 'testAssemblies'
+      searchFolder: '$(Build.BinariesDirectory)\bin'
+      platform: '$(MSBuildPlatform)'
+      configuration: '$(MSBuildConfiguration)'
+      testAssemblyVer2: |
+        **/*UnitTests.dll
+        !**/obj/**
+  
+  # Clean up any placeholder version of the depth engine that were created.
+  - powershell:  Get-ChildItem -Path "$(Build.BinariesDirectory)\bin\\" -Filter "DepthEngine_*.dll" -Recurse | Remove-Item
+    displayName: 'Clean up temp depth engine'
+
+  - task: CopyFiles@2
+    displayName: 'Copy build folder to Staging'
+    inputs:
+      SourceFolder: '$(Build.BinariesDirectory)'
+      Contents: |
+        *
+        bin/**/*
+        docs/**/*
+        CMakeFiles/**/*
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: Build folder'
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: '$(CMakeArch)-windows-msvc-$(CMakeConfiguration)'
+      parallel: true
+      parallelCount: 8
+    condition: and(succeeded(), and(eq(variables['vmImage'], 'vs2017-win2016'), eq(variables['BuildGenerator'], 'Ninja')))
+
+  # This will publish symbols created from this build to the Azure DevOps symbol
+  # server. This symbol server will be private to Microsoft internal.
+  - task: PublishSymbols@2
+    displayName: 'Publish K4A Symbols'
+    inputs:
+      symbolsFolder: '$(Build.BinariesDirectory)'
+      searchPattern: 'bin/**/*.pdb'
+      indexSources: true
+      publishSymbols: true
+      symbolServerType: 'teamServices'
+    condition: and(succeeded(), and(eq(variables['vmImage'], 'vs2017-win2016'), eq(variables['BuildGenerator'], 'Ninja')))
+
+- job: LinuxK4ABuildTest
+  displayName: Linux
+  strategy:
+    maxParallel: 100
+    matrix:
+      x64-clang_debug_ninja:
+        CMakeLinuxTargetTriple: 'x86_64-linux-clang'
+        CMakeConfiguration: 'debug'
+        UsesOpenCV: 'TRUE'
+        container: 'mcr.microsoft.com/akbuilder-linux:v5-amd64'
+      x64-gnu_debug_ninja:
+        CMakeLinuxTargetTriple: 'x86_64-linux-gnu'
+        CMakeConfiguration: 'debug'
+        UsesOpenCV: 'TRUE'
+        container: 'mcr.microsoft.com/akbuilder-linux:v5-amd64'
+      x64-clang_rel_ninja:
+        CMakeLinuxTargetTriple: 'x86_64-linux-clang'
+        CMakeConfiguration: 'relwithdebinfo'
+        UsesOpenCV: 'TRUE'
+        container: 'mcr.microsoft.com/akbuilder-linux:v5-amd64'
+      x64-gnu_rel_ninja:
+        CMakeLinuxTargetTriple: 'x86_64-linux-gnu'
+        CMakeConfiguration: 'relwithdebinfo'
+        UsesOpenCV: 'TRUE'
+        container: 'mcr.microsoft.com/akbuilder-linux:v5-amd64'
+      # arm64-clang_debug_ninja:
+      #   CMakeLinuxTargetTriple: 'arm64-linux-clang'
+      #   CMakeConfiguration: 'debug'
+      #   UsesOpenCV: 'FALSE'
+      arm64-gnu_debug_ninja:
+        CMakeLinuxTargetTriple: 'arm64-linux-gnu'
+        CMakeConfiguration: 'debug'
+        UsesOpenCV: 'FALSE'
+        container: 'mcr.microsoft.com/akbuilder-linux:v5-arm64'
+      # arm64-clang_rel_ninja:
+      #   CMakeLinuxTargetTriple: 'arm64-linux-clang'
+      #   CMakeConfiguration: 'relwithdebinfo'
+      #   UsesOpenCV: 'FALSE'
+      arm64-gnu_rel_ninja:
+        CMakeLinuxTargetTriple: 'arm64-linux-gnu'
+        CMakeConfiguration: 'relwithdebinfo'
+        UsesOpenCV: 'FALSE'
+        container: 'mcr.microsoft.com/akbuilder-linux:v5-arm64'
+
+      # 32-bit builds are currently broken
+      # i386-unknown-linux-clang_debug_ninja:
+      #   CMakeLinuxTargetTriple: 'i386-linux-clang'
+      #   CMakeConfiguration: 'debug'
+      # i386-unknown-linux-gnu_debug_ninja:
+      #   CMakeLinuxTargetTriple: 'i386-linux-gnu'
+      #   CMakeConfiguration: 'debug'
+      # i386-unknown-linux-clang_relwithdebinfo_ninja:
+      #   CMakeLinuxTargetTriple: 'i386-linux-clang'
+      #   CMakeConfiguration: 'relwithdebinfo'
+      # i386-unknown-linux-gnu_relwithdebinfo_ninja:
+      #   CMakeLinuxTargetTriple: 'i386-linux-gnu'
+      #   CMakeConfiguration: 'relwithdebinfo'
+  pool:
+    vmImage: 'ubuntu-18.04'
+  container: $[ variables['container'] ]
+
+  steps:
+  - checkout: self
+    clean: true
+    lfs: false
+    persistCredentials: true
+    submodules: true
+
+  - script: |
+       git add --renormalize . && git diff-index --quiet HEAD --
+       if [ $? -ne 0 ]
+       then
+         echo "Please normalize files before pushing using git add --renormalize ."
+         git status
+         exit 1
+       fi
+    displayName: 'Check Line Endings'
+
+    # OpenCV always required on Linux
+  - script: 'cmake -GNinja -DCMAKE_VERBOSE_MAKEFILE=ON -DOpenCV_REQUIRED=$(UsesOpenCV) "$(Build.SourcesDirectory)" "-DCMAKE_BUILD_TYPE=$(CMakeConfiguration)" "-DCMAKE_TOOLCHAIN_FILE=$(Build.SourcesDirectory)/cmake/toolchains/$(CMakeLinuxTargetTriple).cmake"'
+    workingDirectory: '$(Build.BinariesDirectory)'
+    displayName: 'CMake Configure'
+
+  - task: CMake@1
+    displayName: 'CMake Build'
+    inputs:
+      workingDirectory: '$(Build.BinariesDirectory)'
+      cmakeArgs: '--build .'
+
+  - task: CMake@1
+    displayName: 'CMake Build Package'
+    inputs:
+      workingDirectory: '$(Build.BinariesDirectory)'
+      cmakeArgs: '--build . --target package'
+
+  - script: 'ctest -V -L unit'
+    workingDirectory: '$(Build.BinariesDirectory)'
+    displayName: 'Unit Tests'
+
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results'
+    inputs:
+      searchFolder: '$(Build.BinariesDirectory)'
+      mergeTestResults: true
+      testRunTitle: 'Unit Tests'
+    condition: succeededOrFailed()
+
+  - task: CopyFiles@2
+    displayName: 'Copy build folder to Staging'
+    inputs:
+      SourceFolder: '$(Build.BinariesDirectory)'
+      Contents: |
+        *
+        bin/*
+        docs/**/*
+        CMakeFiles/**/*
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: Build folder'
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: '$(CMakeLinuxTargetTriple)-$(CMakeConfiguration)'
+      parallel: true
+      parallelCount: 8
+    condition: and(succeeded(), contains(variables['CMakeLinuxTargetTriple'], 'gnu'))
+
+- job: DocumentationBuild
+  displayName: Documentation Build
+  pool:
+    vmImage: 'windows-2019'
+    demands:
+      - Cmd
+
+  steps:
+  - checkout: self
+    clean: true
+    lfs: false
+    persistCredentials: true
+    submodules: true
+
+  - task: BatchScript@1
+    displayName: 'Setup VS2019 Env'
+    inputs:
+      filename: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat'
+      modifyEnvironment: true
+
+  - powershell: |
+      $ErrorActionPreference = "Stop"
+
+      function Download-ToTemp
+      {
+          param
+          (
+              [Parameter(Mandatory)]
+              [string] $url,
+              [string] $filename
+          )
+
+          if (-not ($filename))
+          {
+              $filename = Split-Path -Path $url -Leaf
+          }
+
+          if (-not ($filename))
+          {
+              Write-Error "Unable to parse filename from $url"
+              return $null
+          }
+
+          $tempDir = [System.IO.Path]::GetTempPath()
+          $path = Join-Path -Path $tempDir -ChildPath $filename
+
+          Write-Host -NoNewline "Downloading $url to $path..."
+          Invoke-WebRequest -Uri $url -OutFile $path -UserAgent "NativeClient"
+          Write-Host "Done"
+
+          return $path
+      }
+
+      # Download Doxygen
+      $url = "https://sourceforge.net/projects/doxygen/files/rel-1.8.14/doxygen-1.8.14.windows.bin.zip/download"
+      $filename = "doxygen-1.8.14.windows.bin.zip"
+      $doxygenzip = Download-ToTemp -url $url -filename $filename
+
+      Expand-Archive $doxygenzip .\doxygenexe
+      Write-Host "Doxygen installed. Please use Visual Studio Developer Command prompt to build."
+
+    workingDirectory: '$(Build.BinariesDirectory)'
+    displayName: 'Download doxygen'
+
+  - script: |
+      set PATH=%PATH%;$(Build.BinariesDirectory)\doxygenexe
+      cmake -G Ninja "-DK4A_BUILD_DOCS:BOOL=ON" "-DCMAKE_VERBOSE_MAKEFILE=ON" "-DSOURCE_BRANCH=$(Build.SourceBranch)" "$(Build.SourcesDirectory)"
+
+    workingDirectory: '$(Build.BinariesDirectory)'
+    displayName: 'CMake Configure'
+    env:
+      CC: cl
+      CXX: cl
+
+  - task: CMake@1
+    displayName: 'CMake Build'
+    inputs:
+      workingDirectory: '$(Build.BinariesDirectory)'
+      cmakeArgs: '--build . --target k4adocs'
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: Documentation'
+    inputs:
+      PathtoPublish: '$(Build.BinariesDirectory)\docs'
+      ArtifactName: docs
+      parallel: true
+      parallelCount: 8
+
+  - task: PowerShell@2
+    displayName: 'Publish Documentation HTML'
+    inputs:
+      targetType: 'filePath'
+      filePath: '$(Build.SourcesDirectory)\doxygen\PublishDocs.ps1'
+    condition: and(eq(variables['System.CollectionId'], 'cb55739e-4afe-46a3-970f-1b49d8ee7564'), and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')))
+
+- ${{ if eq(variables['System.CollectionId'], 'cb55739e-4afe-46a3-970f-1b49d8ee7564') }}:
+  - job: WindowsFunctionalTests
+    displayName: Windows Functional Test
+    dependsOn: WindowsK4ABuildTest
+    variables:
+      firmware_version: "$(windows_firmware_version)"
+    pool:
+      name: Analog-FwConnected
+      demands:
+      - Eden
+      - Agent.OS -equals Windows_NT
+
+    steps:
+    - task: VisualStudioTestPlatformInstaller@1
+      displayName: 'Install Visual Studio Test Platform tools'
+
+    - checkout: self
+      clean: true
+      lfs: false
+      persistCredentials: true
+      submodules: false
+
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download Build Artifacts'
+      inputs:
+        artifactName: 'amd64-windows-msvc-RelWithDebInfo'
+        parallelizationLimit: 8
+
+    - task: NuGetToolInstaller@0
+      inputs:
+        versionSpec: '>=5.1.0' 
+
+    - task: 333b11bd-d341-40d9-afcf-b32d5ce6f23b@2  #NugetCommand@2
+      displayName: "Get Azure Kinect NuGet Package"
+      inputs: 
+        command: custom 
+        arguments: install Microsoft.Azure.Kinect.Sensor -prerelease -Version $(NuGetPackageVersion) -OutputDirectory $(System.ArtifactsDirectory)/NugetOutputDir
+
+    - task: CopyFiles@2
+      displayName: "Copy DepthEngine into amd64/debug artifacts folder"
+      inputs:
+        sourceFolder: "$(System.ArtifactsDirectory)/NugetOutputDir/Microsoft.Azure.Kinect.Sensor.$(NuGetPackageVersion)/lib/native/amd64/release/"
+        contents: "depthengine*.dll"
+        targetFolder: "$(System.ArtifactsDirectory)/depthengineplugin/windows/amd64/debug"
+        flattenFolders: true
+
+    - task: CopyFiles@2
+      displayName: "Copy DepthEngine into amd64/release artifacts folder"
+      inputs:
+        sourceFolder: "$(System.ArtifactsDirectory)/NugetOutputDir/Microsoft.Azure.Kinect.Sensor.$(NuGetPackageVersion)/lib/native/amd64/release/"
+        contents: "depthengine*.dll"
+        targetFolder: "$(System.ArtifactsDirectory)/depthengineplugin/windows/amd64/release"
+        flattenFolders: true
+
+    - task: CopyFiles@2
+      displayName: "Copy DepthEngine into x86/debug artifacts folder"
+      inputs:
+        sourceFolder: "$(System.ArtifactsDirectory)/NugetOutputDir/Microsoft.Azure.Kinect.Sensor.$(NuGetPackageVersion)/lib/native/x86/release/"
+        contents: "depthengine*.dll"
+        targetFolder: "$(System.ArtifactsDirectory)/depthengineplugin/windows/x86/debug"
+        flattenFolders: true
+
+    - task: CopyFiles@2
+      displayName: "Copy DepthEngine into x86/release artifacts folder"
+      inputs:
+        sourceFolder: "$(System.ArtifactsDirectory)/NugetOutputDir/Microsoft.Azure.Kinect.Sensor.$(NuGetPackageVersion)/lib/native/x86/release/"
+        contents: "depthengine*.dll"
+        targetFolder: "$(System.ArtifactsDirectory)/depthengineplugin/windows/x86/release"
+        flattenFolders: true
+
+    - task: CopyFiles@2
+      displayName: "Copy AzureKinectDK_Fw_$(firmware_version).bin artifacts folder"
+      inputs:
+        sourceFolder: "$(System.ArtifactsDirectory)/NugetOutputDir/Microsoft.Azure.Kinect.Sensor.$(NuGetPackageVersion)/firmware/"
+        contents: "AzureKinectDK_Fw_$(firmware_version).bin"
+        targetFolder: "$(System.ArtifactsDirectory)/firmware"
+        flattenFolders: true
+
+    # we don't want to test other binaries in the NuGet package, so delete it.
+    - task: DeleteFiles@1
+      displayName: "Delete Microsoft.Azure.Kinect.Sensor NuGet Package"
+      inputs:
+        sourceFolder: "$(System.ArtifactsDirectory)/NugetOutputDir"
+        contents: '\*'
+
+    - task: CopyFiles@2
+      displayName: "Copy DepthEngine into bin folder"
+      inputs:
+        sourceFolder: "$(System.ArtifactsDirectory)/depthengineplugin/windows/amd64/release/"
+        contents: "depthengine*.dll"
+        targetFolder: "$(System.ArtifactsDirectory)/amd64-windows-msvc-relwithdebinfo/bin"
+        flattenFolders: true
+
+    - task: CopyFiles@2
+      displayName: "Copy DepthEngine into C# functional tests folder"
+      inputs:
+        sourceFolder: "$(System.ArtifactsDirectory)/depthengineplugin/windows/amd64/release/"
+        contents: "depthengine*.dll"
+        targetFolder: "$(System.ArtifactsDirectory)/amd64-windows-msvc-relwithdebinfo/bin/Release/Microsoft.AzureKinect.FunctionalTests/netcoreapp2.1/"
+        flattenFolders: true
+
+    - script: '.\amd64-windows-msvc-relwithdebinfo\bin\AzureKinectFirmwareTool.exe -r'
+      workingDirectory: '$(System.ArtifactsDirectory)'
+      displayName: 'Reset K4A Device'
+
+    - script: '.\amd64-windows-msvc-relwithdebinfo\bin\AzureKinectFirmwareTool.exe -u firmware/AzureKinectDK_Fw_$(firmware_version).bin'
+      workingDirectory: '$(System.ArtifactsDirectory)'
+      displayName: 'Update Device'
+
+    - script: '.\amd64-windows-msvc-relwithdebinfo\bin\enumerate_devices.exe'
+      workingDirectory: '$(System.ArtifactsDirectory)'
+      displayName: 'Check Device Health'
+
+    - script: 'python $(Build.SourcesDirectory)/scripts/RunTestList.py --list bin/functional_test_list.txt --bin bin/ --output=xml --gtest_filter=-*ONBOARDING*'
+      workingDirectory: '$(System.ArtifactsDirectory)/amd64-windows-msvc-relwithdebinfo'
+      displayName: 'Run Functional Tests'
+      timeoutInMinutes: 15
+
+    - script: 'python $(Build.SourcesDirectory)/scripts/RunTestList.py --list bin/functional_custom_test_list.txt --bin bin/ --output=xml --gtest_filter=-*ONBOARDING*'
+      workingDirectory: '$(System.ArtifactsDirectory)/amd64-windows-msvc-relwithdebinfo'
+      displayName: 'Run Custom Functional Tests'
+      timeoutInMinutes: 15
+
+    - script: 'python $(Build.SourcesDirectory)/scripts/RunTestList.py --list bin/functional_test_list.txt --bin bin/ --output=xml --gtest_filter=*ONBOARDING*'
+      workingDirectory: '$(System.ArtifactsDirectory)/amd64-windows-msvc-relwithdebinfo'
+      displayName: 'Run Functional Tests - Onboarding'
+      timeoutInMinutes: 15
+      continueOnError: true
+
+    - task: VSTest@2
+      displayName: 'Run C# Functional Tests'
+      inputs:
+        testSelector: 'testAssemblies'
+        searchFolder: '$(Build.BinariesDirectory)'
+        platform: '$(MSBuildPlatform)'
+        configuration: '$(MSBuildConfiguration)'
+        vsTestVersion: 'toolsInstaller'
+        testAssemblyVer2: |
+          **/*FunctionalTests.dll
+          !**/obj/**
+
+- ${{ if eq(variables['System.CollectionId'], 'cb55739e-4afe-46a3-970f-1b49d8ee7564') }}:
+  - job: LinuxFunctionalTests
+    displayName: Linux Functional Test
+    dependsOn: LinuxK4ABuildTest
+    variables:
+      firmware_version: "$(linux_firmware_version)"
+    strategy:
+      maxParallel: 100
+      matrix:
+        x86_64:
+          CMakeLinuxTargetTriple: 'x86_64-linux-gnu'
+          EdenArch: 'x64'
+        arm64:
+          CMakeLinuxTargetTriple: 'arm64-linux-gnu'
+          EdenArch: 'arm64'
+    pool:
+      name: Analog-FwConnected
+      demands:
+      - EdenArch -equals $(EdenArch)
+      - Agent.OS -equals Linux
+
+    steps:
+    - checkout: self
+      clean: true
+      lfs: false
+      persistCredentials: true
+      submodules: true
+
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download Build Artifacts'
+      inputs:
+        artifactName: '$(CMakeLinuxTargetTriple)-relwithdebinfo'
+        parallelizationLimit: 8
+        
+    - task: NuGetToolInstaller@0
+      inputs:
+        versionSpec: '>=5.1.0' 
+
+    # The account on the NUC does not currently give this user permission to install, so we have done so manually.
+    # Mono has a bug, so we need a newer version. Version 6.8 is working well for both AMD64 and ARM64.
+    #- script: 'apt-get install mono-complete python git-lfs openssh-server ufw libopencv-dev'
+    #  workingDirectory: '$(System.ArtifactsDirectory)'
+    #  displayName: "Ensure Mono is installed"
+
+    - task: 333b11bd-d341-40d9-afcf-b32d5ce6f23b@2  #NugetCommand@2
+      displayName: "Get Azure Kinect NuGet Package"
+      inputs: 
+        command: custom 
+        arguments: install Microsoft.Azure.Kinect.Sensor -prerelease -Version $(NuGetPackageVersion) -OutputDirectory $(System.ArtifactsDirectory)/NugetOutputDir
+
+    - script: 'ls -alR'
+      workingDirectory: '$(System.ArtifactsDirectory)/NugetOutputDir'
+      displayName: "Temp List files"
+
+    - task: CopyFiles@2
+      displayName: "Copy DepthEngine into $(EdenArch)/debug artifacts folder"
+      inputs:
+        sourceFolder: "$(System.ArtifactsDirectory)/NugetOutputDir/Microsoft.Azure.Kinect.Sensor.$(NuGetPackageVersion)/linux/lib/native/$(EdenArch)/release/"
+        contents: "libdepthengine*"
+        targetFolder: "$(System.ArtifactsDirectory)/depthengineplugin/linux/$(EdenArch)/debug"
+        flattenFolders: true
+
+    - task: CopyFiles@2
+      displayName: "Copy DepthEngine into $(EdenArch)/release artifacts folder"
+      inputs:
+        sourceFolder: "$(System.ArtifactsDirectory)/NugetOutputDir/Microsoft.Azure.Kinect.Sensor.$(NuGetPackageVersion)/linux/lib/native/$(EdenArch)/release/"
+        contents: "libdepthengine*"
+        targetFolder: "$(System.ArtifactsDirectory)/depthengineplugin/linux/$(EdenArch)/release"
+        flattenFolders: true
+
+    - task: CopyFiles@2
+      displayName: "Copy AzureKinectDK_Fw_$(firmware_version).bin artifacts folder"
+      inputs:
+        sourceFolder: "$(System.ArtifactsDirectory)/NugetOutputDir/Microsoft.Azure.Kinect.Sensor.$(NuGetPackageVersion)/firmware/"
+        contents: "AzureKinectDK_Fw_$(firmware_version).bin"
+        targetFolder: "$(System.ArtifactsDirectory)/firmware"
+        flattenFolders: true
+
+    # we don't want to test other binaries in the NuGet package, so delete it.
+    - task: DeleteFiles@1
+      displayName: "Delete Microsoft.Azure.Kinect.Sensor NuGet Package"
+      inputs:
+        sourceFolder: "$(System.ArtifactsDirectory)/NugetOutputDir"
+        contents: '\*'
+
+    - task: CopyFiles@2
+      displayName: "Copy DepthEnginePlugin into Build Artifacts"
+      inputs:
+        sourceFolder: "$(System.ArtifactsDirectory)/depthengineplugin/linux/$(EdenArch)/release/"
+        contents: "libdepthengine.so*"
+        targetFolder: "$(System.ArtifactsDirectory)/$(CMakeLinuxTargetTriple)-relwithdebinfo/bin/"
+        flattenFolders: true
+
+    - script: 'chmod +x ./$(CMakeLinuxTargetTriple)-relwithdebinfo/bin/*'
+      workingDirectory: '$(System.ArtifactsDirectory)'
+      displayName: 'Add execution property to binary files'
+
+    # Set and verify the DISPLAY variable since DepthEngine needs to open a display window (even there is no visual display).
+    - script: |
+        echo
+        echo Checking OpenGL version on DISPLAY=:0
+        echo "##vso[task.setvariable variable=DISPLAY]:0"
+        export DISPLAY=:0
+        env | grep DISPLAY
+        which xauth
+        glxinfo | grep "OpenGL"
+        if [ $? -ne 0 ] ; then 
+          echo
+          echo Checking OpenGL version on DISPLAY=:1
+          echo "##vso[task.setvariable variable=DISPLAY]:1"
+          export DISPLAY=:1
+          env | grep DISPLAY
+          which xauth
+          glxinfo | grep "OpenGL"
+        fi
+      workingDirectory: '$(System.ArtifactsDirectory)'
+      displayName: 'Check openGL version'
+      timeoutInMinutes: 5
+
+    - script: './$(CMakeLinuxTargetTriple)-relwithdebinfo/bin/AzureKinectFirmwareTool -r'
+      workingDirectory: '$(System.ArtifactsDirectory)'
+      displayName: 'Reset K4A Device'
+      env:
+        K4A_LOG_LEVEL: 'I'
+
+    - script: './$(CMakeLinuxTargetTriple)-relwithdebinfo/bin/AzureKinectFirmwareTool -u firmware/AzureKinectDK_Fw_$(firmware_version).bin'
+      workingDirectory: '$(System.ArtifactsDirectory)'
+      displayName: 'Update Device'
+      env:
+        K4A_LOG_LEVEL: 'I'
+
+    - script: './$(CMakeLinuxTargetTriple)-relwithdebinfo/bin/enumerate_devices'
+      workingDirectory: '$(System.ArtifactsDirectory)'
+      displayName: 'Check Device Health'
+
+    - script: 'python $(Build.SourcesDirectory)/scripts/RunTestList.py --list bin/functional_test_list.txt --bin bin/ --output=xml --gtest_filter=-*ONBOARDING*'
+      workingDirectory: '$(System.ArtifactsDirectory)/$(CMakeLinuxTargetTriple)-relwithdebinfo'
+      displayName: 'Run Functional Tests'
+      timeoutInMinutes: 15
+
+    - script: 'python $(Build.SourcesDirectory)/scripts/RunTestList.py --list bin/functional_custom_test_list.txt --bin bin/ --output=xml --gtest_filter=-*ONBOARDING*'
+      workingDirectory: '$(System.ArtifactsDirectory)/$(CMakeLinuxTargetTriple)-relwithdebinfo'
+      displayName: 'Run Custom Functional Tests'
+      timeoutInMinutes: 15
+
+    - script: 'python $(Build.SourcesDirectory)/scripts/RunTestList.py --list bin/functional_test_list.txt --bin bin/ --output=xml --gtest_filter=*ONBOARDING*'
+      workingDirectory: '$(System.ArtifactsDirectory)/$(CMakeLinuxTargetTriple)-relwithdebinfo'
+      displayName: 'Run Functional Tests - Onboarding'
+      timeoutInMinutes: 15
+      continueOnError: true
