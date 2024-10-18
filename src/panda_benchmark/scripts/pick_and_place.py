@@ -13,11 +13,18 @@ if __name__ == '__main__':
 
     arm.exec_gripper_cmd(0.07)
     arm.move_to_neutral()
+
+    print("Desired cartesian pose (x, y, z): 0.425, 0.0955, 0.2")
     
     # Move to bolt
     move_to_cartesian_position(arm, 
                               0.425, 0.0955, 0.2, # X, Y, Z in m
                               0, 0.0, 0.0) # Roll, Pitch, Yaw in rads
+    
+    print("Cartesian Pose after moving to bolt:", arm.ee_pose())
+    print("Joint angles after moving to bolt:", arm.angles())
+
+    exit()
 
     # Grab bolt
     arm.exec_gripper_cmd(0.015) 
