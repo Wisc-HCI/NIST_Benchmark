@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
-import rospy
+import os
 import csv
+from datetime import datetime
+
+import rospy
 
 from panda_robot import PandaArm
 from move_to_position import move_to_cartesian_position
@@ -8,17 +11,20 @@ from move_to_position import move_to_cartesian_position
 		
 if __name__ == '__main__':
 
-    file_name = './output/accuracy_test.csv'
+    file_path = '/workspace/output/accuracy_test.csv'
     fieldnames = ['Trial_Time', 
                 'Desired_X', 'Desired_Y', 'Desired_Z', 
                 'Actual_J0', 'Actual_J1', 'Actual_J2', 'Actual_J3', 'Actual_J4', 'Actual_J5', 'Actual_J6',
                 'Actual_X', 'Actual_Y', 'Actual_Z', 
                 ]
-    with open(file_name, 'w') as csvfile:
 
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writeheader()
-    row = []
+    # Only add header if the file is empty
+    if os.stat(file_path).st_size == 0:
+        with open(file_path, 'w') as csv_file:
+            writer = csv.writer(csv_file)
+            writer.writerow(fieldnames)
+    
+    row = [datetime.now().strftime("%Y-%m-%d %H:%M:%S")] # Add time to row
 
     rospy.init_node("panda_demo") # initialise ros node
     arm = PandaArm() 
@@ -34,14 +40,14 @@ if __name__ == '__main__':
                               0, 0.0, 0.0) # Roll, Pitch, Yaw in rads
     
     row += ik_joints  # Joint positions calculated from IK
-    row += arm.angles() # Actual Joint angles
-    row += arm.ee_pose()[0] # Actual cartesian position
+    row += list(arm.angles()) # Actual Joint angles
+    row += list(arm.ee_pose()[0]) # Actual cartesian position
 
     print(row)
 
-    with open(file_name, 'a') as csvfile:
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writerows(row)
+    with open(file_path, 'a') as csv_file:
+        writer = csv.writer(csv_file)
+        writer.writerows([row])
 
     exit()
 
