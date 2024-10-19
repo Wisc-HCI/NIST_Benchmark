@@ -9,13 +9,14 @@ from panda_robot import PandaArm
 from move_to_position import move_to_cartesian_position
 
 		
-if __name__ == '__main__':
+def move_and_log(arm, x, y, z, action_note):
 
     file_path = '/workspace/output/accuracy_test.csv'
     fieldnames = ['Trial_Time', 
                 'Desired_X', 'Desired_Y', 'Desired_Z', 
                 'Actual_J0', 'Actual_J1', 'Actual_J2', 'Actual_J3', 'Actual_J4', 'Actual_J5', 'Actual_J6',
                 'Actual_X', 'Actual_Y', 'Actual_Z', 
+                'Action'
                 ]
 
     # Only add header if the file is empty
@@ -26,22 +27,18 @@ if __name__ == '__main__':
     
     row = [datetime.now().strftime("%Y-%m-%d %H:%M:%S")] # Add time to row
 
-    rospy.init_node("panda_demo") # initialise ros node
-    arm = PandaArm() 
 
-    arm.exec_gripper_cmd(0.07)
-    arm.move_to_neutral()
-
-    row += [0.425, 0.0955, 0.2]  # Desired cartesian position
+    row += [x, y, z]  # Desired cartesian position
     
     # Move to bolt
     ik_joints = move_to_cartesian_position(arm, 
-                              0.425, 0.0955, 0.2, # X, Y, Z in m
+                              x, y, z, # X, Y, Z in m
                               0, 0.0, 0.0) # Roll, Pitch, Yaw in rads
     
     row += ik_joints  # Joint positions calculated from IK
     row += list(arm.angles()) # Actual Joint angles
     row += list(arm.ee_pose()[0]) # Actual cartesian position
+    row += [action_note]
 
     print(row)
 
@@ -49,5 +46,35 @@ if __name__ == '__main__':
         writer = csv.writer(csv_file)
         writer.writerows([row])
 
-    exit()
+ 
+ 
+if __name__ == '__main__':
 
+    rospy.init_node("panda_demo") # initialise ros node
+    arm = PandaArm() 
+
+    for i in range(3):
+
+        arm.exec_gripper_cmd(0.07)
+        arm.move_to_neutral()
+        
+        # Move to bolt
+        move_and_log(arm, 0.425, 0.0955, 0.2, "Move to bolt")
+        
+        # Grab bolt
+        arm.exec_gripper_cmd(0.015) 
+
+        # Move up
+        move_and_log(arm, 0.425, 0.0955, 0.35, "Move up from bolt")
+
+        # Move across board
+        move_and_log(arm, 0.29, -0.21, 0.35, "Move across board")
+
+        # Move down to bolt
+        move_and_log(arm, 0.29, -0.21, 0.2, "Move down towards bolt")
+
+        # Release bolt
+        arm.exec_gripper_cmd(0.07)
+
+        # Return to neutral position
+        arm.move_to_neutral()
