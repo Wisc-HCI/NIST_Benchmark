@@ -17,6 +17,8 @@ def move_to_cartesian_position(
     Moves arm to so that the end-effector position is at (x, y, z) in meters with 
     and at orientation roll (rotation around x-axis), pitch (rotation around y-axis), and yaw 
     (rotation around z-axis) in radians.
+
+    Return the array of IK joint positions calculated to move to positon [Joint_0, Joint_1, ..., Joint_6]
     """
 
     quat_x, quat_y, quat_z, quat_q = quaternion_from_euler(roll, pitch, yaw)
@@ -42,7 +44,7 @@ def move_to_cartesian_position(
     print("Calculated Joint Configuration:", ik_joint_solutions)
     arm.move_to_joint_position(ik_joint_solutions) # [-8.48556818e-02, -8.88127666e-02, -6.59622769e-01, -1.57569726e+00, -4.82374882e-04,  2.15975946e+00,  4.36766917e-01]
 
-
+    return ik_joint_solutions
 
 
 
