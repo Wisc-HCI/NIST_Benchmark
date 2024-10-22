@@ -14,6 +14,7 @@ def move_and_log(arm, x, y, z, action_note):
     file_path = '/workspace/output/accuracy_test.csv'
     fieldnames = ['Trial_Time', 
                 'Desired_X', 'Desired_Y', 'Desired_Z', 
+                'IK_J0', 'IK_J1', 'IK_J2', 'IK_J3', 'IK_J4', 'IK_J5', 'IK_J6',
                 'Actual_J0', 'Actual_J1', 'Actual_J2', 'Actual_J3', 'Actual_J4', 'Actual_J5', 'Actual_J6',
                 'Actual_X', 'Actual_Y', 'Actual_Z', 
                 'Action'
