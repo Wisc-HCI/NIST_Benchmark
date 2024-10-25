@@ -4,7 +4,7 @@
 -- Up-to-date: /workspace/devel/share/orocos_kdl/cmake/orocos_kdl-config.cmake
 -- Up-to-date: /workspace/devel/share/orocos_kdl/cmake/orocos_kdl-config-version.cmake
 -- Up-to-date: /workspace/devel/share/orocos_kdl/cmake/OrocosKDLTargets.cmake
--- Installing: /workspace/devel/share/orocos_kdl/cmake/OrocosKDLTargets-release.cmake
+-- Up-to-date: /workspace/devel/share/orocos_kdl/cmake/OrocosKDLTargets-release.cmake
 -- Up-to-date: /workspace/devel/share/orocos_kdl/package.xml
 -- Up-to-date: /workspace/devel/lib/liborocos-kdl.so.1.4.0
 -- Up-to-date: /workspace/devel/lib/liborocos-kdl.so.1.4
