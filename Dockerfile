@@ -23,7 +23,31 @@ RUN apt-get update && \
     ros-noetic-joint-state-controller\
     ros-noetic-moveit\
     ros-noetic-moveit-commander\
-    ros-noetic-moveit-visual-tools
+    ros-noetic-moveit-visual-tools\
+    wget
+    
+RUN curl -sSL -O https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb
+
+RUN dpkg -i packages-microsoft-prod.deb
+
+# Download these two .deb files: 
+# RUN wget https://packages.microsoft.com/ubuntu/18.04/prod/pool/main/libk/libk4a1.4-dev/libk4a1.4-dev_1.4.1_amd64.deb
+# RUN wget https://packages.microsoft.com/ubuntu/18.04/prod/pool/main/libk/libk4a1.4/libk4a1.4_1.4.1_amd64.deb
+
+# Install them:
+# RUN dpkg -i ./*.deb
+
+#RUN apt-get update && \
+#    apt-get install -y --fix-missing \
+#    libk4a1.4\
+#    libk4a1.4-dev\
+#    k4a-tools
+
+# Set CMAKE_PREFIX_PATH
+ENV CMAKE_PREFIX_PATH="/usr/lib/x86_64-linux-gnu/cmake/k4a:$CMAKE_PREFIX_PATH"
+
+# OR Set k4a_DIR directly if CMAKE_PREFIX_PATH doesn't work
+# ENV k4a_DIR="/usr/lib/x86_64-linux-gnu/cmake/k4a"
 
 
 # Install python packages
@@ -53,8 +77,8 @@ RUN echo "@realtime hard memlock 102400" | tee -a /etc/security/limits.conf
 COPY . /workspace
 WORKDIR /workspace/
 #RUN rosdep init 
-RUN rosdep update
-RUN rosdep install --from-paths src --ignore-src --rosdistro noetic  -y --skip-keys libfranka
+#RUN rosdep update
+#RUN rosdep install --from-paths src --ignore-src --rosdistro noetic  -y --skip-keys K4A libfranka
 
 
 # Set libfranka library
@@ -66,6 +90,9 @@ RUN rosdep install --from-paths src --ignore-src --rosdistro noetic  -y --skip-k
 # RUN cpack -G DEB
 RUN  dpkg -i /workspace/libfranka/build/libfranka-0.9.2-x86_64.deb  
 #RUN  dpkg -i libfranka-0.9.2-x86_64.deb  
+
+RUN rosdep update
+RUN rosdep install --from-paths src --ignore-src --rosdistro noetic  -y --skip-keys K4A libfranka
 
 
 WORKDIR /workspace/

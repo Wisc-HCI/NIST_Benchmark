@@ -1,14 +1,13 @@
 [100%] Built target orocos-kdl
 [36mInstall the project...[0m
 -- Install configuration: "Release"
--- Installing: /workspace/devel/share/orocos_kdl/cmake/orocos_kdl-config.cmake
--- Installing: /workspace/devel/share/orocos_kdl/cmake/orocos_kdl-config-version.cmake
--- Installing: /workspace/devel/share/orocos_kdl/cmake/OrocosKDLTargets.cmake
--- Installing: /workspace/devel/share/orocos_kdl/cmake/OrocosKDLTargets-release.cmake
+-- Up-to-date: /workspace/devel/share/orocos_kdl/cmake/orocos_kdl-config.cmake
+-- Up-to-date: /workspace/devel/share/orocos_kdl/cmake/orocos_kdl-config-version.cmake
+-- Up-to-date: /workspace/devel/share/orocos_kdl/cmake/OrocosKDLTargets.cmake
+-- Up-to-date: /workspace/devel/share/orocos_kdl/cmake/OrocosKDLTargets-release.cmake
 -- Up-to-date: /workspace/devel/share/orocos_kdl/package.xml
--- Installing: /workspace/devel/lib/liborocos-kdl.so.1.4.0
+-- Up-to-date: /workspace/devel/lib/liborocos-kdl.so.1.4.0
 -- Up-to-date: /workspace/devel/lib/liborocos-kdl.so.1.4
--- Set runtime path of "/workspace/devel/lib/liborocos-kdl.so.1.4.0" to "$ORIGIN/../lib"
 -- Up-to-date: /workspace/devel/lib/liborocos-kdl.so
 -- Up-to-date: /workspace/devel/include/kdl/articulatedbodyinertia.hpp
 -- Up-to-date: /workspace/devel/include/kdl/chain.hpp
@@ -84,7 +83,7 @@
 -- Up-to-date: /workspace/devel/include/kdl/velocityprofile_spline.hpp
 -- Up-to-date: /workspace/devel/include/kdl/velocityprofile_trap.hpp
 -- Up-to-date: /workspace/devel/include/kdl/velocityprofile_traphalf.hpp
--- Installing: /workspace/devel/include/kdl/config.h
+-- Up-to-date: /workspace/devel/include/kdl/config.h
 -- Up-to-date: /workspace/devel/include/kdl/utilities/error.h
 -- Up-to-date: /workspace/devel/include/kdl/utilities/error_stack.h
 -- Up-to-date: /workspace/devel/include/kdl/utilities/kdl-config.h
@@ -101,5 +100,5 @@
 -- Up-to-date: /workspace/devel/include/kdl/utilities/traits.h
 -- Up-to-date: /workspace/devel/include/kdl/utilities/utility.h
 -- Up-to-date: /workspace/devel/include/kdl/utilities/utility_io.h
--- Installing: /workspace/devel/lib/pkgconfig/orocos-kdl.pc
--- Installing: /workspace/devel/lib/pkgconfig/orocos_kdl.pc
+-- Up-to-date: /workspace/devel/lib/pkgconfig/orocos-kdl.pc
+-- Up-to-date: /workspace/devel/lib/pkgconfig/orocos_kdl.pc
