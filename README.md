@@ -1,12 +1,17 @@
 # NIST_Benchmark
- [NIST Benchmark](https://www.nist.gov/el/intelligent-systems-division-73500/robotic-grasping-and-manipulation-assembly/assembly) testing with the Franka Emika Panda Robot. 
+This repo is for passing the [NIST Benchmark](https://www.nist.gov/el/intelligent-systems-division-73500/robotic-grasping-and-manipulation-assembly/assembly) tests with the Franka Emika Panda Robot. 
 
-In order to just visualize the robot, follow the `Visualization` section instructions. To physically control the robot, you will need to follow the `Controlling Panda with FCI` instructions.
-
-Our scripts our in the src/panda_benchmark package. Please only put any additional scripts here.
 
 ## Running
-Please first follow the setup instructions in [doc/setup.md](/doc/setup.md) to setup everything and then reference [doc/run_robot.md](/doc/run_robot.md) or [doc/run_simulation.md](/doc/run_simulation.md).
+1. Follow the instruction in [doc/setup.md](/doc/setup.md) to setup everything.
+
+2. To run this repo...
+    - In simulation, follow the instructions in [doc/run_simulation.md](/doc/run_simulation.md).
+    - On the bot, follow the instructions in [doc/run_robot.md](/doc/run_robot.md).
+
+
+## Making Changes
+Our code is in the src/panda_benchmark package. Please only put any additional scripts there.
 
 
 ## Troubleshooting + Tips
