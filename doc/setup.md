@@ -2,7 +2,8 @@
 
 The following instructions are for setting up FCI control on the Franka Emika Robot (FER) Panda using libfranka and franka_ros. These instructions allow you to launch a container so that you don't have to face most of the pain and suffering we went through in the installation process. However, if you want to control the physical Panda (versus just simulating it), you will still nee to install a Real-Time kernel patch (required by libfranka) on your host computer because containers share the host's machines kernel.
 
-<span style="color:red"> Note: You only have to do steps 1-2 once, the first time you are setting up this repo to work with your Panda. Steps 3-4 you have to do EVERY time you want to work with the robot if your container has shut down.</span>
+<span style="color:red"> **Note: You only have to do steps 1-2 once, the first time you are setting up this repo to work with your Panda. Steps 3-4 you have to do EVERY time you want to work with the robot if your container has shut down.**</span>
+
 
 
 ### 1. Prequisites
@@ -42,7 +43,7 @@ curl -SLO https://www.kernel.org/pub/linux/kernel/projects/rt/5.17/patch-5.17.1-
 
 
 ### 3. Setting Up Your Container
-<span style="color:red"> The previous steps, you only have to do one time. The following steps, you need to do everytime you want to work with the robot if your container has shut down. </span>
+<span style="color:red"> **The previous steps, you only have to do one time. The following steps, you need to do everytime you want to work with the robot if your container has shut down.** </span>
 
 
 First set up display forwarding:
