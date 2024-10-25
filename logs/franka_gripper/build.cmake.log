@@ -36,13 +36,9 @@ Not searching for unused variables given on the command line.
 [36m--[0m Check if compiler accepts -pthread
 [36m--[0m Check if compiler accepts -pthread - yes
 [36m--[0m Generating .msg files for action franka_gripper/Grasp /workspace/src/franka_ros/franka_gripper/action/Grasp.action
-Generating for action Grasp
 [36m--[0m Generating .msg files for action franka_gripper/Homing /workspace/src/franka_ros/franka_gripper/action/Homing.action
-Generating for action Homing
 [36m--[0m Generating .msg files for action franka_gripper/Stop /workspace/src/franka_ros/franka_gripper/action/Stop.action
-Generating for action Stop
 [36m--[0m Generating .msg files for action franka_gripper/Move /workspace/src/franka_ros/franka_gripper/action/Move.action
-Generating for action Move
 [36m--[0m franka_gripper: 29 messages, 0 services
 [36m--[0m Configuring done
 [36m--[0m Generating done

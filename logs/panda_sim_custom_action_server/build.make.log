@@ -1,2 +1,4 @@
+[35m[1mScanning dependencies of target franka_core_msgs_generate_messages_py[0m
 [  0%] Built target franka_core_msgs_generate_messages_py
+[35m[1mScanning dependencies of target panda_sim_custom_action_server_gencfg[0m
 [100%] Built target panda_sim_custom_action_server_gencfg
