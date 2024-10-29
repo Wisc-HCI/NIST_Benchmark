@@ -68,6 +68,13 @@ source devel/setup.sh
 chmod +x /workspace/src/panda_benchmark/scripts/
 ```
 
+### 3B. Seting Up Container with bash scripts
+If you want to use bash script to set up your container, try the module [ros-docker-dev](../ros-docker-dev/README.md).
+Features TLDR;
+ * Volumed
+ * User spoofing
+ * SSH forwarding
+ * Oh-my-zsh
 
 ### 4. Set Up Franka Desktop
 Before you can run anything with the FCI, make sure joints are unlocked and FCI Control is enabled in the Franka desktop (our Desktops is at [192.168.1.2](https://192.168.1.2/desk/)). Directions for doing that are [here](https://youtu.be/91wFDNHVXI4?si=4-ZArdrxOMAiCc5H&t=484). WARNING: we could not get Firefox to access the desk because of security reasons. However we could access through chrome once we clicked "Advanced" > "Proceed to 192.168.1.2 (unsafe)".
