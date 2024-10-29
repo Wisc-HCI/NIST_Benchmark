@@ -63,7 +63,7 @@ args=(
 
     # start image
     "${IMAGE_TAG}"
-    "${SHELL}"
+    "/usr/bin/zsh"
 )
 
 # Create container if not
