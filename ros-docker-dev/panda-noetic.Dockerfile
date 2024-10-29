@@ -89,6 +89,7 @@ RUN mkdir -p -m 0700 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 ######################################################################
 # Install libfranka and franka-ros
 USER root
+## comment the following lines if does work
 RUN apt-get update && apt-get install --yes \
     ros-noetic-libfranka ros-noetic-franka-ros
 

@@ -32,11 +32,11 @@ NOTE: Do not install Docker Desktop. It is different from the Docker Engine and 
 ### [NIST_Benchmark](https://github.com/Wisc-HCI/NIST_Benchmark)
 :warning: **Note: In the container, you will use zsh intead of bash. `zsh` is pretty and more powerful with oh-my-zsh theme and auto-completion. But remember to `source /devel/setup.zsh` instead of `.bash`**
 
- * Some computers support directly `sudo apt install libfranka`, but some do not. So uncomment `RUN apt-get ...` in [panda-noetic.Dockerfile](./panda-noetic.Dockerfile) if it is possible, or you should build from source following [this](https://frankaemika.github.io/docs/installation_linux.html#building-from-source).
+ * Some computers support directly `sudo apt install libfranka`, but some do not. So comment `RUN apt-get ...` in [panda-noetic.Dockerfile](./panda-noetic.Dockerfile) if it does not work, and you should build from source following [this](https://frankaemika.github.io/docs/installation_linux.html#building-from-source).
    ```Dockerfile
    # Install libfranka and franka-ros
    USER root
-   ## Uncomment the following lines if you can apt install libfranka
+   ## comment the following lines if does work
    RUN apt-get update && apt-get install --yes \
        ros-noetic-libfranka ros-noetic-franka-ros
    ```
