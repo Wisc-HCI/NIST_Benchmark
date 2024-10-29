@@ -1,14 +1,14 @@
 # Editable ROS Docker Development
 
-You could also check the latest [main branch README.md](https://github.com/AlfredMoore/ros-docker-dev/blob/main/README.md)
+You could also check the latest [github repo README.md](https://github.com/AlfredMoore/ros-docker-dev/blob/volumed/README.md)
 
 ## Panda Noetic
-To Create Image, Run Container or Open another section in Container, please use
+To Create Image, Run Container or Open another section in Container, please `cd ros-docker-dev` to enter the dir then run the scripts. 
 ```bash
 ./enterpoint.sh
 ```
 
-If you want to build with no-cache for latest dependencies, which keeps docker content up to date but takes much longer time, use
+If you want to build with no-cache for the latest dependencies, which keeps docker content up to date but takes much longer time, use
 ```bash
 export NOCACHE=true
 ./enterpoint.sh
@@ -47,6 +47,8 @@ NOTE: Do not install Docker Desktop. It is different from the Docker Engine and 
    export CONTAINER_NAME="ros-panda-noetic"
    ```
 
+## e.g.
+![example](./example.jpg)
 
 
 ## TODO ~~(TBD: lazy man)~~
