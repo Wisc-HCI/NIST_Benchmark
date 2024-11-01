@@ -2,6 +2,9 @@
 
 The following instructions are for setting up FCI control on the Franka Emika Robot (FER) Panda using libfranka and franka_ros. These instructions allow you to launch a container so that you don't have to face most of the pain and suffering we went through in the installation process. However, if you want to control the physical Panda (versus just simulating it), you will still nee to install a Real-Time kernel patch (required by libfranka) on your host computer because containers share the host's machines kernel.
 
+<span style="color:red"> **Note: You only have to do steps 1-2 once, the first time you are setting up this repo to work with your Panda. Steps 3-4 you have to do EVERY time you want to work with the robot if your container has shut down.**</span>
+
+
 
 ### 1. Prequisites
 These are instructions for software setup for interfacing with the Franka Emika Robot (FER) Panda. The instructions assume you have set up the robot and can interface with it using the Franka Desktop. If that is not the case, reference your user manual or follow the start of [this viedo](https://youtu.be/91wFDNHVXI4?si=_RWVrXJ0wC-qe6NI).
@@ -40,7 +43,7 @@ curl -SLO https://www.kernel.org/pub/linux/kernel/projects/rt/5.17/patch-5.17.1-
 
 
 ### 3. Setting Up Your Container
-The previous steps, you only have to do one time. The following steps, you need to do everytime you want to work with the robot if your container has shut down.
+<span style="color:red"> **The previous steps, you only have to do one time. The following steps, you need to do everytime you want to work with the robot if your container has shut down.** </span>
 
 
 First set up display forwarding:
@@ -65,7 +68,9 @@ cd /workspace
 catkin build
 source devel/setup.sh
 
-chmod +x /workspace/src/panda_benchmark/scripts/
+chmod +x /workspace/src/panda_benchmark/scripts/pick_and_place.py
+chmod +x /workspace/src/panda_benchmark/scripts/move_to_position.py
+
 ```
 
 
@@ -76,6 +81,8 @@ Now you are ready to run the robot or simulation by reference [run_robot.md](/do
 
 
 
+---
+
 ###  Notes
 
 * If you make changes in any of the src C/C++ files, you'll need to run:
@@ -84,7 +91,6 @@ Now you are ready to run the robot or simulation by reference [run_robot.md](/do
     catkin build
     source devel/setup.sh
     ```
-
 * Opening a new docker terminal:
     ```bash
     docker ps  # This will show you running containers w/ their ID
