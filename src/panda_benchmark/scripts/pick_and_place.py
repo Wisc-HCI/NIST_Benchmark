@@ -4,7 +4,20 @@ import rospy
 from panda_robot import PandaArm
 from move_to_position import move_to_cartesian_position
 
-
+def move_to_cartesian_position_multiple_attempts(
+    arm:PandaArm,
+    x:float, y:float, z:float, 
+    roll:float, pitch:float, yaw:float):
+    """
+    Recalculate IK a couple of times to get as close as possible so that the end-effector position is at (x, y, z) in meters with 
+    and at orientation roll (rotation around x-axis), pitch (rotation around y-axis), and yaw 
+    (rotation around z-axis) in radians.
+    """
+    ATTEMPTS = 3
+    for _ in range(ATTEMPTS):
+        move_to_cartesian_position(arm, 
+                                    x, y, z, # X, Y, Z in m
+                                    roll, pitch, yaw) # Roll, Pitch, Yaw in rads`
 
 if __name__ == '__main__':
 
@@ -15,7 +28,7 @@ if __name__ == '__main__':
     arm.move_to_neutral()
     
     # Move to bolt
-    move_to_cartesian_position(arm, 
+    move_to_cartesian_position_multiple_attempts(arm, 
                               0.425, 0.0955, 0.2, # X, Y, Z in m
                               0, 0.0, 0.0) # Roll, Pitch, Yaw in rads
     
@@ -23,19 +36,19 @@ if __name__ == '__main__':
     arm.exec_gripper_cmd(0.015) 
 
     # Move up
-    move_to_cartesian_position(arm, 
+    move_to_cartesian_position_multiple_attempts(arm, 
                             0.425, 0.0955, 0.35, # X, Y, Z in m
                             0, 0.0, 0.0) # Roll, Pitch, Yaw in rads
     
 
 
     # Move across board
-    move_to_cartesian_position(arm, 
+    move_to_cartesian_position_multiple_attempts(arm, 
                         0.29, -0.21, 0.35, # X, Y, Z in m
                         0, 0.0, 0.0) # Roll, Pitch, Yaw in rads
 
     # Move down board
-    move_to_cartesian_position(arm, 
+    move_to_cartesian_position_multiple_attempts(arm, 
                         0.29, -0.21, 0.2, # X, Y, Z in m
                         0, 0.0, 0.0) # Roll, Pitch, Yaw in rads
 
