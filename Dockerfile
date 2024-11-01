@@ -24,30 +24,38 @@ RUN apt-get update && \
     ros-noetic-moveit\
     ros-noetic-moveit-commander\
     ros-noetic-moveit-visual-tools\
-    # wget
-    curl \
-    software-properties-common
+    # wget\
+    curl
+    # software-properties-common\
+    # ros-noetic-ros-control\
+    # ros-noetic-ros-controllers\
+    # ros-noetic-combined-robot-hw\
+    # libboost-all-dev
+
+# Download boost_sml and install in /usr/local/include for CMake to find it
+# RUN mkdir -p /usr/local/include/boost && \
+#     wget https://raw.githubusercontent.com/boost-ext/sml/master/include/boost/sml.hpp -O /usr/local/include/boost/sml.hpp
 
 # # Add Microsoft's package signing key and repository for Ubuntu 18.04
 # RUN curl -sSL https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
 #     apt-add-repository https://packages.microsoft.com/ubuntu/18.04/prod && \
 #     apt-get update
 
-# Add Microsoft's package signing key
-RUN curl -sSL https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+# # Add Microsoft's package signing key
+# RUN curl -sSL https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
 
-# Add Microsoft repository for Ubuntu 18.04 manually and update
-RUN echo "deb [arch=amd64] https://packages.microsoft.com/ubuntu/18.04/prod bionic main" > /etc/apt/sources.list.d/microsoft-prod.list && \
-    apt-get update
+# # Add Microsoft repository for Ubuntu 18.04 manually and update
+# RUN echo "deb [arch=amd64] https://packages.microsoft.com/ubuntu/18.04/prod bionic main" > /etc/apt/sources.list.d/microsoft-prod.list && \
+#     apt-get update
 
 # # Install Azure Kinect SDK dependencies
 # RUN apt-get install -y k4a-tools libk4a1.4 libk4a1.4-dev
 
 # Preconfigure EULA acceptance
-RUN echo "libk4a1.4 libk4a1.4/accepted-eula select true" | debconf-set-selections
+# RUN echo "libk4a1.4 libk4a1.4/accepted-eula select true" | debconf-set-selections
 
 # Install Azure Kinect SDK dependencies
-RUN ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive apt-get install -y k4a-tools libk4a1.4 libk4a1.4-dev
+# RUN ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive apt-get install -y k4a-tools libk4a1.4 libk4a1.4-dev
 
 # # Install Azure Kinect SDK dependencies
 # RUN apt-get update --fix-missing && apt-get install -y \
@@ -117,7 +125,9 @@ RUN ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive apt-get install -y k4a-tools li
 #     catkin_make
 
 # Add k4a to CMAKE_PREFIX_PATH
-ENV CMAKE_PREFIX_PATH="/usr/lib/x86_64-linux-gnu/cmake/k4a:${CMAKE_PREFIX_PATH}"
+# ENV CMAKE_PREFIX_PATH="/usr/lib/x86_64-linux-gnu/cmake/k4a:${CMAKE_PREFIX_PATH}"
+
+# ENV CMAKE_PREFIX_PATH=/opt/ros/noetic:/workspace/devel:$CMAKE_PREFIX_PATH
 
 # OR Set k4a_DIR directly if CMAKE_PREFIX_PATH doesn't work
 # ENV k4a_DIR="/usr/lib/x86_64-linux-gnu/cmake/k4a"
@@ -149,13 +159,18 @@ RUN echo "@realtime hard rtprio 99" | tee -a /etc/security/limits.conf
 RUN echo "@realtime hard priority 99" | tee -a /etc/security/limits.conf
 RUN echo "@realtime hard memlock 102400" | tee -a /etc/security/limits.conf
 
+# Install Azure Kinect SDK dependencies
+RUN curl -sSL https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
+    echo "deb [arch=amd64] https://packages.microsoft.com/ubuntu/18.04/prod bionic main" > /etc/apt/sources.list.d/microsoft-prod.list && \
+    apt-get update && \
+    ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive apt-get install -y k4a-tools libk4a1.4 libk4a1.4-dev
 
 # Install rosdep updates
 COPY . /workspace
 WORKDIR /workspace/
 # RUN rosdep init 
-# RUN rosdep update
-# RUN rosdep install --from-paths src --ignore-src --rosdistro noetic  -y --skip-keys K4A libfranka
+RUN rosdep update
+RUN rosdep install --from-paths src --ignore-src --rosdistro noetic  -y --skip-keys="libfranka K4A"
 
 # Clean up devel folder to avoid duplicate packages
 # RUN rm -rf /workspace/devel
