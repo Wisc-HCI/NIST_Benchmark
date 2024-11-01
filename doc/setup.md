@@ -54,8 +54,8 @@ Now  build the container image and start the container. Make sure you are in thi
 ```bash
 sudo docker build -t panda-container .
 
-# Start the container with real-time kernel privileges, mount onto the current directory, and allow display forwarding
-sudo docker run -it --privileged --cap-add=SYS_NICE --env DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v $(pwd):/workspace --net=host panda-container
+# Start the container with real-time kernel privileges, mount onto the current directory, and allow display forwarding. Container is removed once it exits.
+sudo docker run --rm -it --privileged --cap-add=SYS_NICE --env DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v $(pwd):/workspace --net=host panda-container
 ```
 
 Now your container should be running and you should be in it's command line. Now setup the dependencies:
