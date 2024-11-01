@@ -1,4 +1,4 @@
-#!/bin/bash
+source devel/setup.sh#!/bin/bash
 set -e
 
 # setup ros environment

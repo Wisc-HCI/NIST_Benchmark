@@ -84,6 +84,7 @@ Now you are ready to run the robot or simulation by reference [run_robot.md](/do
 ---
 
 ###  Notes
+* If there is an error with `catkin build` about configuration differences of symlink, run `catkin clean -y` and then rebuild. That should fix the issues.
 
 * If you make changes in any of the src C/C++ files, you'll need to run:
 
