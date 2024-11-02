@@ -32,7 +32,7 @@ def linear_interpolate(
     The calculation of the line equation (when t = 0 at current position 
     and t = 1 at final position) is"
         <x, y, z> = t * <final_x - curr_x, final_y - curr_y, final_z - curr_z> 
-                    +  <curr_x, curr_y, final_z>
+                    +  <curr_x, curr_y, curr_z>
     """
     
     t = 0
@@ -50,6 +50,8 @@ def linear_interpolate(
         trajectory += [(x, y, z)]
         t += t_step
 
+    trajectory += [(final_x, final_y, final_z)]
+        
     return trajectory
 
 
