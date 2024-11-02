@@ -65,7 +65,7 @@ def move_to_cartesian_position_with_linear_trajectory(
     curr_x = arm.ee_pose()[0][0]
     curr_y = arm.ee_pose()[0][1]
     curr_z = arm.ee_pose()[0][2]
-    trajectory = linear_interpolate(curr_x, curr_y, curr_z, x, y, z, 0.01)
+    trajectory = linear_interpolate(curr_x, curr_y, curr_z, x, y, z, 0.1)
     
     for position in trajectory:
         move_to_cartesian_position(arm, 
