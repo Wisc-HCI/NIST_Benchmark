@@ -76,6 +76,27 @@ Features TLDR;
  * SSH forwarding
  * Oh-my-zsh
 
+Use the following command to build your image and container. If you want to build with no-cache or to rebuilt the image, please see [ros-docker-dev](../ros-docker-dev/README.md) for more details about this script and launching the containers.
+```bash
+cd ros-docker-dev
+./enterpoint.sh
+```
+
+Now your container should be running and you should be in it's command line. Now setup the dependencies:
+```bash
+source /opt/ros/noetic/setup.zsh
+cd src/relaxed_ik_ros1/relaxed_ik_core
+cargo build
+
+cd ~/workspace
+catkin build
+source devel/setup.zsh
+
+chmod +x ~/workspace/src/panda_benchmark/scripts/
+```
+
+In this way, you should run `roslaunch panda_benchmark interface_b.launch` in [run_robot.md](../doc/run_robot.md) instead of `interface.launch`
+
 ### 4. Set Up Franka Desktop
 Before you can run anything with the FCI, make sure joints are unlocked and FCI Control is enabled in the Franka desktop (our Desktops is at [192.168.1.2](https://192.168.1.2/desk/)). Directions for doing that are [here](https://youtu.be/91wFDNHVXI4?si=4-ZArdrxOMAiCc5H&t=484). WARNING: we could not get Firefox to access the desk because of security reasons. However we could access through chrome once we clicked "Advanced" > "Proceed to 192.168.1.2 (unsafe)".
 

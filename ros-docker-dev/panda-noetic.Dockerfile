@@ -89,9 +89,22 @@ RUN mkdir -p -m 0700 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 ######################################################################
 # Install libfranka and franka-ros
 USER root
-## comment the following lines if does work
+## comment the following lines if does not work,
+## because some computers cannot directly apt install ros-noetic-libfranka
 RUN apt-get update && apt-get install --yes \
     ros-noetic-libfranka ros-noetic-franka-ros
+
+RUN apt-get update && apt-get install --yes \
+    libpoco-dev libeigen3-dev \
+    python3-rosdep \
+    mesa-utils \
+    ros-noetic-gazebo-ros-control \
+    ros-noetic-rospy-message-converter \
+    ros-noetic-effort-controllers \
+    ros-noetic-joint-state-controller \
+    ros-noetic-moveit \
+    ros-noetic-moveit-commander \
+    ros-noetic-moveit-visual-tools
 
 # Install ranged-IK Python dependencies
 RUN pip3 install \
@@ -99,7 +112,9 @@ RUN pip3 install \
     PyYaml \
     urdf-parser-py \
     future \
-    pynput
+    pynput \
+    panda_robot \
+    numpy==1.21
 
 # Install ranged-IK Rust and Cargo dependencies
 ## Switch to new user

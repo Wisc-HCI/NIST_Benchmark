@@ -53,8 +53,8 @@ args=(
     # PID exposure
 
     # Realtime Kernel, if you are in RTkernel, uncomment the followings
-    # --privileged
-    # --cap-add=SYS_NICE
+    --privileged
+    --cap-add=SYS_NICE
 
     # Workspace
     --volume="$(dirname ${ENTERPOINT_DIR}):${WORKSPACE_PATH}"   # Volume the parent of this docker repo to workspace

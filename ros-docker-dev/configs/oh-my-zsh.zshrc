@@ -109,7 +109,7 @@ if [ ! -f /.dockerenv ]; then
     # echo "Add your scripts here..."
    
 else
-    echo -e "\n\e[33mNOTE:\e[0m RUNING inside a container"
+    echo -e "\n\e[33mNOTE:\e[0m RUNNING inside a container"
     echo -e "\nTesting \e[33mSSH\e[0m forwarding" && ssh -T git@github.com
     echo -e "\nWORKSPACE \e[92m${WORKSPACE_PATH}\e[0m branch: \e[92m$(git -C ${WORKSPACE_PATH} branch --show-current )\e[0m commit: \e[92m$(git -C ${WORKSPACE_PATH} rev-parse --short HEAD)\e[0m"
     # ROS version detection
