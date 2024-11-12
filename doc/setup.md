@@ -68,13 +68,11 @@ cd /workspace
 catkin build
 source devel/setup.sh
 
-chmod +x /workspace/src/panda_benchmark/scripts/pick_and_place.py
-chmod +x /workspace/src/panda_benchmark/scripts/move_to_position.py
-
+chmod +x /workspace/src/panda_benchmark/scripts/*
 ```
 
 
-### 4. Set Up Franka Desktoplist(arm.ee_pose()[0])
+### 4. Set Up Franka Desktop
 Before you can run anything with the FCI, make sure joints are unlocked and FCI Control is enabled in the Franka desktop (our Desktops is at [192.168.1.2](https://192.168.1.2/desk/)). Directions for doing that are [here](https://youtu.be/91wFDNHVXI4?si=4-ZArdrxOMAiCc5H&t=484). WARNING: we could not get Firefox to access the desk because of security reasons. However we could access through chrome once we clicked "Advanced" > "Proceed to 192.168.1.2 (unsafe)".
 
 Now you are ready to run the robot or simulation by reference [run_robot.md](/doc/run_robot.md) or [run_simulation.md](/doc/run_simulation.md)

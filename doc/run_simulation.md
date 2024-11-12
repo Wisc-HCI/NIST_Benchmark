@@ -15,7 +15,8 @@ roslaunch panda_benchmark simulation.launch
 
 # Run the following in another  terminal to move the bot to a position
 source devel/setup.sh
-rosrun panda_benchmark pick_and_place.py 
+#rosrun panda_benchmark pick_and_place.py
+rosrun panda_benchmark torque_controller.py 
 
 ```
 
