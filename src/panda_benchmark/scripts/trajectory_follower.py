@@ -50,7 +50,7 @@ class TrajectoryFollower:
     
     def start_trajectory(self, x, y, z, roll, pitch, yaw):
 
-        velocity = 0.05 # Meter/second
+        velocity = 0.06 # Meter/second
         interpolation_step_size = 0.0005
         time_period = interpolation_step_size / velocity 
 
@@ -71,7 +71,7 @@ class TrajectoryFollower:
     def timer_callback(self, event):
 
         position = self.trajectory[self.i_traj]
-        move_to_small_cartesian_position(arm, 
+        move_to_small_cartesian_position(self.arm, 
                                     position[0], position[1], position[2], # X, Y, Z in m
                                     self.roll, self.pitch, self.yaw) # Roll, Pitch, Yaw in rads`
         print("i:", self.i_traj)
@@ -87,7 +87,7 @@ class TrajectoryFollower:
 
 
 if __name__ == '__main__':
-    rospy.init_node('TorqueController')
+    rospy.init_node('TrajectoryFollower')
     arm = PandaArm()
     arm.move_to_neutral()
 
