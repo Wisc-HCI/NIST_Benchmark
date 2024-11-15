@@ -68,9 +68,7 @@ cd /workspace
 catkin build
 source devel/setup.sh
 
-chmod +x /workspace/src/panda_benchmark/scripts/pick_and_place.py
-chmod +x /workspace/src/panda_benchmark/scripts/move_to_position.py
-
+chmod +x /workspace/src/panda_benchmark/scripts/*
 ```
 
 
