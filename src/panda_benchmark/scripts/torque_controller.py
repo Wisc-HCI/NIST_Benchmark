@@ -15,13 +15,13 @@ class TorqueController:
         self.timer = rospy.Timer(rospy.Duration(self.time_period), self.timer_callback)
         self.prev_q = np.array([0, 0, 0, 0, 0, 0, 0])
 
-        self.q_des = np.array([-1.5707, -1.5707, 0, -2, 0, 3.5, 0.7854])  # Desired joint angles
+        self.q_des = np.array([0, -0.79, 0, -1.3, 0, 3.5, 0.79])  # Desired joint angles (almost vertical)
 
 
 
     def timer_callback(self, event):
-        P =  np.array([4, 4, 4, 2, 2, 0.8, 0.8]) # 50, #[900.0, 900.0, 900.0, 900.0, 375.0, 225.0, 100.0]
-        D = np.array([0, 0, 0, 0, 0, 0, 0]) # 14   # [45.0, 45.0, 45.0, 45.0, 15.0, 15.0, 10.0] 
+        P = np.array([2.00, 2.00, 2.00, 2.00, 2.00, 0.20, 0.20])  # [900.0, 900.0, 900.0, 900.0, 375.0, 225.0, 100.0]
+        D = np.array([0.50, 0.05, 0.50, 2.00, 0.10, 0.05, 0.05])  # [45.0, 45.0, 45.0, 45.0, 15.0, 15.0, 10.0] 
 
         q = np.array(self.arm.angles()) # Angle position in rads
         dq = (q - self.prev_q) / self.time_period # Angular Velocity  of the joints (estimation)
