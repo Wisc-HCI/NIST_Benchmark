@@ -13,7 +13,7 @@ class TorqueController:
         self.arm = arm
         self.time_period = 0.1
         self.timer = rospy.Timer(rospy.Duration(self.time_period), self.timer_callback)
-        self.prev_q = np.array([0, 0, 0, 0, 0, 0, 0])
+        self.prev_q = np.array(arm.angles()) # Current Position
 
         self.q_des = np.array([0, -0.79, 0, -1.3, 0, 3.5, 0.79])  # Desired joint angles (almost vertical)
 
