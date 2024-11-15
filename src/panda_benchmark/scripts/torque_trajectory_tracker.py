@@ -7,7 +7,9 @@ import numpy as np
 from timeit import default_timer as timer
 
 from panda_robot import PandaArm
-from move_to_small_position import move_to_small_cartesian_position
+
+
+from ik import get_cartesian_position
 
 class TrajectoryFollower:
     def __init__(self, arm:PandaArm):
@@ -15,9 +17,9 @@ class TrajectoryFollower:
         self.time_period = 0.1 # Seconds
         self.controller_timer = rospy.Timer(rospy.Duration(self.time_period), self.controller_callback)
         
-        self.prev_q = np.array([0, 0, 0, 0, 0, 0, 0])
         #self.q_des = np.array([0, -0.79, 0, -1.3, 0, 3.5, 0.79])  # Desired joint angles (almost vertical)
         self.prev_q = np.array(arm.angles())
+        self.q_des = self.prev_q
 
 
     def controller_callback(self, event):
@@ -72,8 +74,8 @@ class TrajectoryFollower:
     
     def start_trajectory(self, x, y, z, roll, pitch, yaw):
 
-        velocity = 0.06 # Meter/second
-        interpolation_step_size = 0.0005
+        velocity = 0.05 # Meter/second
+        interpolation_step_size = 0.05
         time_period = interpolation_step_size / velocity 
 
         curr_x = self.arm.ee_pose()[0][0]
@@ -87,15 +89,15 @@ class TrajectoryFollower:
         self.pitch = pitch
         self.yaw = yaw
 
-        self.timer = rospy.Timer(rospy.Duration(time_period), self.timer_callback)
+        self.timer = rospy.Timer(rospy.Duration(time_period), self.position_update_callback)
 
 
-    def timer_callback(self, event):
+    def position_update_callback(self, event):
 
         position = self.trajectory[self.i_traj]
-        move_to_small_cartesian_position(self.arm, 
-                                    position[0], position[1], position[2], # X, Y, Z in m
+        q = get_cartesian_position( position[0], position[1], position[2], # X, Y, Z in m
                                     self.roll, self.pitch, self.yaw) # Roll, Pitch, Yaw in rads`
+        self.q_des = np.array(q)
         print("i:", self.i_traj)
         self.i_traj += 1
 

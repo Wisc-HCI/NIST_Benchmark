@@ -8,6 +8,7 @@ from timeit import default_timer as timer
 
 from panda_robot import PandaArm
 
+
 class TorqueController:
     def __init__(self, arm:PandaArm):
         self.arm = arm
@@ -24,6 +25,7 @@ class TorqueController:
         D = np.array([0.50, 0.05, 0.50, 2.00, 0.10, 0.05, 0.05])  # [45.0, 45.0, 45.0, 45.0, 15.0, 15.0, 10.0] 
 
         q = np.array(self.arm.angles()) # Angle position in rads
+        # TODO: get velocity directly from joints
         dq = (q - self.prev_q) / self.time_period # Angular Velocity  of the joints (estimation)
         e = q - self.q_des # Error
         u = -P * e - D * dq  # numpy array of 7
