@@ -2,7 +2,7 @@
 import rospy
 
 from panda_robot import PandaArm
-from move_to_position import move_to_cartesian_position
+from move_to_small_position import move_to_small_cartesian_position
 
 def move_to_cartesian_position_multiple_attempts(
     arm:PandaArm,
@@ -15,7 +15,7 @@ def move_to_cartesian_position_multiple_attempts(
     """
     ATTEMPTS = 3
     for _ in range(ATTEMPTS):
-        move_to_cartesian_position(arm, 
+        move_to_small_cartesian_position(arm, 
                                     x, y, z, # X, Y, Z in m
                                     roll, pitch, yaw) # Roll, Pitch, Yaw in rads`
         
@@ -23,7 +23,7 @@ def move_to_cartesian_position_multiple_attempts(
 def linear_interpolate(
     curr_x:float, curr_y:float, curr_z:float,  
     final_x:float, final_y:float, final_z:float,
-    step_size:float = 0.01):
+    step_size:float = 0.0001):
     """
     Returns array of (x,y,z) coordinate tuples in m that are evenly spaced 
     by step_size in m between the current and final x, y, and z values.
@@ -70,7 +70,7 @@ def move_to_cartesian_position_with_linear_trajectory(
     trajectory = linear_interpolate(curr_x, curr_y, curr_z, x, y, z, 0.1)
     
     for position in trajectory:
-        move_to_cartesian_position(arm, 
+        move_to_small_cartesian_position(arm, 
                                     position[0], position[1], position[2], # X, Y, Z in m
                                     roll, pitch, yaw) # Roll, Pitch, Yaw in rads`
 
