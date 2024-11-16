@@ -21,7 +21,9 @@ roslaunch panda_benchmark interface.launch
 # In another terminal do the following:
 source devel/setup.sh
 ./franka.sh master
-rosrun panda_benchmark pick_and_place.py # WARNING: THIS WILL MOVE THE BOT!
+# rosrun panda_benchmark pick_and_place.py # WARNING: THIS WILL MOVE THE BOT!
+
+rosrun panda_benchmark torque_controller.py # WARNING: THIS WILL MOVE THE BOT!
 ```
 
 

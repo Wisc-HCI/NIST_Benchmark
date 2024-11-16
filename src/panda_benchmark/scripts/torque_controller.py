@@ -18,11 +18,14 @@ class TorqueController:
 
         #self.q_des = np.array([0, -0.79, 0, -1.3, 0, 3.5, 0.79])  # Desired joint angles (almost vertical)
         self.q_des = np.array([0, -np.pi/4, 0, -2.5 * np.pi/4, 0, np.pi/2, np.pi/4])  # Up a bit
+        #self.q_des = np.array([0.3, -0.79, 0, -1.3, 0, 3.5, 0.79])  # Desired joint angles (almost vertical)
 
 
     def timer_callback(self, event):
-        P = np.array([2.00, 2.00, 2.00, 2.00, 2.00, 0.20, 0.20])  # [900.0, 900.0, 900.0, 900.0, 375.0, 225.0, 100.0]
-        D = np.array([0.50, 0.05, 0.50, 2.00, 0.10, 0.05, 0.05])  # [45.0, 45.0, 45.0, 45.0, 15.0, 15.0, 10.0] 
+        P = np.array([27.00, 27.00, 27.00, 27.00, 10.00, 5.00, 5.00])  
+        #P = np.array([900.0, 900.0, 900.0, 900.0, 375.0, 225.0, 100.0])
+        D = np.array([5.00, 5.00, 5.00, 5.00, 5.00, 0.5, 0.5])  
+        #D = np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
 
         q = np.array(self.arm.angles()) # Angle position in rads
         # TODO: get velocity directly from joints
