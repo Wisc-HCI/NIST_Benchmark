@@ -73,7 +73,7 @@ chmod +x /workspace/src/panda_benchmark/scripts/move_to_position.py
 
 ```
 
-### 3B. Seting Up Container with bash/zsh scripts
+### Optional: 3B. Seting Up Container with bash/zsh scripts
 If you want to use bash script to set up your container, try the module [ros-docker-dev](../ros-docker-dev).
 Features TLDR;
  * User spoofing
@@ -94,16 +94,26 @@ We provide Options flag in this container. Please see [ros-docker-dev](../ros-do
  * -r: enable Realtime kernel
 
 #### Run Examples
-Example 1: Build the image with cache, enable realtime kernel, and use bash inside container
+##### Example 1: Rebuild or Build with no cache
+If you want to rebuild the image with changed dockerfile or to build with no-cache for the latest dependencies, you could build with no cache by running the following scirpts. In this way, you could rebuild the image from scratch but spend much longer time.
+```bash
+./enterpoint.sh -n
+```
+##### Example 2: Build the image with cache, enable realtime kernel, and use bash inside container
 ```bash
 cd ros-docker-dev
 ./enterpoint.sh -br
 ```
 
-Example 2: Build or rebuild the image with no cache, enable realtime kernel and use zsh inside container. 
+##### Example 3: Build or rebuild the image with no cache, enable realtime kernel and use zsh inside container. 
 ```bash
 cd ros-docker-dev
 ./enterpoint.sh -nr
+```
+##### Example 4: Enter an existing container, with realtime kernel. (-n will raise unexpected error)
+```bash
+cd ros-docker-dev
+./enterpoint.sh -r
 ```
 
 :warning: **Note:** If the realtime kernel is not permitted as the regular user in the container, you could try `sudo -i` to activate the root user.
@@ -115,14 +125,16 @@ source /opt/ros/noetic/setup.zsh    # or source /opt/ros/noetic/setup.bash   if 
 cd src/relaxed_ik_ros1/relaxed_ik_core
 cargo build
 
-cd ~/workspace
+cd ${WORKSPACE_PATH}
+sudo sh ros-docker-dev/init_scripts/NIST_Benchmark.sh
+
 catkin build
 source devel/setup.zsh      # or source devel/setup.bash   if you are using bash
 
-chmod +x ~/workspace/src/panda_benchmark/scripts/
+chmod +x ${WORKSPACE_PATH}/src/panda_benchmark/scripts/
 ```
 
-In this way, you should run `roslaunch panda_benchmark interface_b.launch` in [run_robot.md](../doc/run_robot.md) instead of `interface.launch`
+Then in your [run_simulation](./run_simulation.md) and [run_robot](./run_robot.md), you are supposed to use `simulation_b.launch` and `interface_b.launch`.
 
 ### 4. Set Up Franka Desktop
 Before you can run anything with the FCI, make sure joints are unlocked and FCI Control is enabled in the Franka desktop (our Desktops is at [192.168.1.2](https://192.168.1.2/desk/)). Directions for doing that are [here](https://youtu.be/91wFDNHVXI4?si=4-ZArdrxOMAiCc5H&t=484). WARNING: we could not get Firefox to access the desk because of security reasons. However we could access through chrome once we clicked "Advanced" > "Proceed to 192.168.1.2 (unsafe)".
