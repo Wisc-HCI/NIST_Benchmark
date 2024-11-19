@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+  <arg name="setting_file_path" default="/root/workspace/src/panda.yaml" />
+  <!-- IK Launch -->
+  <include file="$(find relaxed_ik_ros1)/launch/ik.launch" pass_all_args="true">
+  </include>
+
+  <!--  Simulation launch  -->
+  <include file="$(find panda_gazebo)/launch/panda_world.launch">
+  </include>
+
+</launch>

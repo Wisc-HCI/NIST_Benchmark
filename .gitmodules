@@ -1,0 +1,4 @@
+[submodule "ros-docker-dev"]
+	path = ros-docker-dev
+	url = https://github.com/AlfredMoore/ros-docker-dev.git
+	branch = realtime
