@@ -94,23 +94,18 @@ We provide Options flag in this container. Please see [ros-docker-dev](../ros-do
  * -r: enable Realtime kernel
 
 #### Run Examples
-##### Example 1: Rebuild or Build with no cache
-If you want to rebuild the image with changed dockerfile or to build with no-cache for the latest dependencies, you could build with no cache by running the following scirpts. In this way, you could rebuild the image from scratch but spend much longer time.
-```bash
-./enterpoint.sh -n
-```
-##### Example 2: Build the image with cache, enable realtime kernel, and use bash inside container
+##### Usually you can just run
 ```bash
 cd ros-docker-dev
-./enterpoint.sh -br
+./enterpoint.sh -r
 ```
 
-##### Example 3: Build or rebuild the image with no cache, enable realtime kernel and use zsh inside container. 
+##### Example 1: Build or rebuild the image with no cache, enable realtime kernel. 
 ```bash
 cd ros-docker-dev
 ./enterpoint.sh -nr
 ```
-##### Example 4: Enter an existing container, with realtime kernel. (-n will raise unexpected error)
+##### Example 2: Build and run image or enter an existing container, with realtime kernel. (-n will start rebuilding)
 ```bash
 cd ros-docker-dev
 ./enterpoint.sh -r
@@ -126,10 +121,10 @@ cd src/relaxed_ik_ros1/relaxed_ik_core
 cargo build
 
 cd ${WORKSPACE_PATH}
-sudo sh ros-docker-dev/init_scripts/NIST_Benchmark.sh
+sudo bash ros-docker-dev/init_scripts/NIST_Benchmark.sh
 
 catkin build
-source devel/setup.zsh      # or source devel/setup.bash   if you are using bash
+source devel/setup.bash      # or source devel/setup.bash   if you are using bash
 
 chmod +x ${WORKSPACE_PATH}/src/panda_benchmark/scripts/
 ```

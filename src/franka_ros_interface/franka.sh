@@ -36,17 +36,17 @@
 ## ========================================= #
 
 # ----- EDIT THIS TO MATCH THE IP OF THE FRANKA ROBOT CONTROLLER IN THE NETWORK
-FRANKA_ROBOT_IP="FRANKA_ROBOT_IP.local"
+FRANKA_ROBOT_IP="192.168.1.2"
 
 # ----- EDIT THIS TO MATCH YOUR IP IN THE NETWORK
-your_ip=""
+your_ip="192.168.1.5"
 
 # ----- EDIT THIS TO MATCH THE IP OF THE MAIN ROS MASTER PC (CONNECTED TO THE FRANKA CONTROLLER),
 # ----- ON WHICH THE Franka ROS Interface 'driver' NODES WILL BE RUNNING (SEE "USAGE EXPLAINED" BELOW).
 # ----- THIS VALUE IS NEEDED ONLY IF YOU WILL USE THE 'remote' ENVIRONMENT ON THIS MACHINE.
 ROS_MASTER_IP=""
 
-ros_version="melodic"
+ros_version="noetic"
 
 ## ========================================= #
 ## ========== USAGE EXPLAINED ============== #
