@@ -14,7 +14,7 @@ from ik import get_cartesian_position
 class TrajectoryFollower:
     def __init__(self, arm:PandaArm):
         self.arm = arm
-        self.time_period = 0.1 # Seconds
+        self.time_period = 0.001 # Seconds
         self.controller_timer = rospy.Timer(rospy.Duration(self.time_period), self.controller_callback)
         
         #self.q_des = np.array([0, -0.79, 0, -1.3, 0, 3.5, 0.79])  # Desired joint angles (almost vertical)
@@ -23,9 +23,9 @@ class TrajectoryFollower:
 
 
     def controller_callback(self, event):
-        P = np.array([2.00, 2.00, 2.00, 2.00, 2.00, 0.20, 0.20])  # [900.0, 900.0, 900.0, 900.0, 375.0, 225.0, 100.0]
-        D = np.array([0.50, 0.05, 0.50, 2.00, 0.10, 0.05, 0.05])  # [45.0, 45.0, 45.0, 45.0, 15.0, 15.0, 10.0] 
-
+        P = np.array([27.00, 27.00, 27.00, 27.00, 10.00, 5.00, 5.00])  
+        D = np.array([5.00, 5.00, 5.00, 5.00, 5.00, 0.5, 0.5])  
+        
         q = np.array(self.arm.angles()) # Angle position in rads
         dq = (q - self.prev_q) / self.time_period # Angular Velocity  of the joints (estimation)
         e = q - self.q_des # Error

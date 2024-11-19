@@ -13,34 +13,30 @@ from ik import get_cartesian_position
 class TorqueController:
     def __init__(self, arm:PandaArm):
         self.arm = arm
-        self.time_period = 0.1
+        self.time_period = 0.001
         
         self.prev_q = np.array(arm.angles()) # Current Position
-
-        # self.q_des = np.array([0, -np.pi/4, 0, -2.5 * np.pi/4, 0, np.pi/2, np.pi/4])  # Up a bit
         self.q_des = self.prev_q
-
         self.Y_des = []
+
+        self.torque_timer = rospy.Timer(rospy.Duration(self.time_period), self.torque_callback)
+
 
     def set_cartesian_position(self, X, Y, Z, roll, pitch, yaw):
         ik_period = 0.3
-        self.ik_time = rospy.Timer(rospy.Duration(ik_period), self.ik_callback)
+        self.ik_timer = rospy.Timer(rospy.Duration(ik_period), self.ik_callback)
         self.Y_des = [X, Y, Z, roll, pitch, yaw]
 
     def ik_callback(self, event):
-        get_cartesian_position(self.Y_des[0], self.Y_des[1], self.Y_des[2],
+        self.q_des = get_cartesian_position(self.Y_des[0], self.Y_des[1], self.Y_des[2],
                                self.Y_des[3], self.Y_des[4], self.Y_des[5])
 
 
     def torque_callback(self, event):
         # Real-Life values
-        P = np.array([2.00, 2.00, 2.00, 2.00, 2.00, 0.20, 0.20]) 
-        D = np.array([0.50, 0.05, 0.50, 2.00, 0.10, 0.05, 0.05]) 
+        P = np.array([27.00, 27.00, 27.00, 27.00, 10.00, 5.00, 5.00])  
+        D = np.array([5.00, 5.00, 5.00, 5.00, 5.00, 0.5, 0.5])  
         
-        # Simulation Values
-        #P = np.array([2.00, 2.00, 2.00, 2.00, 2.00, 0.20, 0.20])
-        #D = np.array([0.50, 0.05, 0.50, 2.00, 0.10, 0.05, 0.05])  
-
 
         q = np.array(self.arm.angles()) # Angle position in rads
         # TODO: get velocity directly from joints

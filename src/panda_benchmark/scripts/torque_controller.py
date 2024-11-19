@@ -12,7 +12,7 @@ from panda_robot import PandaArm
 class TorqueController:
     def __init__(self, arm:PandaArm):
         self.arm = arm
-        self.time_period = 0.1
+        self.time_period = 0.001
         self.timer = rospy.Timer(rospy.Duration(self.time_period), self.timer_callback)
         self.prev_q = np.array(arm.angles()) # Current Position
 
