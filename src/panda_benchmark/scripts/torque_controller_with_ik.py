@@ -7,20 +7,32 @@ import numpy as np
 from timeit import default_timer as timer
 
 from panda_robot import PandaArm
+from ik import get_cartesian_position
 
 
 class TorqueController:
     def __init__(self, arm:PandaArm):
         self.arm = arm
         self.time_period = 0.1
-        self.timer = rospy.Timer(rospy.Duration(self.time_period), self.timer_callback)
+        
         self.prev_q = np.array(arm.angles()) # Current Position
 
-        #self.q_des = np.array([0, -0.79, 0, -1.3, 0, 3.5, 0.79])  # Desired joint angles (almost vertical)
-        self.q_des = np.array([0, -np.pi/4, 0, -2.5 * np.pi/4, 0, np.pi/2, np.pi/4])  # Up a bit
+        # self.q_des = np.array([0, -np.pi/4, 0, -2.5 * np.pi/4, 0, np.pi/2, np.pi/4])  # Up a bit
+        self.q_des = self.prev_q
+
+        self.Y_des = []
+
+    def set_cartesian_position(self, X, Y, Z, roll, pitch, yaw):
+        ik_period = 0.3
+        self.ik_time = rospy.Timer(rospy.Duration(ik_period), self.ik_callback)
+        self.Y_des = [X, Y, Z, roll, pitch, yaw]
+
+    def ik_callback(self, event):
+        get_cartesian_position(self.Y_des[0], self.Y_des[1], self.Y_des[2],
+                               self.Y_des[3], self.Y_des[4], self.Y_des[5])
 
 
-    def timer_callback(self, event):
+    def torque_callback(self, event):
         P = np.array([2.00, 2.00, 2.00, 2.00, 2.00, 0.20, 0.20]) 
         D = np.array([0.50, 0.05, 0.50, 2.00, 0.10, 0.05, 0.05]) 
 
@@ -37,16 +49,14 @@ class TorqueController:
 
 
 
-
-
-
 if __name__ == '__main__':
     rospy.init_node('TorqueController')
     arm = PandaArm()
     arm.move_to_neutral()
-    #arm.move_to_joint_position([-1.5707, -1.5707, 0, -2, 0, 3.5, 0.7854])
-    #exit()
-    trace_a_line = TorqueController(arm)
+
+    controller = TorqueController(arm)
+    controller.set_cartesian_position(0.425, 0.0955, 0.2, # X, Y, Z in m
+                              0, 0.0, 0.0)
     rospy.spin()
 
 
