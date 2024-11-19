@@ -33,8 +33,14 @@ class TorqueController:
 
 
     def torque_callback(self, event):
+        # Real-Life values
         P = np.array([2.00, 2.00, 2.00, 2.00, 2.00, 0.20, 0.20]) 
         D = np.array([0.50, 0.05, 0.50, 2.00, 0.10, 0.05, 0.05]) 
+        
+        # Simulation Values
+        #P = np.array([2.00, 2.00, 2.00, 2.00, 2.00, 0.20, 0.20])
+        #D = np.array([0.50, 0.05, 0.50, 2.00, 0.10, 0.05, 0.05])  
+
 
         q = np.array(self.arm.angles()) # Angle position in rads
         # TODO: get velocity directly from joints
