@@ -150,20 +150,22 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 
 # Set up realtime configs (for realtime kernel)
-RUN addgroup realtime
-RUN usermod -a -G realtime $(whoami)
-RUN echo "@realtime soft rtprio 99" | tee -a /etc/security/limits.conf
-RUN echo "@realtime soft priority 99" | tee -a /etc/security/limits.conf
-RUN echo "@realtime soft memlock 102400" | tee -a /etc/security/limits.conf
-RUN echo "@realtime hard rtprio 99" | tee -a /etc/security/limits.conf
-RUN echo "@realtime hard priority 99" | tee -a /etc/security/limits.conf
-RUN echo "@realtime hard memlock 102400" | tee -a /etc/security/limits.conf
+# RUN addgroup realtime
+# RUN usermod -a -G realtime $(whoami)
+# RUN echo "@realtime soft rtprio 99" | tee -a /etc/security/limits.conf
+# RUN echo "@realtime soft priority 99" | tee -a /etc/security/limits.conf
+# RUN echo "@realtime soft memlock 102400" | tee -a /etc/security/limits.conf
+# RUN echo "@realtime hard rtprio 99" | tee -a /etc/security/limits.conf
+# RUN echo "@realtime hard priority 99" | tee -a /etc/security/limits.conf
+# RUN echo "@realtime hard memlock 102400" | tee -a /etc/security/limits.conf
 
 # Install Azure Kinect SDK dependencies
 RUN curl -sSL https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
     echo "deb [arch=amd64] https://packages.microsoft.com/ubuntu/18.04/prod bionic main" > /etc/apt/sources.list.d/microsoft-prod.list && \
     apt-get update && \
     ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive apt-get install -y k4a-tools libk4a1.4 libk4a1.4-dev
+
+RUN apt-get update && apt-get install -y alsa-utils
 
 # Install rosdep updates
 COPY . /workspace
