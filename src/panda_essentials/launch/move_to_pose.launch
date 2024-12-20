@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="robot_ip" default="192.168.1.2"/>
+    <arg name="arm_id" default="panda" />
+    <arg name="transmission" default="effort"
+        doc="The type of position control to use (either 'position' or 'effort')" />
+    <arg name="load_gripper" default="false"/> 
+
+    <!-- activate franka control, enable error recovery action, load urdf, spawn FrankaStateController, robot_state_publisher, joint_state_publisher -->
+    <include file="$(find panda_essentials)/launch/franka_control.launch" pass_all_args="true">
+        <arg name="load_gripper" value="false" />
+    </include>
+
+    <!-- FollowJointTrajactory -->
+    <node name="controller_spawner"
+        pkg="controller_manager"
+        type="spawner"
+        respawn="false"
+        output="screen"
+        args="$(arg transmission)_joint_trajectory_controller">
+    </node>
+
+    <!-- move end-effector to a specific pose -->
+    <node name="move_to_pose"
+        pkg="panda_essentials"
+        type="move_to_pose.py"
+        output="screen"
+        required="true">
+
+        <rosparam file="$(find panda_essentials)/config/move_to_pose.yaml" subst_value="true" />
+        <remap from="~follow_joint_trajectory"
+            to="$(arg transmission)_joint_trajectory_controller/follow_joint_trajectory" />
+        <remap from="~joint_states" to="franka_state_controller/joint_states" />
+        <remap if="$(arg load_gripper)" from="~grasp" to="/franka_gripper/grasp"/>
+        <param name="max_dq" value="0.2" /> <!-- [rad/s] -->
+        <param name="load_gripper" value="$(arg load_gripper)"/>
+        <param name="setting_file_path" value="$(find panda_essentials)/config/panda.yaml"/>
+    </node>
+
+</launch>

@@ -1,0 +1,2 @@
+<!-- load planner.yaml -->
+<rosparam command="load" file="$(find panda_essentials)/config/planner.yaml" />

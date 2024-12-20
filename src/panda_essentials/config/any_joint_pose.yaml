@@ -1,0 +1,39 @@
+joint_pose:
+  $(arg arm_id)_joint1: 0
+  $(arg arm_id)_joint2: -0.785398163397
+  $(arg arm_id)_joint3: 0
+  $(arg arm_id)_joint4: -2.35619449019
+  $(arg arm_id)_joint5: 0
+  $(arg arm_id)_joint6: 1.57079632679
+  $(arg arm_id)_joint7: 0.785398163397
+
+joint_pose1:
+  $(arg arm_id)_joint1: 0.1
+  $(arg arm_id)_joint2: -0.685398163397
+  $(arg arm_id)_joint3: 0.1
+  $(arg arm_id)_joint4: -2.4519449019
+  $(arg arm_id)_joint5: 0.1
+  $(arg arm_id)_joint6: 1.57079632679
+  $(arg arm_id)_joint7: 0.785398163397
+
+joint_pose2:
+  $(arg arm_id)_joint1: 0.2
+  $(arg arm_id)_joint2: -0.585398163397
+  $(arg arm_id)_joint3: 0.2
+  $(arg arm_id)_joint4: -2.5519449019
+  $(arg arm_id)_joint5: 0.2
+  $(arg arm_id)_joint6: 1.57079632679
+  $(arg arm_id)_joint7: 0.785398163397
+
+joint_pose3:
+  $(arg arm_id)_joint1: 0.3
+  $(arg arm_id)_joint2: -0.485398163397
+  $(arg arm_id)_joint3: 0.3
+  $(arg arm_id)_joint4: -2.6519449019
+  $(arg arm_id)_joint5: 0.3
+  $(arg arm_id)_joint6: 1.57079632679
+  $(arg arm_id)_joint7: 0.785398163397
+
+gripper_config:
+  width: 0.05
+  speed: 0.05

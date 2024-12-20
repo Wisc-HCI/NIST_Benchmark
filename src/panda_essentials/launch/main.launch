@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="robot_ip" required="true"/>
+    <arg name="arm_id" default="panda" />
+    <arg name="transmission" default="effort" doc="The type of position control to use (either 'position' or 'effort')" />
+  
+    <arg name="ik_config_path" required="true" doc="Absolute path to ik config file"/>
+
+    <!-- start franka controller, load description -->
+    <include file="$(find panda_essentials)/launch/franka_control.launch" pass_all_args="true">
+        <arg name="load_gripper" value="true" />
+    </include>
+
+    <!-- start relaxed-ik service, load description twice, start robot_state_publisher -->
+    <include file="$(find panda_essentials)/launch/franka_ik.launch" >
+        <arg name="setting_file_path" value="$(arg ik_config_path)"/>
+    </include>
+</launch>

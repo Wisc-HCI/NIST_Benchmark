@@ -1,0 +1,9 @@
+# Copy from relaxed_ik_core/configs/example_settings/panda.yaml
+urdf: panda.urdf
+link_radius: 0.05 
+base_links:
+  - world
+ee_links:
+  - panda_hand
+starting_config: [ 0.0, 0.0, 0.0, -1.5708, 0.0, 1.5708, 0.0 ]
+obstacles:

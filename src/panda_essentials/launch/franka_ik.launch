@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="setting_file_path" default="$(find panda_essentials)/config/panda.yaml"/>
+    <!-- setting_file_path is read in relaxed_ik_rust.py -->
+    <param name="setting_file_path" value="$(arg setting_file_path)" />
+
+    <!-- relaxed_ik_rust load the franka_panda_description urdf into public namespace -->
+    <node pkg="relaxed_ik_ros1" type="relaxed_ik_rust.py" name="relaxed_ik_rust" output="screen" >
+        <param name="use_visualization" value="False" />
+    </node>
+
+    <!-- rviz_viewer.py starts another subprocess for RViz -->
+    <!-- <node pkg="relaxed_ik_ros1" type="rviz_viewer.py" name="rviz_viewer" output="screen" /> -->
+</launch>

@@ -1,0 +1,58 @@
+rate: 10
+node_name: "move_to_pose"
+
+target_pose:
+  position:
+    x: 0.4
+    y: 0.1
+    z: 0.4
+  orientation:
+    x: 0.9
+    y: 0.4
+    z: 0
+    w: 0
+
+target_grasp:
+  width: 0.05
+  speed: 0.05
+  force: 0.1
+  epsilon:
+    inner: 0.005
+    outer: 0.005
+
+inverse_kinematics:
+  type: "relaxed-IK"
+  solver_service: "/relaxed_ik/solve_pose"
+  solver_topic: "/relaxed_ik/ee_pose_goals"
+  solver_reset: "/relaxed_ik/reset"
+  use_service: True
+
+# planner config
+global_planner:
+  type: "TaskPlanner"
+
+local_planner:
+  type: "Interpolation"
+  step_size: 0.01 # in Euclidean space
+  steps: 10
+
+# IK has been moved to the move_to_pos.yaml file
+# inverse_kinematics:
+#   type: "relaxed-IK"
+#   service: "relaxed_ik/solve_pose"
+
+debugger:
+  evaluate_time: True
+
+
+# hardcoding
+hardcoding:
+  use_hardcoding: True
+  hardcoding_joint_pose:
+    $(arg arm_id)_joint1: 0
+    $(arg arm_id)_joint2: -0.785398163397
+    $(arg arm_id)_joint3: 0
+    $(arg arm_id)_joint4: -2.35619449019
+    $(arg arm_id)_joint5: 0
+    $(arg arm_id)_joint6: 1.57079632679
+    $(arg arm_id)_joint7: 0.785398163397
