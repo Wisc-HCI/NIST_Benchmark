@@ -16,6 +16,13 @@ RUN apt-get update && \
     python3-rosdep\
     mesa-utils\
     nano\
+    pulseaudio\
+    pulseaudio-utils\
+    alsa-base\
+    alsa-utils\
+    libasound2\
+    libasound2-plugins\
+    pulseaudio\
     python3-catkin-tools\ 
     ros-noetic-gazebo-ros-control\
     ros-noetic-rospy-message-converter\
@@ -77,6 +84,14 @@ RUN  dpkg -i /workspace/libfranka/build/libfranka-0.9.2-x86_64.deb
 
 
 WORKDIR /workspace/
+
+
+# Set PulseAudio environment variable
+ENV PULSE_SERVER=unix:/run/user/1000/pulse/native
+
+# Expose PulseAudio socket
+VOLUME ["/run/user/1000/pulse"]
+
 
 # Set the default command to execute
 # When creating a container, this will simulate `docker run -it`
